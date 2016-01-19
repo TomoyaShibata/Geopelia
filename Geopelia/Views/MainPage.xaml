@@ -1,0 +1,40 @@
+﻿<Page x:Class="Geopelia.Views.MainPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:local="using:Geopelia"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:mvvm="using:Prism.Windows.Mvvm"
+      mvvm:ViewModelLocator.AutoWireViewModel="True"
+      mc:Ignorable="d">
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Pivot>
+            <PivotItem Header="Timeline"
+                       MinWidth="{x:Bind ViewModel.PivotItemWidth}">
+                <ListView>
+                    <ListViewItem>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="20" />
+                                <RowDefinition Height="100" />
+                            </Grid.RowDefinitions>
+                            <TextBlock Text="2016/01/19 14:15" />
+                            <TextBlock Grid.Row="1"
+                                       Text="雪猫さんめっちゃ頑張ってるので今年はワシもがんばるぞい" />
+                        </Grid>
+                    </ListViewItem>
+                </ListView>
+            </PivotItem>
+            <PivotItem Header="Mention"
+                       MinWidth="{x:Bind ViewModel.PivotItemWidth}">
+                <Button Content="ちょっと認証させて"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Top" />
+            </PivotItem>
+            <PivotItem Header="Message"
+                       MinWidth="{x:Bind ViewModel.PivotItemWidth}"></PivotItem>
+            <PivotItem Header="I'm"
+                       MinWidth="{x:Bind ViewModel.PivotItemWidth}"></PivotItem>
+        </Pivot>
+    </Grid>
+</Page>

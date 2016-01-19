@@ -1,0 +1,136 @@
+﻿<UserControl x:Class="Geopelia.MyUserControl1"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="using:Geopelia"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             Height="300"
+             Width="300">
+    <UserControl.Resources>
+        <Color x:Key="Dodgerblue">DodgerBlue</Color>
+    </UserControl.Resources>
+
+    <Grid Width="350"
+          Height="350"
+          HorizontalAlignment="Center"
+          VerticalAlignment="Center">
+        <Grid.Background>
+            <SolidColorBrush Color="{StaticResource Dodgerblue}" />
+        </Grid.Background>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="43*" />
+            <RowDefinition Height="17*" />
+        </Grid.RowDefinitions>
+        <Rectangle Margin="98,56,106,44"
+                   Height="200"
+                   RenderTransformOrigin="0.5,0.5"
+                   UseLayoutRounding="False"
+                   d:LayoutRounding="Auto"
+                   d:LayoutOverrides="LeftPosition, RightPosition"
+                   Grid.RowSpan="2"
+                   d:IsHidden="True">
+            <Rectangle.Fill>
+                <SolidColorBrush Color="{StaticResource Dodgerblue}" />
+            </Rectangle.Fill>
+            <Rectangle.RenderTransform>
+                <CompositeTransform Rotation="0.422" />
+            </Rectangle.RenderTransform>
+        </Rectangle>
+        <Rectangle Margin="91,63,113,37"
+                   Height="200"
+                   Fill="White"
+                   RenderTransformOrigin="0.5,0.5"
+                   UseLayoutRounding="False"
+                   d:LayoutRounding="Auto"
+                   d:LayoutOverrides="LeftPosition, RightPosition"
+                   Grid.RowSpan="2"
+                   d:IsHidden="True">
+            <Rectangle.RenderTransform>
+                <CompositeTransform Rotation="0.422" />
+            </Rectangle.RenderTransform>
+        </Rectangle>
+        <Rectangle Margin="19,65,182,-98"
+                   Height="333"
+                   RenderTransformOrigin="0.5,0.5"
+                   UseLayoutRounding="False"
+                   d:LayoutRounding="Auto"
+                   Grid.RowSpan="2"
+                   d:LayoutOverrides="LeftPosition, RightPosition"
+                   d:IsHidden="True">
+            <Rectangle.Fill>
+                <SolidColorBrush Color="{StaticResource Dodgerblue}" />
+            </Rectangle.Fill>
+            <Rectangle.Projection>
+                <PlaneProjection RotationZ="45" />
+            </Rectangle.Projection>
+            <Rectangle.RenderTransform>
+                <CompositeTransform Rotation="0.422" />
+            </Rectangle.RenderTransform>
+        </Rectangle>
+        <Rectangle Margin="27,-104,177,-11"
+                   Height="200"
+                   RenderTransformOrigin="0.5,0.5"
+                   UseLayoutRounding="False"
+                   d:LayoutRounding="Auto"
+                   d:LayoutOverrides="LeftPosition, RightPosition"
+                   Grid.Row="1"
+                   d:IsHidden="True">
+            <Rectangle.Fill>
+                <SolidColorBrush Color="{StaticResource Dodgerblue}" />
+            </Rectangle.Fill>
+            <Rectangle.RenderTransform>
+                <CompositeTransform Rotation="0.422" />
+            </Rectangle.RenderTransform>
+        </Rectangle>
+        <Rectangle Fill="White"
+                   Height="30"
+                   Margin="185,0,185,64"
+                   VerticalAlignment="Bottom"
+                   Width="30"
+                   d:IsHidden="True" />
+        <Rectangle Fill="White"
+                   Height="30"
+                   Margin="147,0,0,26"
+                   VerticalAlignment="Bottom"
+                   Width="30"
+                   HorizontalAlignment="Left"
+                   d:LayoutOverrides="Width"
+                   d:IsHidden="True" />
+        <Path Data="M62,67 L245,67 L244,227 L234,217 L234,77 L62,77"
+              Fill="White"
+              Margin="92,85,75,5.667"
+              Stretch="Fill"
+              UseLayoutRounding="False"
+              d:LayoutOverrides="LeftPosition, RightPosition, TopPosition, BottomPosition" />
+        <Path Data="M62,67 L245,67 L244,227 L234,217 L234,127 L62,127"
+              Fill="White"
+              Margin="74,101.667,93,-11"
+              Stretch="Fill"
+              UseLayoutRounding="False"
+              d:LayoutOverrides="LeftPosition, RightPosition, TopPosition, BottomPosition" />
+        <Path Data="M123,141 L198,141 L198,181 L123,181"
+              Margin="0,111.166,111.5,99.5"
+              Stretch="Fill"
+              UseLayoutRounding="False"
+              Width="40"
+              Height="40"
+              HorizontalAlignment="Right"
+              d:LayoutOverrides="Width">
+            <Path.Fill>
+                <SolidColorBrush Color="{StaticResource Dodgerblue}" />
+            </Path.Fill>
+        </Path>
+        <Path Data="M123,141 L198,141 L198,181 L123,181"
+              Fill="White"
+              Margin="0,0,111.5,38"
+              Stretch="Fill"
+              UseLayoutRounding="False"
+              Width="40"
+              Height="40"
+              VerticalAlignment="Bottom"
+              HorizontalAlignment="Right"
+              d:LayoutOverrides="Width" />
+
+    </Grid>
+</UserControl>
