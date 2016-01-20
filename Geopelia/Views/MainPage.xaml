@@ -9,6 +9,15 @@
       mc:Ignorable="d">
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Pivot>
+            <Pivot.LeftHeader>
+                <Ellipse Margin="10"
+                         Width="40"
+                         Height="40">
+                    <Ellipse.Fill>
+                        <ImageBrush ImageSource="{x:Bind ViewModel.MyProfile.Value.ProfileImageUrlHttps, Mode=TwoWay}" />
+                    </Ellipse.Fill>
+                </Ellipse>
+            </Pivot.LeftHeader>
             <PivotItem Header="Timeline"
                        MinWidth="{x:Bind ViewModel.PivotItemWidth}">
                 <ListView>
@@ -23,10 +32,27 @@
                                        Text="雪猫さんめっちゃ頑張ってるので今年はワシもがんばるぞい" />
                         </Grid>
                     </ListViewItem>
+                    <ListViewItem>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="100" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <TextBox Height="100"
+                                     Margin="0,0,-237,0"
+                                     HorizontalAlignment="Left"
+                                     Width="320"
+                                     Text="{x:Bind ViewModel.TweetText.Value, Mode=TwoWay}" />
+                            <Button Grid.Row="1"
+                                    Margin="0,10,0,0"
+                                    Content="ツイートする"
+                                    Command="{x:Bind PostTweetCommand}" />
+                        </Grid>
+                    </ListViewItem>
                 </ListView>
             </PivotItem>
             <PivotItem Header="Mention"
-                       MinWidth="{x:Bind ViewModel.PivotItemWidth}">
+                       Width="{x:Bind ViewModel.PivotItemWidth}">
                 <Button Content="ちょっと認証させて"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Top" />
@@ -34,7 +60,30 @@
             <PivotItem Header="Message"
                        MinWidth="{x:Bind ViewModel.PivotItemWidth}"></PivotItem>
             <PivotItem Header="I'm"
-                       MinWidth="{x:Bind ViewModel.PivotItemWidth}"></PivotItem>
+                       MinWidth="{x:Bind ViewModel.PivotItemWidth}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50" />
+                        <RowDefinition Height="50" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock FontSize="15"
+                               Text="Followers" />
+                    <TextBlock FontSize="15"
+                               Grid.Column="1"
+                               Text="{x:Bind ViewModel.MyProfile.Value.FollowersCount, Mode=OneWay}" />
+                    <TextBlock FontSize="15"
+                               Grid.Row="1"
+                               Text="Following" />
+                    <TextBlock FontSize="15"
+                               Grid.Row="1"
+                               Grid.Column="1"
+                               Text="{x:Bind ViewModel.MyProfile.Value.FriendsCount, Mode=OneWay}" />
+                </Grid>
+            </PivotItem>
         </Pivot>
     </Grid>
 </Page>

@@ -2,8 +2,7 @@
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml.Controls;
 using Geopelia.ViewModels;
-
-// 空白ページのアイテム テンプレートについては、http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409 を参照してください
+using Prism.Commands;
 
 namespace Geopelia.Views
 {
@@ -14,12 +13,16 @@ namespace Geopelia.Views
     {
         private MainPageViewModel ViewModel => this.DataContext as MainPageViewModel;
 
+        public DelegateCommand PostTweetCommand { get; set; }
+
         public MainPage()
         {
             this.InitializeComponent();
 
-            ApplicationView.PreferredLaunchViewSize = new Size(400, 500);
+            ApplicationView.PreferredLaunchViewSize = new Size(200, 500);
             ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.PreferredLaunchViewSize;
+
+            this.PostTweetCommand = new DelegateCommand(() => ViewModel.PostTweet());
         }
     }
 }
