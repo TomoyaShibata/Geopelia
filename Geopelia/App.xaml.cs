@@ -1,6 +1,8 @@
 ﻿using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
+using Geopelia.Models;
 using Prism.Unity.Windows;
+using Microsoft.Practices.Unity;
 
 namespace Geopelia
 {
@@ -22,6 +24,12 @@ namespace Geopelia
         {
             this.NavigationService.Navigate("Main", null);
             return Task.CompletedTask;
+        }
+
+        protected override void ConfigureContainer()
+        {
+            base.ConfigureContainer();
+            this.Container.RegisterType<TwitterClient>(new ContainerControlledLifetimeManager());
         }
     }
 }

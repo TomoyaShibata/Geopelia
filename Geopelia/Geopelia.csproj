@@ -101,9 +101,15 @@
     <Compile Include="DraftLogo.xaml.cs">
       <DependentUpon>DraftLogo.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\TweetModel.cs" />
     <Compile Include="Models\TwitterClient.cs" />
     <Compile Include="Models\TwitterConst.cs" />
+    <Compile Include="ViewModels\TweetCreatePageViewModel.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />
+    <Compile Include="ViewModels\TweetItemViewModel.cs" />
+    <Compile Include="Views\TweetCreatePage.xaml.cs">
+      <DependentUpon>TweetCreatePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -133,6 +139,10 @@
     <Page Include="DraftLogo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TweetCreatePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>

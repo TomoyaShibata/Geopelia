@@ -22,6 +22,11 @@
           "lib/portable-win81+wpa81/CoreTweet.dll": {}
         }
       },
+      "CoreTweet.Streaming.Reactive/0.6.0.251": {
+        "dependencies": {
+          "CoreTweet": "[0.6.0, )"
+        }
+      },
       "Microsoft.ApplicationInsights/1.0.0": {
         "compile": {
           "lib/portable-win81+wpa81/Microsoft.ApplicationInsights.dll": {}
@@ -328,9 +333,9 @@
           "lib/win81/ReactiveProperty.WinRT.dll": {}
         }
       },
-      "Rx-Core/2.2.5": {
+      "Rx-Core/2.3.0-beta2": {
         "dependencies": {
-          "Rx-Interfaces": "[2.2.5, )"
+          "Rx-Interfaces": "[2.3.0-beta2, )"
         },
         "compile": {
           "lib/windows8/System.Reactive.Core.dll": {}
@@ -339,7 +344,7 @@
           "lib/windows8/System.Reactive.Core.dll": {}
         }
       },
-      "Rx-Interfaces/2.2.5": {
+      "Rx-Interfaces/2.3.0-beta2": {
         "compile": {
           "lib/windows8/System.Reactive.Interfaces.dll": {}
         },
@@ -347,10 +352,10 @@
           "lib/windows8/System.Reactive.Interfaces.dll": {}
         }
       },
-      "Rx-Linq/2.2.5": {
+      "Rx-Linq/2.3.0-beta2": {
         "dependencies": {
-          "Rx-Core": "[2.2.5, )",
-          "Rx-Interfaces": "[2.2.5, )"
+          "Rx-Core": "[2.3.0-beta2, )",
+          "Rx-Interfaces": "[2.3.0-beta2, )"
         },
         "compile": {
           "lib/windows8/System.Reactive.Linq.dll": {}
@@ -359,18 +364,18 @@
           "lib/windows8/System.Reactive.Linq.dll": {}
         }
       },
-      "Rx-Main/2.2.5": {
+      "Rx-Main/2.3.0-beta2": {
         "dependencies": {
-          "Rx-Core": "[2.2.5, )",
-          "Rx-Interfaces": "[2.2.5, )",
-          "Rx-Linq": "[2.2.5, )",
-          "Rx-PlatformServices": "[2.2.5, )"
+          "Rx-Core": "[2.3.0-beta2, )",
+          "Rx-Interfaces": "[2.3.0-beta2, )",
+          "Rx-Linq": "[2.3.0-beta2, )",
+          "Rx-PlatformServices": "[2.3.0-beta2, )"
         }
       },
-      "Rx-PlatformServices/2.2.5": {
+      "Rx-PlatformServices/2.3.0-beta2": {
         "dependencies": {
-          "Rx-Core": "[2.2.5, )",
-          "Rx-Interfaces": "[2.2.5, )"
+          "Rx-Core": "[2.3.0-beta2, )",
+          "Rx-Interfaces": "[2.3.0-beta2, )"
         },
         "compile": {
           "lib/windows8/System.Reactive.PlatformServices.dll": {}
@@ -1748,6 +1753,11 @@
           "lib/portable-win81+wpa81/CoreTweet.dll": {}
         }
       },
+      "CoreTweet.Streaming.Reactive/0.6.0.251": {
+        "dependencies": {
+          "CoreTweet": "[0.6.0, )"
+        }
+      },
       "Microsoft.ApplicationInsights/1.0.0": {
         "compile": {
           "lib/portable-win81+wpa81/Microsoft.ApplicationInsights.dll": {}
@@ -2097,9 +2107,9 @@
           "lib/win81/ReactiveProperty.WinRT.dll": {}
         }
       },
-      "Rx-Core/2.2.5": {
+      "Rx-Core/2.3.0-beta2": {
         "dependencies": {
-          "Rx-Interfaces": "[2.2.5, )"
+          "Rx-Interfaces": "[2.3.0-beta2, )"
         },
         "compile": {
           "lib/windows8/System.Reactive.Core.dll": {}
@@ -2108,7 +2118,7 @@
           "lib/windows8/System.Reactive.Core.dll": {}
         }
       },
-      "Rx-Interfaces/2.2.5": {
+      "Rx-Interfaces/2.3.0-beta2": {
         "compile": {
           "lib/windows8/System.Reactive.Interfaces.dll": {}
         },
@@ -2116,10 +2126,10 @@
           "lib/windows8/System.Reactive.Interfaces.dll": {}
         }
       },
-      "Rx-Linq/2.2.5": {
+      "Rx-Linq/2.3.0-beta2": {
         "dependencies": {
-          "Rx-Core": "[2.2.5, )",
-          "Rx-Interfaces": "[2.2.5, )"
+          "Rx-Core": "[2.3.0-beta2, )",
+          "Rx-Interfaces": "[2.3.0-beta2, )"
         },
         "compile": {
           "lib/windows8/System.Reactive.Linq.dll": {}
@@ -2128,18 +2138,18 @@
           "lib/windows8/System.Reactive.Linq.dll": {}
         }
       },
-      "Rx-Main/2.2.5": {
+      "Rx-Main/2.3.0-beta2": {
         "dependencies": {
-          "Rx-Core": "[2.2.5, )",
-          "Rx-Interfaces": "[2.2.5, )",
-          "Rx-Linq": "[2.2.5, )",
-          "Rx-PlatformServices": "[2.2.5, )"
+          "Rx-Core": "[2.3.0-beta2, )",
+          "Rx-Interfaces": "[2.3.0-beta2, )",
+          "Rx-Linq": "[2.3.0-beta2, )",
+          "Rx-PlatformServices": "[2.3.0-beta2, )"
         }
       },
-      "Rx-PlatformServices/2.2.5": {
+      "Rx-PlatformServices/2.3.0-beta2": {
         "dependencies": {
-          "Rx-Core": "[2.2.5, )",
-          "Rx-Interfaces": "[2.2.5, )"
+          "Rx-Core": "[2.3.0-beta2, )",
+          "Rx-Interfaces": "[2.3.0-beta2, )"
         },
         "compile": {
           "lib/windows8/System.Reactive.PlatformServices.dll": {}
@@ -3564,6 +3574,11 @@
           "lib/portable-win81+wpa81/CoreTweet.dll": {}
         }
       },
+      "CoreTweet.Streaming.Reactive/0.6.0.251": {
+        "dependencies": {
+          "CoreTweet": "[0.6.0, )"
+        }
+      },
       "Microsoft.ApplicationInsights/1.0.0": {
         "compile": {
           "lib/portable-win81+wpa81/Microsoft.ApplicationInsights.dll": {}
@@ -3899,9 +3914,9 @@
           "lib/win81/ReactiveProperty.WinRT.dll": {}
         }
       },
-      "Rx-Core/2.2.5": {
+      "Rx-Core/2.3.0-beta2": {
         "dependencies": {
-          "Rx-Interfaces": "[2.2.5, )"
+          "Rx-Interfaces": "[2.3.0-beta2, )"
         },
         "compile": {
           "lib/windows8/System.Reactive.Core.dll": {}
@@ -3910,7 +3925,7 @@
           "lib/windows8/System.Reactive.Core.dll": {}
         }
       },
-      "Rx-Interfaces/2.2.5": {
+      "Rx-Interfaces/2.3.0-beta2": {
         "compile": {
           "lib/windows8/System.Reactive.Interfaces.dll": {}
         },
@@ -3918,10 +3933,10 @@
           "lib/windows8/System.Reactive.Interfaces.dll": {}
         }
       },
-      "Rx-Linq/2.2.5": {
+      "Rx-Linq/2.3.0-beta2": {
         "dependencies": {
-          "Rx-Core": "[2.2.5, )",
-          "Rx-Interfaces": "[2.2.5, )"
+          "Rx-Core": "[2.3.0-beta2, )",
+          "Rx-Interfaces": "[2.3.0-beta2, )"
         },
         "compile": {
           "lib/windows8/System.Reactive.Linq.dll": {}
@@ -3930,18 +3945,18 @@
           "lib/windows8/System.Reactive.Linq.dll": {}
         }
       },
-      "Rx-Main/2.2.5": {
+      "Rx-Main/2.3.0-beta2": {
         "dependencies": {
-          "Rx-Core": "[2.2.5, )",
-          "Rx-Interfaces": "[2.2.5, )",
-          "Rx-Linq": "[2.2.5, )",
-          "Rx-PlatformServices": "[2.2.5, )"
+          "Rx-Core": "[2.3.0-beta2, )",
+          "Rx-Interfaces": "[2.3.0-beta2, )",
+          "Rx-Linq": "[2.3.0-beta2, )",
+          "Rx-PlatformServices": "[2.3.0-beta2, )"
         }
       },
-      "Rx-PlatformServices/2.2.5": {
+      "Rx-PlatformServices/2.3.0-beta2": {
         "dependencies": {
-          "Rx-Core": "[2.2.5, )",
-          "Rx-Interfaces": "[2.2.5, )"
+          "Rx-Core": "[2.3.0-beta2, )",
+          "Rx-Interfaces": "[2.3.0-beta2, )"
         },
         "compile": {
           "lib/windows8/System.Reactive.PlatformServices.dll": {}
@@ -5352,6 +5367,11 @@
           "lib/portable-win81+wpa81/CoreTweet.dll": {}
         }
       },
+      "CoreTweet.Streaming.Reactive/0.6.0.251": {
+        "dependencies": {
+          "CoreTweet": "[0.6.0, )"
+        }
+      },
       "Microsoft.ApplicationInsights/1.0.0": {
         "compile": {
           "lib/portable-win81+wpa81/Microsoft.ApplicationInsights.dll": {}
@@ -5706,9 +5726,9 @@
           "lib/win81/ReactiveProperty.WinRT.dll": {}
         }
       },
-      "Rx-Core/2.2.5": {
+      "Rx-Core/2.3.0-beta2": {
         "dependencies": {
-          "Rx-Interfaces": "[2.2.5, )"
+          "Rx-Interfaces": "[2.3.0-beta2, )"
         },
         "compile": {
           "lib/windows8/System.Reactive.Core.dll": {}
@@ -5717,7 +5737,7 @@
           "lib/windows8/System.Reactive.Core.dll": {}
         }
       },
-      "Rx-Interfaces/2.2.5": {
+      "Rx-Interfaces/2.3.0-beta2": {
         "compile": {
           "lib/windows8/System.Reactive.Interfaces.dll": {}
         },
@@ -5725,10 +5745,10 @@
           "lib/windows8/System.Reactive.Interfaces.dll": {}
         }
       },
-      "Rx-Linq/2.2.5": {
+      "Rx-Linq/2.3.0-beta2": {
         "dependencies": {
-          "Rx-Core": "[2.2.5, )",
-          "Rx-Interfaces": "[2.2.5, )"
+          "Rx-Core": "[2.3.0-beta2, )",
+          "Rx-Interfaces": "[2.3.0-beta2, )"
         },
         "compile": {
           "lib/windows8/System.Reactive.Linq.dll": {}
@@ -5737,18 +5757,18 @@
           "lib/windows8/System.Reactive.Linq.dll": {}
         }
       },
-      "Rx-Main/2.2.5": {
+      "Rx-Main/2.3.0-beta2": {
         "dependencies": {
-          "Rx-Core": "[2.2.5, )",
-          "Rx-Interfaces": "[2.2.5, )",
-          "Rx-Linq": "[2.2.5, )",
-          "Rx-PlatformServices": "[2.2.5, )"
+          "Rx-Core": "[2.3.0-beta2, )",
+          "Rx-Interfaces": "[2.3.0-beta2, )",
+          "Rx-Linq": "[2.3.0-beta2, )",
+          "Rx-PlatformServices": "[2.3.0-beta2, )"
         }
       },
-      "Rx-PlatformServices/2.2.5": {
+      "Rx-PlatformServices/2.3.0-beta2": {
         "dependencies": {
-          "Rx-Core": "[2.2.5, )",
-          "Rx-Interfaces": "[2.2.5, )"
+          "Rx-Core": "[2.3.0-beta2, )",
+          "Rx-Interfaces": "[2.3.0-beta2, )"
         },
         "compile": {
           "lib/windows8/System.Reactive.PlatformServices.dll": {}
@@ -7173,6 +7193,11 @@
           "lib/portable-win81+wpa81/CoreTweet.dll": {}
         }
       },
+      "CoreTweet.Streaming.Reactive/0.6.0.251": {
+        "dependencies": {
+          "CoreTweet": "[0.6.0, )"
+        }
+      },
       "Microsoft.ApplicationInsights/1.0.0": {
         "compile": {
           "lib/portable-win81+wpa81/Microsoft.ApplicationInsights.dll": {}
@@ -7508,9 +7533,9 @@
           "lib/win81/ReactiveProperty.WinRT.dll": {}
         }
       },
-      "Rx-Core/2.2.5": {
+      "Rx-Core/2.3.0-beta2": {
         "dependencies": {
-          "Rx-Interfaces": "[2.2.5, )"
+          "Rx-Interfaces": "[2.3.0-beta2, )"
         },
         "compile": {
           "lib/windows8/System.Reactive.Core.dll": {}
@@ -7519,7 +7544,7 @@
           "lib/windows8/System.Reactive.Core.dll": {}
         }
       },
-      "Rx-Interfaces/2.2.5": {
+      "Rx-Interfaces/2.3.0-beta2": {
         "compile": {
           "lib/windows8/System.Reactive.Interfaces.dll": {}
         },
@@ -7527,10 +7552,10 @@
           "lib/windows8/System.Reactive.Interfaces.dll": {}
         }
       },
-      "Rx-Linq/2.2.5": {
+      "Rx-Linq/2.3.0-beta2": {
         "dependencies": {
-          "Rx-Core": "[2.2.5, )",
-          "Rx-Interfaces": "[2.2.5, )"
+          "Rx-Core": "[2.3.0-beta2, )",
+          "Rx-Interfaces": "[2.3.0-beta2, )"
         },
         "compile": {
           "lib/windows8/System.Reactive.Linq.dll": {}
@@ -7539,18 +7564,18 @@
           "lib/windows8/System.Reactive.Linq.dll": {}
         }
       },
-      "Rx-Main/2.2.5": {
+      "Rx-Main/2.3.0-beta2": {
         "dependencies": {
-          "Rx-Core": "[2.2.5, )",
-          "Rx-Interfaces": "[2.2.5, )",
-          "Rx-Linq": "[2.2.5, )",
-          "Rx-PlatformServices": "[2.2.5, )"
+          "Rx-Core": "[2.3.0-beta2, )",
+          "Rx-Interfaces": "[2.3.0-beta2, )",
+          "Rx-Linq": "[2.3.0-beta2, )",
+          "Rx-PlatformServices": "[2.3.0-beta2, )"
         }
       },
-      "Rx-PlatformServices/2.2.5": {
+      "Rx-PlatformServices/2.3.0-beta2": {
         "dependencies": {
-          "Rx-Core": "[2.2.5, )",
-          "Rx-Interfaces": "[2.2.5, )"
+          "Rx-Core": "[2.3.0-beta2, )",
+          "Rx-Interfaces": "[2.3.0-beta2, )"
         },
         "compile": {
           "lib/windows8/System.Reactive.PlatformServices.dll": {}
@@ -8961,6 +8986,11 @@
           "lib/portable-win81+wpa81/CoreTweet.dll": {}
         }
       },
+      "CoreTweet.Streaming.Reactive/0.6.0.251": {
+        "dependencies": {
+          "CoreTweet": "[0.6.0, )"
+        }
+      },
       "Microsoft.ApplicationInsights/1.0.0": {
         "compile": {
           "lib/portable-win81+wpa81/Microsoft.ApplicationInsights.dll": {}
@@ -9315,9 +9345,9 @@
           "lib/win81/ReactiveProperty.WinRT.dll": {}
         }
       },
-      "Rx-Core/2.2.5": {
+      "Rx-Core/2.3.0-beta2": {
         "dependencies": {
-          "Rx-Interfaces": "[2.2.5, )"
+          "Rx-Interfaces": "[2.3.0-beta2, )"
         },
         "compile": {
           "lib/windows8/System.Reactive.Core.dll": {}
@@ -9326,7 +9356,7 @@
           "lib/windows8/System.Reactive.Core.dll": {}
         }
       },
-      "Rx-Interfaces/2.2.5": {
+      "Rx-Interfaces/2.3.0-beta2": {
         "compile": {
           "lib/windows8/System.Reactive.Interfaces.dll": {}
         },
@@ -9334,10 +9364,10 @@
           "lib/windows8/System.Reactive.Interfaces.dll": {}
         }
       },
-      "Rx-Linq/2.2.5": {
+      "Rx-Linq/2.3.0-beta2": {
         "dependencies": {
-          "Rx-Core": "[2.2.5, )",
-          "Rx-Interfaces": "[2.2.5, )"
+          "Rx-Core": "[2.3.0-beta2, )",
+          "Rx-Interfaces": "[2.3.0-beta2, )"
         },
         "compile": {
           "lib/windows8/System.Reactive.Linq.dll": {}
@@ -9346,18 +9376,18 @@
           "lib/windows8/System.Reactive.Linq.dll": {}
         }
       },
-      "Rx-Main/2.2.5": {
+      "Rx-Main/2.3.0-beta2": {
         "dependencies": {
-          "Rx-Core": "[2.2.5, )",
-          "Rx-Interfaces": "[2.2.5, )",
-          "Rx-Linq": "[2.2.5, )",
-          "Rx-PlatformServices": "[2.2.5, )"
+          "Rx-Core": "[2.3.0-beta2, )",
+          "Rx-Interfaces": "[2.3.0-beta2, )",
+          "Rx-Linq": "[2.3.0-beta2, )",
+          "Rx-PlatformServices": "[2.3.0-beta2, )"
         }
       },
-      "Rx-PlatformServices/2.2.5": {
+      "Rx-PlatformServices/2.3.0-beta2": {
         "dependencies": {
-          "Rx-Core": "[2.2.5, )",
-          "Rx-Interfaces": "[2.2.5, )"
+          "Rx-Core": "[2.3.0-beta2, )",
+          "Rx-Interfaces": "[2.3.0-beta2, )"
         },
         "compile": {
           "lib/windows8/System.Reactive.PlatformServices.dll": {}
@@ -10782,6 +10812,11 @@
           "lib/portable-win81+wpa81/CoreTweet.dll": {}
         }
       },
+      "CoreTweet.Streaming.Reactive/0.6.0.251": {
+        "dependencies": {
+          "CoreTweet": "[0.6.0, )"
+        }
+      },
       "Microsoft.ApplicationInsights/1.0.0": {
         "compile": {
           "lib/portable-win81+wpa81/Microsoft.ApplicationInsights.dll": {}
@@ -11117,9 +11152,9 @@
           "lib/win81/ReactiveProperty.WinRT.dll": {}
         }
       },
-      "Rx-Core/2.2.5": {
+      "Rx-Core/2.3.0-beta2": {
         "dependencies": {
-          "Rx-Interfaces": "[2.2.5, )"
+          "Rx-Interfaces": "[2.3.0-beta2, )"
         },
         "compile": {
           "lib/windows8/System.Reactive.Core.dll": {}
@@ -11128,7 +11163,7 @@
           "lib/windows8/System.Reactive.Core.dll": {}
         }
       },
-      "Rx-Interfaces/2.2.5": {
+      "Rx-Interfaces/2.3.0-beta2": {
         "compile": {
           "lib/windows8/System.Reactive.Interfaces.dll": {}
         },
@@ -11136,10 +11171,10 @@
           "lib/windows8/System.Reactive.Interfaces.dll": {}
         }
       },
-      "Rx-Linq/2.2.5": {
+      "Rx-Linq/2.3.0-beta2": {
         "dependencies": {
-          "Rx-Core": "[2.2.5, )",
-          "Rx-Interfaces": "[2.2.5, )"
+          "Rx-Core": "[2.3.0-beta2, )",
+          "Rx-Interfaces": "[2.3.0-beta2, )"
         },
         "compile": {
           "lib/windows8/System.Reactive.Linq.dll": {}
@@ -11148,18 +11183,18 @@
           "lib/windows8/System.Reactive.Linq.dll": {}
         }
       },
-      "Rx-Main/2.2.5": {
+      "Rx-Main/2.3.0-beta2": {
         "dependencies": {
-          "Rx-Core": "[2.2.5, )",
-          "Rx-Interfaces": "[2.2.5, )",
-          "Rx-Linq": "[2.2.5, )",
-          "Rx-PlatformServices": "[2.2.5, )"
+          "Rx-Core": "[2.3.0-beta2, )",
+          "Rx-Interfaces": "[2.3.0-beta2, )",
+          "Rx-Linq": "[2.3.0-beta2, )",
+          "Rx-PlatformServices": "[2.3.0-beta2, )"
         }
       },
-      "Rx-PlatformServices/2.2.5": {
+      "Rx-PlatformServices/2.3.0-beta2": {
         "dependencies": {
-          "Rx-Core": "[2.2.5, )",
-          "Rx-Interfaces": "[2.2.5, )"
+          "Rx-Core": "[2.3.0-beta2, )",
+          "Rx-Interfaces": "[2.3.0-beta2, )"
         },
         "compile": {
           "lib/windows8/System.Reactive.PlatformServices.dll": {}
@@ -12591,6 +12626,16 @@
         "package/services/metadata/core-properties/b1ff2ca8d05745daa17482c9b9f64b4d.psmdcp"
       ]
     },
+    "CoreTweet.Streaming.Reactive/0.6.0.251": {
+      "sha512": "86EYQMjnCs5tndktUv9OR0H8S1heRpcz/VcRIUlhg1fhYMf7ckEKeVw2EwjdaHkBQSE8gGSZOy9m0jAJcaTN9Q==",
+      "type": "Package",
+      "files": [
+        "[Content_Types].xml",
+        "_rels/.rels",
+        "CoreTweet.Streaming.Reactive.nuspec",
+        "package/services/metadata/core-properties/83675cc8201045238e75774ee1f3f53b.psmdcp"
+      ]
+    },
     "Microsoft.ApplicationInsights/1.0.0": {
       "sha512": "HZ47/thX57SOuIivSvIbsR6L9CCb/Yt3IyB2i4KHmmNlf3DO+lqFwWIKDdbDNWKX+qh0Rg20/JSMPK0dwUsYYw==",
       "type": "Package",
@@ -13462,8 +13507,8 @@
         "Snippet/csharp6/ReadOnlyReactiveProperty.snippet"
       ]
     },
-    "Rx-Core/2.2.5": {
-      "sha512": "DfWVTfW6tvRkkqpnRHKxPIvaRZyDJGADuqrE6J2nwejOQbLRWi0rNUwXkViDWz++25BGDy3iRE5OE6Dv8mJxYQ==",
+    "Rx-Core/2.3.0-beta2": {
+      "sha512": "ufLvowEi6bzrCrRSEY3RS/gUbV6axNAT9uzsbGDWeAShcwSBbOSxlcioQsvlYCgzAAB15WK9dM1f0sUk4NTE6w==",
       "type": "Package",
       "files": [
         "[Content_Types].xml",
@@ -13472,28 +13517,26 @@
         "lib/net40/System.Reactive.Core.XML",
         "lib/net45/System.Reactive.Core.dll",
         "lib/net45/System.Reactive.Core.XML",
+        "lib/net46/System.Reactive.Core.dll",
+        "lib/net46/System.Reactive.Core.XML",
         "lib/portable-net40+sl5+win8+wp8/System.Reactive.Core.dll",
         "lib/portable-net40+sl5+win8+wp8/System.Reactive.Core.XML",
-        "lib/portable-net45+winrt45+wp8+wpa81/System.Reactive.Core.dll",
-        "lib/portable-net45+winrt45+wp8+wpa81/System.Reactive.Core.XML",
+        "lib/portable-net45+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1/System.Reactive.Core.dll",
+        "lib/portable-net45+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1/System.Reactive.Core.XML",
         "lib/portable-win81+wpa81/System.Reactive.Core.dll",
         "lib/portable-win81+wpa81/System.Reactive.Core.XML",
-        "lib/portable-windows8+net45+wp8/System.Reactive.Core.dll",
-        "lib/portable-windows8+net45+wp8/System.Reactive.Core.XML",
         "lib/sl5/System.Reactive.Core.dll",
         "lib/sl5/System.Reactive.Core.XML",
         "lib/windows8/System.Reactive.Core.dll",
         "lib/windows8/System.Reactive.Core.XML",
-        "lib/windowsphone71/System.Reactive.Core.dll",
-        "lib/windowsphone71/System.Reactive.Core.XML",
         "lib/windowsphone8/System.Reactive.Core.dll",
         "lib/windowsphone8/System.Reactive.Core.XML",
-        "package/services/metadata/core-properties/acd70acf6eca4cb38c21c68005176d93.psmdcp",
+        "package/services/metadata/core-properties/adc0a55d0ca947dc98443cf265dc770a.psmdcp",
         "Rx-Core.nuspec"
       ]
     },
-    "Rx-Interfaces/2.2.5": {
-      "sha512": "FKtG2QfMIeUcfB7r3a89VoAiszX3DTvYETkpC6U0FzWpxRK/mcHyzYOsniDfag+NsDG0P1k1c8yNSefXKp3t2A==",
+    "Rx-Interfaces/2.3.0-beta2": {
+      "sha512": "YgUHTMj9qNKF2+zdXsAAkXy5cYvTHD/OSXG0PkVu/QDRDvHcINR+EsKqh3Dh9Tjssvsivs8cXuO3rV0GnSqMbg==",
       "type": "Package",
       "files": [
         "[Content_Types].xml",
@@ -13502,28 +13545,26 @@
         "lib/net40/System.Reactive.Interfaces.XML",
         "lib/net45/System.Reactive.Interfaces.dll",
         "lib/net45/System.Reactive.Interfaces.XML",
+        "lib/net46/System.Reactive.Interfaces.dll",
+        "lib/net46/System.Reactive.Interfaces.XML",
         "lib/portable-net40+sl5+win8+wp8/System.Reactive.Interfaces.dll",
         "lib/portable-net40+sl5+win8+wp8/System.Reactive.Interfaces.XML",
-        "lib/portable-net45+winrt45+wp8+wpa81/System.Reactive.Interfaces.dll",
-        "lib/portable-net45+winrt45+wp8+wpa81/System.Reactive.Interfaces.XML",
+        "lib/portable-net45+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1/System.Reactive.Interfaces.dll",
+        "lib/portable-net45+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1/System.Reactive.Interfaces.XML",
         "lib/portable-win81+wpa81/System.Reactive.Interfaces.dll",
         "lib/portable-win81+wpa81/System.Reactive.Interfaces.XML",
-        "lib/portable-windows8+net45+wp8/System.Reactive.Interfaces.dll",
-        "lib/portable-windows8+net45+wp8/System.Reactive.Interfaces.XML",
         "lib/sl5/System.Reactive.Interfaces.dll",
         "lib/sl5/System.Reactive.Interfaces.XML",
         "lib/windows8/System.Reactive.Interfaces.dll",
         "lib/windows8/System.Reactive.Interfaces.XML",
-        "lib/windowsphone71/System.Reactive.Interfaces.dll",
-        "lib/windowsphone71/System.Reactive.Interfaces.XML",
         "lib/windowsphone8/System.Reactive.Interfaces.dll",
         "lib/windowsphone8/System.Reactive.Interfaces.XML",
-        "package/services/metadata/core-properties/c34c0935638f4b7ea6c51ca968fd1a88.psmdcp",
+        "package/services/metadata/core-properties/03d381598db047d7a93bf54e424139cc.psmdcp",
         "Rx-Interfaces.nuspec"
       ]
     },
-    "Rx-Linq/2.2.5": {
-      "sha512": "UTeCIu3cWPExxmTzdiVq7SalqTBhUaomBTaAC9LpYPoAopjlFwA3hjVWXoLkGlDc/44wqJemJuEwFP00KphiFg==",
+    "Rx-Linq/2.3.0-beta2": {
+      "sha512": "3VTu/AvESi12ucOYWlpv4aZT3xkV7BYG4zUHV+IV3fj+mWx0C9M8jtn99oQ2AZsLx7wsWpYNqCiwyPeqwNmWHQ==",
       "type": "Package",
       "files": [
         "[Content_Types].xml",
@@ -13532,38 +13573,36 @@
         "lib/net40/System.Reactive.Linq.XML",
         "lib/net45/System.Reactive.Linq.dll",
         "lib/net45/System.Reactive.Linq.XML",
+        "lib/net46/System.Reactive.Linq.dll",
+        "lib/net46/System.Reactive.Linq.XML",
         "lib/portable-net40+sl5+win8+wp8/System.Reactive.Linq.dll",
         "lib/portable-net40+sl5+win8+wp8/System.Reactive.Linq.XML",
-        "lib/portable-net45+winrt45+wp8+wpa81/System.Reactive.Linq.dll",
-        "lib/portable-net45+winrt45+wp8+wpa81/System.Reactive.Linq.XML",
+        "lib/portable-net45+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1/System.Reactive.Linq.dll",
+        "lib/portable-net45+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1/System.Reactive.Linq.XML",
         "lib/portable-win81+wpa81/System.Reactive.Linq.dll",
         "lib/portable-win81+wpa81/System.Reactive.Linq.XML",
-        "lib/portable-windows8+net45+wp8/System.Reactive.Linq.dll",
-        "lib/portable-windows8+net45+wp8/System.Reactive.Linq.XML",
         "lib/sl5/System.Reactive.Linq.dll",
         "lib/sl5/System.Reactive.Linq.XML",
         "lib/windows8/System.Reactive.Linq.dll",
         "lib/windows8/System.Reactive.Linq.XML",
-        "lib/windowsphone71/System.Reactive.Linq.dll",
-        "lib/windowsphone71/System.Reactive.Linq.XML",
         "lib/windowsphone8/System.Reactive.Linq.dll",
         "lib/windowsphone8/System.Reactive.Linq.XML",
-        "package/services/metadata/core-properties/0b05bef9a8e34a3da5e4d5d41f320ee4.psmdcp",
+        "package/services/metadata/core-properties/1873dac86e1345578c7a81d48de747bd.psmdcp",
         "Rx-Linq.nuspec"
       ]
     },
-    "Rx-Main/2.2.5": {
-      "sha512": "qdQ6qENEiLsp/LRdzZlLlodihWN8VDjwNfWa8c2ELjEHZgTdKzt1V4i61gkHVtFKZXe8Px6KupbMP3pZ+1tusQ==",
+    "Rx-Main/2.3.0-beta2": {
+      "sha512": "zss81QC+I0UiKJhNOnjDY6ildp0vR+QKZfxZh4E1wmUR7JivePlMf86Qashesywm+rCKVtLeHKj/eZk5gpeUaw==",
       "type": "Package",
       "files": [
         "[Content_Types].xml",
         "_rels/.rels",
-        "package/services/metadata/core-properties/42be7976390b4c6f82065a7d2c011282.psmdcp",
+        "package/services/metadata/core-properties/f246d330e0de42999a69be97cae68958.psmdcp",
         "Rx-Main.nuspec"
       ]
     },
-    "Rx-PlatformServices/2.2.5": {
-      "sha512": "pMnNEvJVjT+wuDib+W/bi5hhIYcre7dW5yxvKrJxnR4iKJ1VLA/dY2FTtjDriHGx7OeGn12lQewXlH2oHiWFPA==",
+    "Rx-PlatformServices/2.3.0-beta2": {
+      "sha512": "AFDbK+gVGqd2rNBwsXjrWX+PwWIQ34IE8DnP2wnl+LT7menKe1mpjwUANTFN349zMZY3eTtr34N4vtdHgX65yw==",
       "type": "Package",
       "files": [
         "[Content_Types].xml",
@@ -13572,23 +13611,21 @@
         "lib/net40/System.Reactive.PlatformServices.XML",
         "lib/net45/System.Reactive.PlatformServices.dll",
         "lib/net45/System.Reactive.PlatformServices.XML",
+        "lib/net46/System.Reactive.PlatformServices.dll",
+        "lib/net46/System.Reactive.PlatformServices.XML",
         "lib/portable-net40+sl5+win8+wp8/System.Reactive.PlatformServices.dll",
         "lib/portable-net40+sl5+win8+wp8/System.Reactive.PlatformServices.XML",
-        "lib/portable-net45+winrt45+wp8+wpa81/System.Reactive.PlatformServices.dll",
-        "lib/portable-net45+winrt45+wp8+wpa81/System.Reactive.PlatformServices.XML",
+        "lib/portable-net45+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1/System.Reactive.PlatformServices.dll",
+        "lib/portable-net45+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1/System.Reactive.PlatformServices.XML",
         "lib/portable-win81+wpa81/System.Reactive.PlatformServices.dll",
         "lib/portable-win81+wpa81/System.Reactive.PlatformServices.XML",
-        "lib/portable-windows8+net45+wp8/System.Reactive.PlatformServices.dll",
-        "lib/portable-windows8+net45+wp8/System.Reactive.PlatformServices.XML",
         "lib/sl5/System.Reactive.PlatformServices.dll",
         "lib/sl5/System.Reactive.PlatformServices.XML",
         "lib/windows8/System.Reactive.PlatformServices.dll",
         "lib/windows8/System.Reactive.PlatformServices.XML",
-        "lib/windowsphone71/System.Reactive.PlatformServices.dll",
-        "lib/windowsphone71/System.Reactive.PlatformServices.XML",
         "lib/windowsphone8/System.Reactive.PlatformServices.dll",
         "lib/windowsphone8/System.Reactive.PlatformServices.XML",
-        "package/services/metadata/core-properties/5087526007294f7d8e78a6a4a61c494a.psmdcp",
+        "package/services/metadata/core-properties/2bc5ebdd432e48e1b205e44dd5f71350.psmdcp",
         "Rx-PlatformServices.nuspec"
       ]
     },
@@ -16319,12 +16356,14 @@
   "projectFileDependencyGroups": {
     "": [
       "CoreTweet >= 0.6.1.267",
+      "CoreTweet.Streaming.Reactive >= 0.6.0.251",
       "Microsoft.ApplicationInsights >= 1.0.0",
       "Microsoft.ApplicationInsights.PersistenceChannel >= 1.0.0",
       "Microsoft.ApplicationInsights.WindowsApps >= 1.0.0",
       "Microsoft.NETCore.UniversalWindowsPlatform >= 5.0.0",
       "Prism.Unity >= 6.2.0-pre2",
-      "ReactiveProperty >= 2.4.2"
+      "ReactiveProperty >= 2.4.2",
+      "Rx-Main >= 2.3.0-beta2"
     ],
     "UAP,Version=v10.0": []
   }

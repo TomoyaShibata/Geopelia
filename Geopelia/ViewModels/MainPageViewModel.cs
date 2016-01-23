@@ -1,38 +1,58 @@
 ﻿using System;
+using Windows.UI.Xaml;
 using CoreTweet;
 using Geopelia.Models;
 using Prism.Windows.Mvvm;
+using Prism.Windows.Navigation;
 using Reactive.Bindings;
 
 namespace Geopelia.ViewModels
 {
     public class MainPageViewModel : ViewModelBase
     {
-        public int PivotItemWidth { get; set; } = 200;
+        private INavigationService NavigationService { get; }
+
+
+        public int PivotItemWidth { get; set; } = 400;
 
         private string _nowDateTime = DateTime.Now.ToString();
-        public  string NowDateTime
+        public string NowDateTime
         {
             get { return this._nowDateTime; }
             set { this.SetProperty(ref this._nowDateTime, value); }
         }
 
-        public ReactiveProperty<string>       TweetText    { get; set; } = new ReactiveProperty<string>("");
-        public ReactiveProperty<UserResponse> MyProfile    { get; set; } = new ReactiveProperty<UserResponse>();
-        public ReactiveProperty<Uri>          ProfileImage { get; set; } = new ReactiveProperty<Uri>();
-        private readonly TwitterClient _twitterClient = new TwitterClient();
+        public ReactiveProperty<string> TweetText { get; set; } = new ReactiveProperty<string>("");
+        public ReactiveProperty<UserResponse> MyProfile { get; set; } = new ReactiveProperty<UserResponse>();
+        public ReactiveProperty<Uri> ProfileImage { get; set; } = new ReactiveProperty<Uri>();
+        public ReadOnlyReactiveCollection<TweetModel> Timelines { get; set; }
+        public ReadOnlyReactiveCollection<TweetItemViewModel> TweetItems { get; set; }
+        public ReactiveProperty<double> Width { get; set; } = new ReactiveProperty<double>();
 
-        public MainPageViewModel()
+        private readonly TwitterClient _twitterClient;
+
+        public MainPageViewModel(INavigationService navigationService, TwitterClient twitterClient)
         {
+            this._twitterClient    = twitterClient;
+            this.NavigationService = navigationService;
+
+            this.Width.Value = Window.Current.Bounds.Width;
+
             this.GetMyProfile();
+
+            this.Timelines = this._twitterClient.Timelines.ToReadOnlyReactiveCollection();
+            this.TweetItems = this._twitterClient.TweetItems.ToReadOnlyReactiveCollection();
+
+            this.StartStreaming();
+            //this.StartStreamingMentions();
         }
 
         /// <summary>
-        /// Tweet を Post する
+        /// Streaming 受信を開始する
         /// </summary>
-        public void PostTweet()
+        public void StartStreaming()
         {
-            this._twitterClient.PostTweet(this.TweetText.Value);
+            this._twitterClient.StartStreaming(this.NavigationService);
         }
 
         /// <summary>
@@ -43,5 +63,11 @@ namespace Geopelia.ViewModels
             this.MyProfile.Value    = this._twitterClient.GetMyProfile();
             this.ProfileImage.Value = new Uri(this.MyProfile.Value.ProfileImageUrlHttps);
         }
+
+        public void NavigateNextPage()
+        {
+            this.NavigationService.Navigate("TweetCreate", null);
+        }
+
     }
 }

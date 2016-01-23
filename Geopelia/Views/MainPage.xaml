@@ -5,10 +5,12 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:mvvm="using:Prism.Windows.Mvvm"
+      xmlns:viewModels="using:Geopelia.ViewModels"
       mvvm:ViewModelLocator.AutoWireViewModel="True"
-      mc:Ignorable="d">
+      mc:Ignorable="d"
+      FontFamily="Meiryo">
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Pivot>
+        <!--<Pivot>
             <Pivot.LeftHeader>
                 <Ellipse Margin="10"
                          Width="40"
@@ -18,18 +20,193 @@
                     </Ellipse.Fill>
                 </Ellipse>
             </Pivot.LeftHeader>
-            <PivotItem Header="Timeline"
-                       MinWidth="{x:Bind ViewModel.PivotItemWidth}">
-                <ListView>
+            <Pivot.RightHeader>
+                <Button Width="50"
+                        Height="50"
+                        VerticalAlignment="Top"
+                        Background="Transparent">
+                    <Button.Content>
+                        <SymbolIcon VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                    Width="50"
+                                    Height="50"
+                                    Symbol="Edit" />
+                    </Button.Content>
+                </Button>
+            </Pivot.RightHeader>-->
+        <!--<PivotItem Header="Timeline">-->
+        <ListView VerticalAlignment="Top"
+                  ItemsSource="{x:Bind ViewModel.TweetItems}"
+                  SelectionMode="None">
+            <ListView.Header>
+                <StackPanel Margin="20, 15">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="60" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Border CornerRadius="5"
+                                BorderThickness="2"
+                                BorderBrush="White"
+                                Width="50"
+                                Height="50">
+                            <Border.Background>
+                                <ImageBrush Stretch="None"
+                                            ImageSource="{x:Bind ViewModel.MyProfile.Value.ProfileImageUrlHttps, Mode=OneTime}" />
+                            </Border.Background>
+                        </Border>
+                        <TextBlock Grid.Column="1"
+                                   Text="Timelines"
+                                   FontFamily="Meiryo UI"
+                                   FontSize="35"
+                                   Margin="10, 0, 0, 0"
+                                   VerticalAlignment="Top" />
+                    </Grid>
+                </StackPanel>
+            </ListView.Header>
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment"
+                            Value="Stretch" />
+                    <Setter Property="Margin"
+                            Value="0,0,10,0" />
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="viewModels:TweetItemViewModel">
+                    <Grid Margin="0,3"
+                          BorderThickness="3,0,0,0"
+                          BorderBrush="{x:Bind Brush.Value}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="70" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30" />
+                            <RowDefinition Height="80" />
+                            <RowDefinition Height="30" />
+                            <RowDefinition Height="40" />
+                        </Grid.RowDefinitions>
+                        <Border Grid.RowSpan="2"
+                                Width="50"
+                                Height="50"
+                                VerticalAlignment="Top"
+                                HorizontalAlignment="Left"
+                                Margin="10,0"
+                                CornerRadius="5"
+                                BorderThickness="2"
+                                BorderBrush="White">
+                            <Border.Background>
+                                <ImageBrush Stretch="None"
+                                            ImageSource="{x:Bind TweetModel.Value.TweetStatusMessage.Status.User.ProfileImageUrlHttps}" />
+                            </Border.Background>
+                        </Border>
+                        <Border Grid.RowSpan="2"
+                                Margin="10,40,0,0"
+                                Width="50"
+                                Height="50"
+                                VerticalAlignment="Top"
+                                HorizontalAlignment="Left"
+                                CornerRadius="5"
+                                BorderThickness="2"
+                                BorderBrush="White">
+                            <Border.Background>
+                                <ImageBrush Stretch="None"
+                                            ImageSource="{x:Bind TweetModel.Value.TweetStatusMessage.Status.RetweetedStatus.User.ProfileImageUrlHttps}" />
+                            </Border.Background>
+                        </Border>
+                        <TextBlock Grid.Column="1"
+                                   Grid.ColumnSpan="2"
+                                   VerticalAlignment="Top"
+                                   Margin="10, 0, 0, 0"
+                                   TextTrimming="CharacterEllipsis">
+                            <Run Text="{x:Bind TweetModel.Value.Name}"
+                                 FontSize="12" />
+                            <Run Text="@"
+                                 FontSize="11" />
+                            <Run Text="{x:Bind TweetModel.Value.ScreenName}"
+                                 FontSize="12" />
+                        </TextBlock>
+                        <TextBlock Grid.Column="2"
+                                   Text="{x:Bind TweetModel.Value.CreatedAt}"
+                                   VerticalAlignment="Top"
+                                   HorizontalAlignment="Right" />
+                        <TextBlock Grid.Row="1"
+                                   Grid.Column="1"
+                                   Grid.ColumnSpan="2"
+                                   HorizontalAlignment="Left"
+                                   Margin="10, 0, 0, 0"
+                                   Text="{x:Bind TweetModel.Value.Text}"
+                                   TextWrapping="WrapWholeWords" />
+                        <TextBlock Grid.Row="2" />
+                        <TextBlock Grid.Row="2"
+                                   Grid.Column="1"
+                                   Grid.ColumnSpan="2"
+                                   FontSize="11"
+                                   Foreground="Gray"
+                                   Margin="10, 0, 0, 0"
+                                   Text="{x:Bind TweetModel.Value.RtName}"
+                                   TextWrapping="WrapWholeWords" />
+                        <Grid Row="3"
+                              Grid.ColumnSpan="3">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Button Background="Transparent"
+                                    HorizontalAlignment="Center"
+                                    Tapped="{x:Bind NavigateTweetCreatePage}">
+                                <SymbolIcon Symbol="Back" />
+                            </Button>
+                            <Button Grid.Column="1"
+                                    Background="Transparent"
+                                    HorizontalAlignment="Center">
+                                <Button.Flyout>
+                                    <MenuFlyout>
+                                        <MenuFlyoutItem Text="リツイートする"
+                                                        Tapped="{x:Bind Retweet}" />
+                                        <MenuFlyoutItem Text="引用リツイートする" />
+                                    </MenuFlyout>
+                                </Button.Flyout>
+                                <SymbolIcon Symbol="ReShare" />
+                            </Button>
+                            <Button Grid.Column="2"
+                                    Background="Transparent"
+                                    HorizontalAlignment="Center">
+                                <SymbolIcon Symbol="Like" />
+                            </Button>
+                            <Button Grid.Column="3"
+                                    Background="Transparent"
+                                    HorizontalAlignment="Center">
+                                <SymbolIcon Symbol="Upload" />
+                            </Button>
+                            <Button Grid.Column="4"
+                                    Background="Transparent"
+                                    HorizontalAlignment="Center">
+                                <SymbolIcon Symbol="More" />
+                            </Button>
+                        </Grid>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <!--<TextBlock Text="{x:Bind ViewModel.Timelines.Count, Mode=OneWay}" />-->
+        <!--<ListView ItemsSource="{x:Bind ViewModel.Timelines.Value, Mode=OneWay}">
                     <ListViewItem>
+
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="20" />
                                 <RowDefinition Height="100" />
                             </Grid.RowDefinitions>
                             <TextBlock Text="2016/01/19 14:15" />
+						
                             <TextBlock Grid.Row="1"
-                                       Text="雪猫さんめっちゃ頑張ってるので今年はワシもがんばるぞい" />
+                                       Text="{x:Bind Status.Text}" />
                         </Grid>
                     </ListViewItem>
                     <ListViewItem>
@@ -49,14 +226,14 @@
                                     Command="{x:Bind PostTweetCommand}" />
                         </Grid>
                     </ListViewItem>
-                </ListView>
-            </PivotItem>
+                </ListView>-->
+        <!--</PivotItem>
             <PivotItem Header="Mention"
                        Width="{x:Bind ViewModel.PivotItemWidth}">
                 <Button Content="ちょっと認証させて"
                         HorizontalAlignment="Center"
-                        VerticalAlignment="Top" />
-            </PivotItem>
+                        VerticalAlignment="Top" />-->
+        <!--</PivotItem>
             <PivotItem Header="Message"
                        MinWidth="{x:Bind ViewModel.PivotItemWidth}"></PivotItem>
             <PivotItem Header="I'm"
@@ -84,6 +261,15 @@
                                Text="{x:Bind ViewModel.MyProfile.Value.FriendsCount, Mode=OneWay}" />
                 </Grid>
             </PivotItem>
-        </Pivot>
+
+
+        </Pivot>-->
     </Grid>
+    <Page.BottomAppBar>
+        <CommandBar ClosedDisplayMode="Compact">
+            <AppBarButton Icon="Edit"
+                          Label="Tweet"
+                          Click="{x:Bind ViewModel.NavigateNextPage}"></AppBarButton>
+        </CommandBar>
+    </Page.BottomAppBar>
 </Page>
