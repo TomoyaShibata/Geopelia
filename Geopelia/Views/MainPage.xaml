@@ -10,31 +10,6 @@
       mc:Ignorable="d"
       FontFamily="Meiryo">
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <!--<Pivot>
-            <Pivot.LeftHeader>
-                <Ellipse Margin="10"
-                         Width="40"
-                         Height="40">
-                    <Ellipse.Fill>
-                        <ImageBrush ImageSource="{x:Bind ViewModel.MyProfile.Value.ProfileImageUrlHttps, Mode=TwoWay}" />
-                    </Ellipse.Fill>
-                </Ellipse>
-            </Pivot.LeftHeader>
-            <Pivot.RightHeader>
-                <Button Width="50"
-                        Height="50"
-                        VerticalAlignment="Top"
-                        Background="Transparent">
-                    <Button.Content>
-                        <SymbolIcon VerticalAlignment="Center"
-                                    HorizontalAlignment="Center"
-                                    Width="50"
-                                    Height="50"
-                                    Symbol="Edit" />
-                    </Button.Content>
-                </Button>
-            </Pivot.RightHeader>-->
-        <!--<PivotItem Header="Timeline">-->
         <ListView VerticalAlignment="Top"
                   ItemsSource="{x:Bind ViewModel.TweetItems}"
                   SelectionMode="None">
@@ -194,76 +169,6 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <!--<TextBlock Text="{x:Bind ViewModel.Timelines.Count, Mode=OneWay}" />-->
-        <!--<ListView ItemsSource="{x:Bind ViewModel.Timelines.Value, Mode=OneWay}">
-                    <ListViewItem>
-
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="20" />
-                                <RowDefinition Height="100" />
-                            </Grid.RowDefinitions>
-                            <TextBlock Text="2016/01/19 14:15" />
-						
-                            <TextBlock Grid.Row="1"
-                                       Text="{x:Bind Status.Text}" />
-                        </Grid>
-                    </ListViewItem>
-                    <ListViewItem>
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="100" />
-                                <RowDefinition Height="*" />
-                            </Grid.RowDefinitions>
-                            <TextBox Height="100"
-                                     Margin="0,0,-237,0"
-                                     HorizontalAlignment="Left"
-                                     Width="320"
-                                     Text="{x:Bind ViewModel.TweetText.Value, Mode=TwoWay}" />
-                            <Button Grid.Row="1"
-                                    Margin="0,10,0,0"
-                                    Content="ツイートする"
-                                    Command="{x:Bind PostTweetCommand}" />
-                        </Grid>
-                    </ListViewItem>
-                </ListView>-->
-        <!--</PivotItem>
-            <PivotItem Header="Mention"
-                       Width="{x:Bind ViewModel.PivotItemWidth}">
-                <Button Content="ちょっと認証させて"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Top" />-->
-        <!--</PivotItem>
-            <PivotItem Header="Message"
-                       MinWidth="{x:Bind ViewModel.PivotItemWidth}"></PivotItem>
-            <PivotItem Header="I'm"
-                       MinWidth="{x:Bind ViewModel.PivotItemWidth}">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="50" />
-                        <RowDefinition Height="50" />
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition />
-                        <ColumnDefinition />
-                    </Grid.ColumnDefinitions>
-                    <TextBlock FontSize="15"
-                               Text="Followers" />
-                    <TextBlock FontSize="15"
-                               Grid.Column="1"
-                               Text="{x:Bind ViewModel.MyProfile.Value.FollowersCount, Mode=OneWay}" />
-                    <TextBlock FontSize="15"
-                               Grid.Row="1"
-                               Text="Following" />
-                    <TextBlock FontSize="15"
-                               Grid.Row="1"
-                               Grid.Column="1"
-                               Text="{x:Bind ViewModel.MyProfile.Value.FriendsCount, Mode=OneWay}" />
-                </Grid>
-            </PivotItem>
-
-
-        </Pivot>-->
     </Grid>
     <Page.BottomAppBar>
         <CommandBar ClosedDisplayMode="Compact">
