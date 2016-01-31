@@ -9,172 +9,264 @@
       mvvm:ViewModelLocator.AutoWireViewModel="True"
       mc:Ignorable="d"
       FontFamily="Meiryo">
+    <Page.Resources>
+        <DataTemplate x:Key="TweetItemTemplate"
+                      x:DataType="viewModels:TweetItemViewModel">
+            <Grid Margin="0,3"
+                  BorderThickness="3,0,0,0"
+                  BorderBrush="{x:Bind Brush.Value}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="70" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30" />
+                    <RowDefinition Height="80" />
+                    <RowDefinition Height="30" />
+                    <RowDefinition Height="40" />
+                </Grid.RowDefinitions>
+                <Border Grid.RowSpan="2"
+                        Width="50"
+                        Height="50"
+                        VerticalAlignment="Top"
+                        HorizontalAlignment="Left"
+                        Margin="10,0"
+                        CornerRadius="5"
+                        BorderThickness="2"
+                        BorderBrush="White">
+                    <Border.Background>
+                        <ImageBrush Stretch="None"
+                                    ImageSource="{x:Bind TweetModel.Value.TweetStatusMessage.Status.User.ProfileImageUrlHttps}" />
+                    </Border.Background>
+                    <Ellipse Visibility="{x:Bind ProtectedVisibility.Value, Mode=OneTime}"
+                             Width="15"
+                             Height="15"
+                             HorizontalAlignment="Right"
+                             Margin="0, -20, -9, 0"
+                             Fill="White" />
+                </Border>
+                <Border Grid.RowSpan="2"
+                        Visibility="{x:Bind TweetVisibility.Value, Mode=OneTime}"
+                        Margin="10,40,0,0"
+                        Width="50"
+                        Height="50"
+                        VerticalAlignment="Top"
+                        HorizontalAlignment="Left"
+                        CornerRadius="5"
+                        BorderThickness="2"
+                        BorderBrush="White">
+                    <Border.Background>
+                        <ImageBrush Stretch="None"
+                                    ImageSource="{x:Bind TweetModel.Value.TweetStatusMessage.Status.RetweetedStatus.User.ProfileImageUrlHttps}" />
+                    </Border.Background>
+                    <Ellipse Width="15"
+                             Height="15"
+                             HorizontalAlignment="Right"
+                             Margin="0, -20, -9, 0"
+                             Fill="White" />
+                </Border>
+                <TextBlock Grid.Column="1"
+                           Grid.ColumnSpan="2"
+                           VerticalAlignment="Top"
+                           Margin="10, 0, 0, 0"
+                           TextTrimming="CharacterEllipsis">
+                                    <Run Text="{x:Bind TweetModel.Value.Name}"
+                                         FontSize="12" />
+                                    <Run Text="@"
+                                         FontSize="11" />
+                                    <Run Text="{x:Bind TweetModel.Value.ScreenName}"
+                                         FontSize="12" />
+                </TextBlock>
+                <TextBlock Grid.Column="2"
+                           Text="{x:Bind TweetModel.Value.CreatedAt}"
+                           VerticalAlignment="Top"
+                           HorizontalAlignment="Right" />
+                <TextBlock Grid.Row="1"
+                           Grid.Column="1"
+                           Grid.ColumnSpan="2"
+                           HorizontalAlignment="Left"
+                           Margin="10, 0, 0, 0"
+                           Text="{x:Bind TweetModel.Value.Text}"
+                           TextWrapping="WrapWholeWords" />
+                <TextBlock Grid.Row="2" />
+                <TextBlock Grid.Row="2"
+                           Grid.Column="1"
+                           Grid.ColumnSpan="2"
+                           FontSize="11"
+                           Foreground="Gray"
+                           Margin="10, 0, 0, 0"
+                           Text="{x:Bind TweetModel.Value.RtName}"
+                           TextWrapping="WrapWholeWords" />
+                <Grid Row="3"
+                      Grid.ColumnSpan="3">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Button Background="Transparent"
+                            HorizontalAlignment="Center"
+                            Tapped="{x:Bind NavigateTweetCreatePage}">
+                        <SymbolIcon Symbol="Back" />
+                    </Button>
+                    <Button Grid.Column="1"
+                            Background="Transparent"
+                            HorizontalAlignment="Center"
+                            Foreground="{x:Bind RetweetForground.Value, Mode=OneWay}">
+                        <Button.Flyout>
+                            <MenuFlyout>
+                                <MenuFlyoutItem Text="{x:Bind RetweetText.Value, Mode=OneWay}"
+                                                Tapped="{x:Bind ChangeIsRetweeted}" />
+                                <MenuFlyoutItem Text="引用リツイートする" />
+                            </MenuFlyout>
+                        </Button.Flyout>
+                        <SymbolIcon Symbol="ReShare" />
+                    </Button>
+                    <Button Grid.Column="2"
+                            Background="Transparent"
+                            HorizontalAlignment="Center"
+                            Tapped="{x:Bind AddFavorite}">
+                        <SymbolIcon Symbol="Favorite"
+                                    Foreground="{x:Bind FavoriteForground.Value, Mode=OneWay}" />
+                    </Button>
+                    <Button Grid.Column="3"
+                            Background="Transparent"
+                            HorizontalAlignment="Center">
+                        <SymbolIcon Symbol="Upload" />
+                    </Button>
+                    <Button Grid.Column="4"
+                            Background="Transparent"
+                            HorizontalAlignment="Center">
+                        <SymbolIcon Symbol="More" />
+                    </Button>
+                </Grid>
+            </Grid>
+        </DataTemplate>
+    </Page.Resources>
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <ListView VerticalAlignment="Top"
-                  ItemsSource="{x:Bind ViewModel.TweetItems}"
-                  SelectionMode="None">
-            <ListView.Header>
-                <StackPanel Margin="20, 15">
+        <Pivot>
+            <PivotItem>
+                <PivotItem.Header>
+                    <TextBlock Text="Timelines" />
+                </PivotItem.Header>
+                <ListView VerticalAlignment="Top"
+                          ItemsSource="{x:Bind ViewModel.TweetItems}"
+                          ItemTemplate="{StaticResource TweetItemTemplate}"
+                          SelectionMode="None">
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="HorizontalContentAlignment"
+                                    Value="Stretch" />
+                            <Setter Property="Margin"
+                                    Value="0,0,10,0" />
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                </ListView>
+            </PivotItem>
+            <PivotItem>
+                <PivotItem.Header>
+                    <TextBlock Text="Mentions" />
+                </PivotItem.Header>
+                <ListView VerticalAlignment="Top"
+                          ItemsSource="{x:Bind ViewModel.MentionItems}"
+                          ItemTemplate="{StaticResource TweetItemTemplate}"
+                          SelectionMode="None">
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="HorizontalContentAlignment"
+                                    Value="Stretch" />
+                            <Setter Property="Margin"
+                                    Value="0,0,10,0" />
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                </ListView>
+            </PivotItem>
+            <PivotItem>
+                <PivotItem.Header>
+                    <TextBlock Text="Profile" />
+                </PivotItem.Header>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="250" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
                     <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="60" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
+                        <Grid.Background>
+                            <ImageBrush ImageSource="{x:Bind ViewModel.MyProfile.Value.ProfileBannerUrl}" />
+                            <!--<SolidColorBrush Color="DarkSlateBlue" />-->
+                        </Grid.Background>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="2*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="100" />
+                        </Grid.RowDefinitions>
                         <Border CornerRadius="5"
                                 BorderThickness="2"
                                 BorderBrush="White"
-                                Width="50"
-                                Height="50">
+                                Width="80"
+                                Height="80"
+                                VerticalAlignment="Bottom">
                             <Border.Background>
-                                <ImageBrush Stretch="None"
+                                <ImageBrush Stretch="Fill"
                                             ImageSource="{x:Bind ViewModel.MyProfile.Value.ProfileImageUrlHttps, Mode=OneTime}" />
                             </Border.Background>
                         </Border>
-                        <TextBlock Grid.Column="1"
-                                   Text="Timelines"
-                                   FontFamily="Meiryo UI"
-                                   FontSize="35"
-                                   Margin="10, 0, 0, 0"
-                                   VerticalAlignment="Top" />
+                        <TextBlock Grid.Row="1"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   FontSize="20"
+                                   Text="{x:Bind ViewModel.MyProfile.Value.Name}" />
+                        <TextBlock Grid.Row="2"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   Margin="20, 0"
+                                   FontSize="15"
+                                   TextWrapping="WrapWholeWords"
+                                   Text="{x:Bind ViewModel.MyProfile.Value.Description}" />
                     </Grid>
-                </StackPanel>
-            </ListView.Header>
-            <ListView.ItemContainerStyle>
-                <Style TargetType="ListViewItem">
-                    <Setter Property="HorizontalContentAlignment"
-                            Value="Stretch" />
-                    <Setter Property="Margin"
-                            Value="0,0,10,0" />
-                </Style>
-            </ListView.ItemContainerStyle>
-            <ListView.ItemTemplate>
-                <DataTemplate x:DataType="viewModels:TweetItemViewModel">
-                    <Grid Margin="0,3"
-                          BorderThickness="3,0,0,0"
-                          BorderBrush="{x:Bind Brush.Value}">
+                    <Grid Grid.Row="1"
+                          Background="{ThemeResource AppBarItemBackgroundThemeBrush}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="50" />
+                            <RowDefinition Height="50" />
+                        </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="70" />
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="30" />
-                            <RowDefinition Height="80" />
-                            <RowDefinition Height="30" />
-                            <RowDefinition Height="40" />
-                        </Grid.RowDefinitions>
-                        <Border Grid.RowSpan="2"
-                                Width="50"
-                                Height="50"
-                                VerticalAlignment="Top"
-                                HorizontalAlignment="Left"
-                                Margin="10,0"
-                                CornerRadius="5"
-                                BorderThickness="2"
-                                BorderBrush="White">
-                            <Border.Background>
-                                <ImageBrush Stretch="None"
-                                            ImageSource="{x:Bind TweetModel.Value.TweetStatusMessage.Status.User.ProfileImageUrlHttps}" />
-                            </Border.Background>
-                        </Border>
-                        <Border Grid.RowSpan="2"
-                                Margin="10,40,0,0"
-                                Width="50"
-                                Height="50"
-                                VerticalAlignment="Top"
-                                HorizontalAlignment="Left"
-                                CornerRadius="5"
-                                BorderThickness="2"
-                                BorderBrush="White">
-                            <Border.Background>
-                                <ImageBrush Stretch="None"
-                                            ImageSource="{x:Bind TweetModel.Value.TweetStatusMessage.Status.RetweetedStatus.User.ProfileImageUrlHttps}" />
-                            </Border.Background>
-                        </Border>
-                        <TextBlock Grid.Column="1"
-                                   Grid.ColumnSpan="2"
-                                   VerticalAlignment="Top"
-                                   Margin="10, 0, 0, 0"
-                                   TextTrimming="CharacterEllipsis">
-                            <Run Text="{x:Bind TweetModel.Value.Name}"
-                                 FontSize="12" />
-                            <Run Text="@"
-                                 FontSize="11" />
-                            <Run Text="{x:Bind TweetModel.Value.ScreenName}"
-                                 FontSize="12" />
+                        <TextBlock VerticalAlignment="Center"
+                                   HorizontalAlignment="Center">
+						       <Run Text="{x:Bind ViewModel.MyProfile.Value.FriendsCount}" />
+						       <Run Text="Follows" />
                         </TextBlock>
-                        <TextBlock Grid.Column="2"
-                                   Text="{x:Bind TweetModel.Value.CreatedAt}"
-                                   VerticalAlignment="Top"
-                                   HorizontalAlignment="Right" />
+                        <TextBlock Grid.Column="1"
+                                   VerticalAlignment="Center"
+                                   HorizontalAlignment="Center">
+								<Run Text="{x:Bind ViewModel.MyProfile.Value.FollowersCount}" />
+						       <Run Text="Followers" />
+                        </TextBlock>
                         <TextBlock Grid.Row="1"
-                                   Grid.Column="1"
-                                   Grid.ColumnSpan="2"
-                                   HorizontalAlignment="Left"
-                                   Margin="10, 0, 0, 0"
-                                   Text="{x:Bind TweetModel.Value.Text}"
-                                   TextWrapping="WrapWholeWords" />
-                        <TextBlock Grid.Row="2" />
-                        <TextBlock Grid.Row="2"
-                                   Grid.Column="1"
-                                   Grid.ColumnSpan="2"
-                                   FontSize="11"
-                                   Foreground="Gray"
-                                   Margin="10, 0, 0, 0"
-                                   Text="{x:Bind TweetModel.Value.RtName}"
-                                   TextWrapping="WrapWholeWords" />
-                        <Grid Row="3"
-                              Grid.ColumnSpan="3">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            <Button Background="Transparent"
-                                    HorizontalAlignment="Center"
-                                    Tapped="{x:Bind NavigateTweetCreatePage}">
-                                <SymbolIcon Symbol="Back" />
-                            </Button>
-                            <Button Grid.Column="1"
-                                    Background="Transparent"
-                                    HorizontalAlignment="Center">
-                                <Button.Flyout>
-                                    <MenuFlyout>
-                                        <MenuFlyoutItem Text="リツイートする"
-                                                        Tapped="{x:Bind Retweet}" />
-                                        <MenuFlyoutItem Text="引用リツイートする" />
-                                    </MenuFlyout>
-                                </Button.Flyout>
-                                <SymbolIcon Symbol="ReShare" />
-                            </Button>
-                            <Button Grid.Column="2"
-                                    Background="Transparent"
-                                    HorizontalAlignment="Center">
-                                <SymbolIcon Symbol="Like" />
-                            </Button>
-                            <Button Grid.Column="3"
-                                    Background="Transparent"
-                                    HorizontalAlignment="Center">
-                                <SymbolIcon Symbol="Upload" />
-                            </Button>
-                            <Button Grid.Column="4"
-                                    Background="Transparent"
-                                    HorizontalAlignment="Center">
-                                <SymbolIcon Symbol="More" />
-                            </Button>
-                        </Grid>
+                                   VerticalAlignment="Center"
+                                   HorizontalAlignment="Center">
+							   <Run Text="{x:Bind ViewModel.MyProfile.Value.Status.FavoriteCount}" />
+						      <Run Text="Favorites" />
+                        </TextBlock>
                     </Grid>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+                </Grid>
+            </PivotItem>
+        </Pivot>
     </Grid>
     <Page.BottomAppBar>
         <CommandBar ClosedDisplayMode="Compact">
             <AppBarButton Icon="Edit"
                           Label="Tweet"
-                          Click="{x:Bind ViewModel.NavigateNextPage}"></AppBarButton>
+                          Click="{x:Bind ViewModel.NavigateNextPage}" />
         </CommandBar>
     </Page.BottomAppBar>
 </Page>

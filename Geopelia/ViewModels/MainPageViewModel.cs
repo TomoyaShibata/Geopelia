@@ -27,6 +27,7 @@ namespace Geopelia.ViewModels
         public ReactiveProperty<Uri> ProfileImage { get; set; } = new ReactiveProperty<Uri>();
         public ReadOnlyReactiveCollection<TweetModel> Timelines { get; set; }
         public ReadOnlyReactiveCollection<TweetItemViewModel> TweetItems { get; set; }
+        public ReadOnlyReactiveCollection<TweetItemViewModel> MentionItems { get; set; }
         public ReactiveProperty<double> Width { get; set; } = new ReactiveProperty<double>();
 
         private readonly TwitterClient _twitterClient;
@@ -42,9 +43,9 @@ namespace Geopelia.ViewModels
 
             this.Timelines = this._twitterClient.Timelines.ToReadOnlyReactiveCollection();
             this.TweetItems = this._twitterClient.TweetItems.ToReadOnlyReactiveCollection();
+            this.MentionItems = this._twitterClient.MentionItems.ToReadOnlyReactiveCollection();
 
             this.StartStreaming();
-            //this.StartStreamingMentions();
         }
 
         /// <summary>

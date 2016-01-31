@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Reactive.Linq;
+using System.Threading.Tasks;
 using CoreTweet;
 using CoreTweet.Streaming;
 using Geopelia.ViewModels;
@@ -27,6 +28,8 @@ namespace Geopelia.Models
             set { this.SetProperty(ref this._tweetItems, value); }
         }
 
+        public ObservableCollection<TweetItemViewModel> MentionItems = new ObservableCollection<TweetItemViewModel>();
+
         //private ObservableCollection<TweetModel> _mentions = new ObservableCollection<TweetModel>();
         //public ObservableCollection<TweetModel> Mentions
         //{
@@ -45,31 +48,32 @@ namespace Geopelia.Models
             var updateAsync = this._tokens.Statuses.UpdateAsync(new { status = s });
         }
 
-        public void Retweet(long id)
+        public async Task<StatusResponse> ChangeIsRetweeted(long id, bool newIsRetweeted)
         {
-            var updateAsync = this._tokens.Statuses.RetweetAsync(id);
+            return newIsRetweeted ? await this._tokens.Statuses.RetweetAsync(id)
+                                  : await this._tokens.Statuses.DestroyAsync(id);
         }
-	
-	    /// <summary>
+
+        /// <summary>
         /// お気に入りに追加する
         /// </summary>
         /// <param name="id">ツイート ID</param>
-        public void Favorite(long id)
+        public async Task<StatusResponse> Favorite(long id)
         {
-            this._tokens.Favorites.CreateAsync(id);
+            return await this._tokens.Favorites.CreateAsync(id);
         }
-	
+
         public void StartStreaming(INavigationService iNavigationService)
         {
-            //this._tokens.Streaming.UserAsObservable()
-            //    .Where(m => m.Type == MessageType.Create)
-            //    .Cast<StatusMessage>()
-            //    .Subscribe(m => this._tweetItems.Insert(0, new TweetModel(m)));
-
-            this._tokens.Streaming.UserAsObservable()
-                .Where(m => m.Type == MessageType.Create)
+            var observable = this._tokens.Streaming.UserAsObservable()
+                .Where(m => m.Type == MessageType.Create);
+            observable
                 .Cast<StatusMessage>()
                 .Subscribe(m => this.TweetItems.Insert(0, new TweetItemViewModel(iNavigationService, m, this)));
+            observable
+                .Cast<StatusMessage>()
+                .Where(m => m.Status.InReplyToScreenName?.Contains("tomoya_shibata") ?? false)
+                .Subscribe(m => this.MentionItems.Insert(0, new TweetItemViewModel(iNavigationService, m, this)));
         }
 
         //public void StartStreamingMentions()
