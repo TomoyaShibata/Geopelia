@@ -30,13 +30,6 @@ namespace Geopelia.Models
 
         public ObservableCollection<TweetItemViewModel> MentionItems = new ObservableCollection<TweetItemViewModel>();
 
-        //private ObservableCollection<TweetModel> _mentions = new ObservableCollection<TweetModel>();
-        //public ObservableCollection<TweetModel> Mentions
-        //{
-        //    get { return this._mentions; }
-        //    set { this.SetProperty(ref this._mentions, value); }
-        //}
-
         public TwitterClient()
         {
             this._tokens = Tokens.Create(TwitterConst.ConsumerKey, TwitterConst.ConsumerSecret, TwitterConst.AccessToken,
@@ -75,15 +68,6 @@ namespace Geopelia.Models
                 .Where(m => m.Status.InReplyToScreenName?.Contains("tomoya_shibata") ?? false)
                 .Subscribe(m => this.MentionItems.Insert(0, new TweetItemViewModel(iNavigationService, m, this)));
         }
-
-        //public void StartStreamingMentions()
-        //{
-        //    this._tokens.Streaming.UserAsObservable()
-        //        .Where(m => m.Type == MessageType.Create)
-        //        .Cast<StatusMessage>()
-        //        .Where(m => m.Status.InReplyToScreenName == "tomoya_shibata")
-        //        .Subscribe(m => this._mentions.Add(new TweetModel(m)));
-        //}
 
         public UserResponse GetMyProfile()
         {

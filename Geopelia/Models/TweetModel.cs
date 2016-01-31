@@ -82,7 +82,7 @@ namespace Geopelia.Models
             this.Text                 = s.Status.Text;
             this.Name                 = s.Status.User.Name;
             this.ScreenName           = s.Status.User.ScreenName;
-            this.ProfileImageUrlHttps   = new Uri(s.Status.User.ProfileImageUrlHttps);
+            this.ProfileImageUrlHttps = new Uri(s.Status.User.ProfileImageUrlHttps);
         }
 
         private SolidColorBrush SetBorderBrushColor(StatusMessage s)
