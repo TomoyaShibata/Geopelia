@@ -41,6 +41,12 @@ namespace Geopelia.Models
             var updateAsync = this._tokens.Statuses.UpdateAsync(new { status = s });
         }
 
+        /// <summary>
+        /// リツイート状態を切替える
+        /// </summary>
+        /// <param name="id">ツイート ID</param>
+        /// <param name="newIsRetweeted"></param>
+        /// <returns></returns>
         public async Task<StatusResponse> ChangeIsRetweeted(long id, bool newIsRetweeted)
         {
             return newIsRetweeted ? await this._tokens.Statuses.RetweetAsync(id)
@@ -48,12 +54,14 @@ namespace Geopelia.Models
         }
 
         /// <summary>
-        /// お気に入りに追加する
+        /// お気に入り状態を切替える
         /// </summary>
         /// <param name="id">ツイート ID</param>
-        public async Task<StatusResponse> Favorite(long id)
+        /// <param name="newIsFavorited"></param>
+        public async Task<StatusResponse> ChangeIsFavorited(long id, bool newIsFavorited)
         {
-            return await this._tokens.Favorites.CreateAsync(id);
+		    return  newIsFavorited ? await this._tokens.Favorites.CreateAsync(id)
+                                  : await this._tokens.Favorites.DestroyAsync(id);
         }
 
         public void StartStreaming(INavigationService iNavigationService)

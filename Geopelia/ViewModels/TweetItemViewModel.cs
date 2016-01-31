@@ -63,11 +63,12 @@ namespace Geopelia.ViewModels
         }
 
         /// <summary>
-        /// お気に入りに登録する
+        /// お気に入り状態を切替える
         /// </summary>
-        public async void AddFavorite()
+        public async void ChangeIsFavorited()
         {
-            var statusResponse = await this._tweetClient.Favorite(this.TweetModel.Value.Id);
+            var newIsFavorited = (bool) !this.TweetModel.Value.TweetStatusMessage.Status.IsFavorited;
+            var statusResponse = await this._tweetClient.ChangeIsFavorited(this.TweetModel.Value.Id, newIsFavorited);
             this.TweetModel.Value.TweetStatusMessage.Status.IsFavorited = statusResponse.IsFavorited;
             this.SetFavoriteForeground();
         }

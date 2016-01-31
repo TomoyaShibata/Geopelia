@@ -128,7 +128,7 @@
                     <Button Grid.Column="2"
                             Background="Transparent"
                             HorizontalAlignment="Center"
-                            Tapped="{x:Bind AddFavorite}">
+                            Tapped="{x:Bind ChangeIsFavorited}">
                         <SymbolIcon Symbol="Favorite"
                                     Foreground="{x:Bind FavoriteForground.Value, Mode=OneWay}" />
                     </Button>
@@ -255,7 +255,7 @@
                                    VerticalAlignment="Center"
                                    HorizontalAlignment="Center">
 							   <Run Text="{x:Bind ViewModel.MyProfile.Value.Status.FavoriteCount}" />
-						      <Run Text="Favorites" />
+						      <Run Text="ChangeFavorites" />
                         </TextBlock>
                     </Grid>
                 </Grid>
