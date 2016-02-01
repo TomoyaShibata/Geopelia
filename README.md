@@ -10,7 +10,9 @@ Geopelia（ジオペリア）は Windows 10 プラットフォーム用に開発
 Geopelia は2016年中のリリースを目標としています。
 
 # Used libraries
-+ Prism
+### CoreTweet
+https://github.com/CoreTweet/CoreTweet
+### Prism
 https://github.com/PrismLibrary/Prism
-+ ReactiveProperty
+### ReactiveProperty
 https://github.com/runceel/ReactiveProperty
