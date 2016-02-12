@@ -64,11 +64,18 @@ namespace Geopelia.ViewModels
             this.MyProfile.Value    = this._twitterClient.GetMyProfile();
             this.ProfileImage.Value = new Uri(this.MyProfile.Value.ProfileImageUrlHttps);
         }
+	
+	    /// <summary>
+        /// ツイート一覧の現在位置を上部にジャンプする
+        /// </summary>
+        public void JumpToTop()
+        {
+        }
+
 
         public void NavigateNextPage()
         {
             this.NavigationService.Navigate("TweetCreate", null);
         }
-
     }
 }

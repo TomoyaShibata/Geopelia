@@ -20,13 +20,17 @@ namespace Geopelia.ViewModels
             set { this.SetProperty(ref this._tweetModel, value); }
         }
 
-        public ReactiveProperty<Brush>      BorderBrush         = new ReactiveProperty<Brush>();
-        public ReactiveProperty<string>     Brush               = new ReactiveProperty<string>();
-        public ReactiveProperty<string>     FavoriteForground   = new ReactiveProperty<string>();
-        public ReactiveProperty<string>     RetweetForground    = new ReactiveProperty<string>();
-        public ReactiveProperty<string>     RetweetText         = new ReactiveProperty<string>();
-        public ReactiveProperty<Visibility> TweetVisibility     = new ReactiveProperty<Visibility>();
-        public ReactiveProperty<Visibility> ProtectedVisibility = new ReactiveProperty<Visibility>();
+        public ReactiveProperty<Brush>      BorderBrush                = new ReactiveProperty<Brush>();
+        public ReactiveProperty<string>     Brush                      = new ReactiveProperty<string>();
+        public ReactiveProperty<string>     FavoriteForground          = new ReactiveProperty<string>();
+        public ReactiveProperty<string>     RetweetForground           = new ReactiveProperty<string>();
+        public ReactiveProperty<string>     RetweetText                = new ReactiveProperty<string>();
+        public ReactiveProperty<Visibility> TweetVisibility            = new ReactiveProperty<Visibility>();
+        public ReactiveProperty<Visibility> ProtectedVisibility        = new ReactiveProperty<Visibility>();
+        public ReactiveProperty<string>     ReplyToTweetText           = new ReactiveProperty<string>();
+        public ReactiveProperty<Visibility> ReplyToTweetTextVisibility = new ReactiveProperty<Visibility>();
+        public ReactiveProperty<Visibility> PictureVisibility          = new ReactiveProperty<Visibility>();
+
 
         /// <summary>
         /// Constructor
@@ -42,8 +46,10 @@ namespace Geopelia.ViewModels
             this.Brush.Value               = this.SetBorderBrushColor();
             this.TweetVisibility.Value     = this.GetVisibility();
             this.ProtectedVisibility.Value = this.GetProtectedVisibility();
+            this.SetPictureVisibility();
             this.SetRetweetForegroundAndText();
             this.SetFavoriteForeground();
+            this.SetReplyToTweetText();
         }
 
         public void TappedEventHandler()
@@ -142,6 +148,31 @@ namespace Geopelia.ViewModels
 
             this.RetweetForground.Value = "White";
             this.RetweetText.Value      = "リツイートする";
+        }
+
+        /// <summary>
+        /// リプライ先のツイートテキストをセットする
+        /// </summary>
+        private void SetReplyToTweetText()
+        {
+            var inReplyToStatusId = this.TweetModel.Value.TweetStatusMessage.Status.InReplyToStatusId;
+            if (inReplyToStatusId == null)
+            {
+                this.ReplyToTweetTextVisibility.Value = Visibility.Collapsed;
+                return;
+            }
+
+            this.ReplyToTweetTextVisibility.Value = Visibility.Visible;
+            this.TweetModel.Value.ReplyStatusMessage = this._tweetClient.GetTweet((long)inReplyToStatusId);
+
+            this.ReplyToTweetText.Value = this._tweetClient.GetTweet((long)inReplyToStatusId).Text;
+        }
+
+        private void SetPictureVisibility()
+        {
+            this.PictureVisibility.Value = this.TweetModel.Value.PicTwitterUris == null
+                ? Visibility.Collapsed
+                : Visibility.Visible;
         }
     }
 }

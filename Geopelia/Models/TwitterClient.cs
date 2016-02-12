@@ -82,6 +82,11 @@ namespace Geopelia.Models
             return this._tokens.Users.ShowAsync(57864731).Result;
         }
 
+        /// <summary>
+        /// ツイートを取得する
+        /// </summary>
+        /// <param name="id">ツイートID</param>
+        /// <returns>ツイート</returns>
         public StatusResponse GetTweet(long id)
         {
             return _tokens.Statuses.ShowAsync(id).Result;

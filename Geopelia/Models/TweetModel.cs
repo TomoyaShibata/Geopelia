@@ -1,15 +1,20 @@
 ﻿using System;
+using System.Collections.Generic;
 using Windows.UI;
 using Windows.UI.Xaml.Media;
 using CoreTweet;
 using CoreTweet.Streaming;
+using Microsoft.Practices.ObjectBuilder2;
 
 namespace Geopelia.Models
 {
+    /// <summary>
+    /// ツイート Model
+    /// </summary>
     public class TweetModel
-    {
+						    {
         /// <summary>
-        /// ツイートID
+        /// ツイート ID
         /// </summary>
         public long Id { get; set; }
         /// <summary>
@@ -29,7 +34,7 @@ namespace Geopelia.Models
         /// </summary>
         public string ScreenName { get; set; }
         /// <summary>
-        /// プロフィール画像URL
+        /// プロフィール画像 URL
         /// </summary>
         public Uri ProfileImageUrlHttps { get; set; }
         /// <summary>
@@ -41,15 +46,15 @@ namespace Geopelia.Models
         /// </summary>
         public string RtScreenName { get; set; }
         /// <summary>
-        /// RT プロフィール画像URL
+        /// RT プロフィール画像 URL
         /// </summary>
         public Uri RtProfileImageUrlHttps { get; set; }
         /// <summary>
-        /// 返信先ツイートID
+        /// 返信先ツイート ID
         /// </summary>
         public long? InReplyToStatusId { get; set; }
         /// <summary>
-        /// 返信先ツイートID
+        /// 返信先ツイート ID
         /// </summary>
         public TweetModel ReplyTweet { get; set; }
 
@@ -59,16 +64,35 @@ namespace Geopelia.Models
         public SolidColorBrush BorderColor { get; set; }
 
         /// <summary>
-        /// 返信先ツイートID
+        /// ツイート先ステータス
         /// </summary>
         public Status RetweetedStatus { get; set; }
 
+        /// <summary>
+        /// 添付画像 URI リスト
+        /// </summary>
+        public List<string> PicTwitterUris { get; set; }
+
+        /// <summary>
+        /// ツイート
+        /// </summary>
         public StatusMessage TweetStatusMessage { get; set; }
+
+        /// <summary>
+        /// リプライ先ツイート
+        /// </summary>
+        public StatusResponse ReplyStatusMessage { get; set; }
 
         public TweetModel(StatusMessage s)
         {
-            TweetStatusMessage = s;
-		
+            this.TweetStatusMessage = s;
+
+            if (s.Status.Entities.Media != null)
+            {
+                this.PicTwitterUris = new List<string>();
+                s.Status.ExtendedEntities.Media.ForEach(m => this.PicTwitterUris.Add(m.MediaUrlHttps));
+            }
+
             //this.BorderColor = this.SetBorderBrushColor(s);
             this.RetweetedStatus      = s.Status.RetweetedStatus;
             if (s.Status.RetweetedStatus != null)
@@ -99,8 +123,8 @@ namespace Geopelia.Models
 
             return new SolidColorBrush(Colors.Transparent);
         }
-
-        /// <summary>
+	
+	    /// <summary>
         /// リツイート情報をセットする
         /// </summary>
         /// <param name="s"></param>
