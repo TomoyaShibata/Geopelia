@@ -71,16 +71,38 @@ namespace Geopelia.Models
                 .Where(m => m.Type == MessageType.Create);
             observable
                 .Cast<StatusMessage>()
-                .Subscribe(m => this.TweetItems.Insert(0, new TweetItemViewModel(iNavigationService, m, this)));
+                .Subscribe(m => this.TweetItems.Insert(0, new TweetItemViewModel(iNavigationService, m.Status, this)));
             observable
                 .Cast<StatusMessage>()
                 .Where(m => m.Status.InReplyToScreenName?.Contains("tomoya_shibata") ?? false)
-                .Subscribe(m => this.MentionItems.Insert(0, new TweetItemViewModel(iNavigationService, m, this)));
+                .Subscribe(m => this.MentionItems.Insert(0, new TweetItemViewModel(iNavigationService, m.Status, this)));
         }
 
         public UserResponse GetMyProfile()
         {
             return this._tokens.Users.ShowAsync(57864731).Result;
+        }
+
+        /// <summary>
+        /// 初回描画時のタイムラインを取得する
+        /// </summary>
+        /// <returns></returns>
+        public void InitTimelines(INavigationService iNavigationService)
+        {
+            this._tokens.Statuses.HomeTimelineAsync(200)
+                .Result.ToObservable()
+                .Subscribe(s => this.TweetItems.Insert(0, new TweetItemViewModel(iNavigationService, s, this)));
+        }
+	
+        /// <summary>
+        /// 初回描画時のメンションを取得する
+        /// </summary>
+        /// <param name="iNavigationService"></param>
+        public void InitMentions(INavigationService iNavigationService)
+        {
+            this._tokens.Statuses.MentionsTimelineAsync(10)
+                .Result.ToObservable()
+                .Subscribe(s => this.MentionItems.Insert(0, new TweetItemViewModel(iNavigationService, s, this)));
         }
 
         /// <summary>

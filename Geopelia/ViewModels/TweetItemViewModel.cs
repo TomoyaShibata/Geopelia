@@ -1,5 +1,6 @@
 ﻿using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
+using CoreTweet;
 using CoreTweet.Streaming;
 using Geopelia.Models;
 using Prism.Windows.Mvvm;
@@ -38,7 +39,7 @@ namespace Geopelia.ViewModels
         /// <param name="iNavigationService"></param>
         /// <param name="s"></param>
         /// <param name="twitterClient"></param>
-        public TweetItemViewModel(INavigationService iNavigationService, StatusMessage s, TwitterClient twitterClient)
+        public TweetItemViewModel(INavigationService iNavigationService, Status s, TwitterClient twitterClient)
         {
             this._iNavigationService       = iNavigationService;
             this._tweetClient              = twitterClient;

@@ -45,6 +45,8 @@ namespace Geopelia.ViewModels
             this.TweetItems = this._twitterClient.TweetItems.ToReadOnlyReactiveCollection();
             this.MentionItems = this._twitterClient.MentionItems.ToReadOnlyReactiveCollection();
 
+            this._twitterClient.InitTimelines(this.NavigationService);
+            this._twitterClient.InitMentions(this.NavigationService);
             this.StartStreaming();
         }
 
@@ -64,8 +66,8 @@ namespace Geopelia.ViewModels
             this.MyProfile.Value    = this._twitterClient.GetMyProfile();
             this.ProfileImage.Value = new Uri(this.MyProfile.Value.ProfileImageUrlHttps);
         }
-	
-	    /// <summary>
+
+        /// <summary>
         /// ツイート一覧の現在位置を上部にジャンプする
         /// </summary>
         public void JumpToTop()

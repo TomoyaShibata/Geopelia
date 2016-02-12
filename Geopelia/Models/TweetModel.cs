@@ -12,7 +12,7 @@ namespace Geopelia.Models
     /// ツイート Model
     /// </summary>
     public class TweetModel
-						    {
+    {
         /// <summary>
         /// ツイート ID
         /// </summary>
@@ -97,7 +97,7 @@ namespace Geopelia.Models
             this.RetweetedStatus      = s.Status.RetweetedStatus;
             if (s.Status.RetweetedStatus != null)
             {
-                this.SetRetweet(s);
+                this.SetRetweet(s.Status);
                 return;
             }
 
@@ -107,6 +107,32 @@ namespace Geopelia.Models
             this.Name                 = s.Status.User.Name;
             this.ScreenName           = s.Status.User.ScreenName;
             this.ProfileImageUrlHttps = new Uri(s.Status.User.ProfileImageUrlHttps);
+        }
+
+        public TweetModel(Status s)
+        {
+            this.TweetStatus = s;
+
+            if (s.Entities.Media != null)
+            {
+                this.PicTwitterUris = new List<string>();
+                s.ExtendedEntities.Media.ForEach(m => this.PicTwitterUris.Add(m.MediaUrlHttps));
+            }
+
+            //this.BorderColor = this.SetBorderBrushColor(s);
+            this.RetweetedStatus      = s.RetweetedStatus;
+            if (s.RetweetedStatus != null)
+            {
+                this.SetRetweet(s);
+                return;
+            }
+
+            this.CreatedAt            = s.CreatedAt.DateTime.ToLocalTime().ToString("yyyy/MM/dd HH:mm:ss");
+            this.Id                   = s.Id;
+            this.Text                 = s.Text;
+            this.Name                 = s.User.Name;
+            this.ScreenName           = s.User.ScreenName;
+            this.ProfileImageUrlHttps = new Uri(s.User.ProfileImageUrlHttps);
         }
 
         private SolidColorBrush SetBorderBrushColor(StatusMessage s)
@@ -123,22 +149,22 @@ namespace Geopelia.Models
 
             return new SolidColorBrush(Colors.Transparent);
         }
-	
-	    /// <summary>
+
+        /// <summary>
         /// リツイート情報をセットする
         /// </summary>
         /// <param name="s"></param>
-        private void SetRetweet(StatusMessage s)
+        private void SetRetweet(Status s)
         {
-            this.CreatedAt              = s.Status.RetweetedStatus.CreatedAt.DateTime.ToString("yyyy/MM/dd HH:mm:ss");
-            this.Id                     = s.Status.RetweetedStatus.Id;
-            this.Text                   = s.Status.RetweetedStatus.Text;
-            this.Name                   = s.Status.RetweetedStatus.User.Name;
-            this.ScreenName             = s.Status.RetweetedStatus.User.ScreenName;
-            this.RtName                 = s.Status.User.Name + "さんがリツイート";
-            this.RtScreenName           = s.Status.User.ScreenName;
-            this.ProfileImageUrlHttps   = new Uri(s.Status.User.ProfileImageUrlHttps);
-            this.RtProfileImageUrlHttps = new Uri(s.Status.RetweetedStatus.User.ProfileImageUrlHttps);
+            this.CreatedAt              = s.RetweetedStatus.CreatedAt.DateTime.ToString("yyyy/MM/dd HH:mm:ss");
+            this.Id                     = s.RetweetedStatus.Id;
+            this.Text                   = s.RetweetedStatus.Text;
+            this.Name                   = s.RetweetedStatus.User.Name;
+            this.ScreenName             = s.RetweetedStatus.User.ScreenName;
+            this.RtName                 = s.User.Name + "さんがリツイート";
+            this.RtScreenName           = s.User.ScreenName;
+            this.ProfileImageUrlHttps   = new Uri(s.User.ProfileImageUrlHttps);
+            this.RtProfileImageUrlHttps = new Uri(s.RetweetedStatus.User.ProfileImageUrlHttps);
         }
     }
 }
