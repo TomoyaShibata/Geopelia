@@ -41,8 +41,8 @@ namespace Geopelia.ViewModels
 
             this.GetMyProfile();
 
-            this.Timelines = this._twitterClient.Timelines.ToReadOnlyReactiveCollection();
-            this.TweetItems = this._twitterClient.TweetItems.ToReadOnlyReactiveCollection();
+            this.Timelines    = this._twitterClient.Timelines.ToReadOnlyReactiveCollection();
+            this.TweetItems   = this._twitterClient.TweetItems.ToReadOnlyReactiveCollection();
             this.MentionItems = this._twitterClient.MentionItems.ToReadOnlyReactiveCollection();
 
             this._twitterClient.InitTimelines(this.NavigationService);
