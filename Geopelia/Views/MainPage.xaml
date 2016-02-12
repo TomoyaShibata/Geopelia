@@ -51,7 +51,7 @@
                         BorderBrush="White">
                     <Border.Background>
                         <ImageBrush Stretch="None"
-                                    ImageSource="{x:Bind TweetModel.Value.TweetStatusMessage.Status.User.ProfileImageUrlHttps}" />
+                                    ImageSource="{x:Bind TweetModel.Value.TweetStatus.User.ProfileImageUrlHttps}" />
                     </Border.Background>
                     <Ellipse Visibility="{x:Bind ProtectedVisibility.Value, Mode=OneTime}"
                              HorizontalAlignment="Right"

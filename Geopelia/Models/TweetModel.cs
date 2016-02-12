@@ -76,7 +76,7 @@ namespace Geopelia.Models
         /// <summary>
         /// ツイート
         /// </summary>
-        public StatusMessage TweetStatusMessage { get; set; }
+        public Status TweetStatus { get; set; }
 
         /// <summary>
         /// リプライ先ツイート
@@ -85,7 +85,7 @@ namespace Geopelia.Models
 
         public TweetModel(StatusMessage s)
         {
-            this.TweetStatusMessage = s;
+            this.TweetStatus = s.Status;
 
             if (s.Status.Entities.Media != null)
             {

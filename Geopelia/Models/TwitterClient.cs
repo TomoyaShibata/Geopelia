@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using CoreTweet;
+using CoreTweet.Core;
 using CoreTweet.Streaming;
 using Geopelia.ViewModels;
 using Prism.Mvvm;
@@ -60,7 +61,7 @@ namespace Geopelia.Models
         /// <param name="newIsFavorited"></param>
         public async Task<StatusResponse> ChangeIsFavorited(long id, bool newIsFavorited)
         {
-		    return  newIsFavorited ? await this._tokens.Favorites.CreateAsync(id)
+            return newIsFavorited ? await this._tokens.Favorites.CreateAsync(id)
                                   : await this._tokens.Favorites.DestroyAsync(id);
         }
 

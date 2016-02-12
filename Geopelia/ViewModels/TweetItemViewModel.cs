@@ -62,9 +62,9 @@ namespace Geopelia.ViewModels
         /// </summary>
         public async void ChangeIsRetweeted()
         {
-            var newIsRetweeted = (bool) !this.TweetModel.Value.TweetStatusMessage.Status.IsRetweeted;
+            var newIsRetweeted = (bool) !this.TweetModel.Value.TweetStatus.IsRetweeted;
             var statusResponse = await this._tweetClient.ChangeIsRetweeted(this.TweetModel.Value.Id, newIsRetweeted);
-            this.TweetModel.Value.TweetStatusMessage.Status.IsRetweeted = statusResponse.IsRetweeted;
+            this.TweetModel.Value.TweetStatus.IsRetweeted = statusResponse.IsRetweeted;
             this.SetRetweetForegroundAndText();
         }
 
@@ -73,9 +73,9 @@ namespace Geopelia.ViewModels
         /// </summary>
         public async void ChangeIsFavorited()
         {
-            var newIsFavorited = (bool) !this.TweetModel.Value.TweetStatusMessage.Status.IsFavorited;
+            var newIsFavorited = (bool) !this.TweetModel.Value.TweetStatus.IsFavorited;
             var statusResponse = await this._tweetClient.ChangeIsFavorited(this.TweetModel.Value.Id, newIsFavorited);
-            this.TweetModel.Value.TweetStatusMessage.Status.IsFavorited = statusResponse.IsFavorited;
+            this.TweetModel.Value.TweetStatus.IsFavorited = statusResponse.IsFavorited;
             this.SetFavoriteForeground();
         }
 
@@ -109,7 +109,7 @@ namespace Geopelia.ViewModels
         /// <returns></returns>
         private Visibility GetProtectedVisibility()
         {
-            return this.TweetModel.Value.TweetStatusMessage.Status.User.IsProtected ? Visibility.Visible
+            return this.TweetModel.Value.TweetStatus.User.IsProtected ? Visibility.Visible
                                                                                     : Visibility.Collapsed;
         }
 
@@ -129,7 +129,7 @@ namespace Geopelia.ViewModels
         /// <returns></returns>
         public void SetFavoriteForeground()
         {
-            this.FavoriteForground.Value = this.TweetModel.Value.TweetStatusMessage.Status.IsFavorited == true ? "Gold"
+            this.FavoriteForground.Value = this.TweetModel.Value.TweetStatus.IsFavorited == true ? "Gold"
                                                                                                                : "White";
         }
 
@@ -139,7 +139,7 @@ namespace Geopelia.ViewModels
         /// <returns></returns>
         public void SetRetweetForegroundAndText()
         {
-            if (this.TweetModel.Value.TweetStatusMessage.Status.IsRetweeted == true)
+            if (this.TweetModel.Value.TweetStatus.IsRetweeted == true)
             {
                 this.RetweetForground.Value = "LawnGreen";
                 this.RetweetText.Value      = "リツイートを取り消す";
@@ -155,7 +155,7 @@ namespace Geopelia.ViewModels
         /// </summary>
         private void SetReplyToTweetText()
         {
-            var inReplyToStatusId = this.TweetModel.Value.TweetStatusMessage.Status.InReplyToStatusId;
+            var inReplyToStatusId = this.TweetModel.Value.TweetStatus.InReplyToStatusId;
             if (inReplyToStatusId == null)
             {
                 this.ReplyToTweetTextVisibility.Value = Visibility.Collapsed;
