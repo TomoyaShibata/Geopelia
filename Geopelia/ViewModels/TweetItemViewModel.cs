@@ -1,8 +1,11 @@
-﻿using Windows.UI.Xaml;
+﻿using System;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Documents;
 using Windows.UI.Xaml.Media;
 using CoreTweet;
-using CoreTweet.Streaming;
 using Geopelia.Models;
+using Microsoft.Practices.ObjectBuilder2;
 using Prism.Windows.Mvvm;
 using Prism.Windows.Navigation;
 using Reactive.Bindings;
@@ -31,6 +34,7 @@ namespace Geopelia.ViewModels
         public ReactiveProperty<string>     ReplyToTweetText           = new ReactiveProperty<string>();
         public ReactiveProperty<Visibility> ReplyToTweetTextVisibility = new ReactiveProperty<Visibility>();
         public ReactiveProperty<Visibility> PictureVisibility          = new ReactiveProperty<Visibility>();
+        public ReactiveCollection<string>   Urls                       = new ReactiveCollection<string>();
 
 
         /// <summary>
@@ -108,21 +112,15 @@ namespace Geopelia.ViewModels
         /// 鍵アイコンの Visibility を取得する
         /// </summary>
         /// <returns></returns>
-        private Visibility GetProtectedVisibility()
-        {
-            return this.TweetModel.Value.TweetStatus.User.IsProtected ? Visibility.Visible
-                                                                                    : Visibility.Collapsed;
-        }
+        private Visibility GetProtectedVisibility() => this.TweetModel.Value.TweetStatus.User.IsProtected ? Visibility.Visible
+                                                                                                          : Visibility.Collapsed;
 
         /// <summary>
         /// 被リツイートユーザアイコンの Visibility を取得する
         /// </summary>
         /// <returns></returns>
-        public Visibility GetVisibility()
-        {
-            return this.TweetModel.Value.RetweetedStatus != null ? Visibility.Visible
-                                                                 : Visibility.Collapsed;
-        }
+        public Visibility GetVisibility() => this.TweetModel.Value.RetweetedStatus != null ? Visibility.Visible
+                                                                                           : Visibility.Collapsed;
 
         /// <summary>
         /// お気に入りボタンの色をセットする
@@ -131,7 +129,7 @@ namespace Geopelia.ViewModels
         public void SetFavoriteForeground()
         {
             this.FavoriteForground.Value = this.TweetModel.Value.TweetStatus.IsFavorited == true ? "Gold"
-                                                                                                               : "White";
+                                                                                                 : "White";
         }
 
         /// <summary>
@@ -163,10 +161,10 @@ namespace Geopelia.ViewModels
                 return;
             }
 
-            this.ReplyToTweetTextVisibility.Value = Visibility.Visible;
-            this.TweetModel.Value.ReplyStatusMessage = this._tweetClient.GetTweet((long)inReplyToStatusId);
+            //this.ReplyToTweetTextVisibility.Value = Visibility.Visible;
+            //this.TweetModel.Value.ReplyStatusMessage = this._tweetClient.GetTweet((long)inReplyToStatusId);
 
-            this.ReplyToTweetText.Value = this._tweetClient.GetTweet((long)inReplyToStatusId).Text;
+            //this.ReplyToTweetText.Value = this._tweetClient.GetTweet((long)inReplyToStatusId).Text;
         }
 
         private void SetPictureVisibility()
@@ -174,6 +172,20 @@ namespace Geopelia.ViewModels
             this.PictureVisibility.Value = this.TweetModel.Value.PicTwitterUris == null
                 ? Visibility.Collapsed
                 : Visibility.Visible;
+        }
+	
+        private void hoge()
+        {
+            this.TweetModel.Value.TweetStatus.Entities.Urls.ForEach(u => this.Urls.Add(u.Url));
+        }
+
+        public void TextBlock_Loaded(Object sender, RoutedEventArgs args)
+        {
+            var textBlock        = sender as TextBlock;
+            var run              = new Run {Text = "クラりん可愛い"};
+            var hyperlink        = new Hyperlink { NavigateUri = new Uri("https://www.google.co.jp/")};
+            hyperlink.Inlines.Add(run);
+            textBlock.Inlines.Add(hyperlink);
         }
     }
 }

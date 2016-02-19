@@ -98,9 +98,11 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="GeopeliaBehaiviors\InlineLinkTextBlock.cs" />
     <Compile Include="DraftLogo.xaml.cs">
       <DependentUpon>DraftLogo.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\PictureModel.cs" />
     <Compile Include="Models\TweetModel.cs" />
     <Compile Include="Models\TwitterClient.cs" />
     <Compile Include="Models\TwitterConst.cs" />
@@ -122,9 +124,9 @@
     <None Include="Geopelia_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\SplashScreen.scale-200.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
-    <Content Include="Assets\SplashScreen.scale-200.png" />
     <Content Include="Assets\Square150x150Logo.scale-200.png" />
     <Content Include="Assets\Square44x44Logo.scale-200.png" />
     <Content Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png" />
