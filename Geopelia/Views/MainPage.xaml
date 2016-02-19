@@ -6,6 +6,9 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:mvvm="using:Prism.Windows.Mvvm"
       xmlns:viewModels="using:Geopelia.ViewModels"
+      xmlns:interop="using:Windows.UI.Xaml.Interop"
+      xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+      xmlns:geopeliaBehaiviors="using:Geopelia.GeopeliaBehaiviors"
       mvvm:ViewModelLocator.AutoWireViewModel="True"
       mc:Ignorable="d"
       FontFamily="Meiryo">
@@ -103,7 +106,10 @@
                            VerticalAlignment="Top"
                            Margin="10, 0, 0, 0"
                            Text="{x:Bind TweetModel.Value.Text}"
-                           TextWrapping="WrapWholeWords" />
+                           TextWrapping="WrapWholeWords"
+                           Loaded="{x:Bind TextBlock_Loaded}">
+<!--<interactivity:Interaction.Behaviors><geopeliaBehaiviors:InlineLinkTextBlock /></interactivity:Interaction.Behaviors>-->
+                </TextBlock>
                 <Grid Grid.Row="4"
                       Grid.Column="1"
                       Grid.ColumnSpan="2"
@@ -191,7 +197,7 @@
         <Pivot>
             <PivotItem Margin="0">
                 <PivotItem.Header>
-                    <TextBlock Text="Timelines"
+                    <TextBlock Text="PictureFilePaths"
                                Tapped="{x:Bind ViewModel.JumpToTop}" />
                 </PivotItem.Header>
                 <ListView Name="ListViewTimelines"

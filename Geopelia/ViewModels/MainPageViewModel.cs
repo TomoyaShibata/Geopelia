@@ -30,6 +30,7 @@ namespace Geopelia.ViewModels
         public ReadOnlyReactiveCollection<TweetItemViewModel> MentionItems { get; set; }
         public ReactiveProperty<double> Width { get; set; } = new ReactiveProperty<double>();
 
+        public class ItemModelBase { }
         private readonly TwitterClient _twitterClient;
 
         public MainPageViewModel(INavigationService navigationService, TwitterClient twitterClient)

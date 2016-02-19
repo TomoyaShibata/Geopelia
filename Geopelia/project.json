@@ -6,6 +6,7 @@
     "Microsoft.ApplicationInsights.PersistenceChannel": "1.0.0",
     "Microsoft.ApplicationInsights.WindowsApps": "1.0.0",
     "Microsoft.NETCore.UniversalWindowsPlatform": "5.0.0",
+    "Microsoft.Xaml.Behaviors.Uwp.Managed": "1.0.3",
     "Prism.Unity": "6.2.0-pre2",
     "ReactiveProperty": "2.4.2",
     "Rx-Main": "2.3.0-beta2"

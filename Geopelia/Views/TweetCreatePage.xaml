@@ -9,7 +9,7 @@
       mc:Ignorable="d"
       FontFamily="Meiryo"
       Background="Black">
-    <Grid>
+    <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="50" />
             <RowDefinition Height="100" />
@@ -28,15 +28,40 @@
         <TextBox Grid.Row="1"
                  Grid.ColumnSpan="2"
                  PlaceholderText="Tweet..."
-                 Text="{x:Bind ViewModel.TweetText.Value, Mode=TwoWay}" />
+                 Text="{x:Bind ViewModel.TweetText.Value, Mode=TwoWay}"
+                 TextChanged="{x:Bind ViewModel.CheckInputKey}" />
+        <ListView Grid.Row="2"
+                  Grid.ColumnSpan="2"
+                  ItemsSource="{x:Bind ViewModel.PictureFilePaths}"
+                  HorizontalAlignment="Left">
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal"
+                                Height="100"
+                                Width="100">
+                        <!--<Image Source="{Binding}" />-->
+                    </StackPanel>
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+        </ListView>
+        <Popup IsOpen="{x:Bind ViewModel.IsFriendScreenNamesShow.Value, Mode=OneWay }">
+            <Grid Background="#666666"
+                  BorderBrush="#222222"
+                  Height="200"
+                  Width="150"
+                  Margin="10,80,0,0">
+                <ListView ItemsSource="{x:Bind ViewModel.FilteredFriendScreenNames, Mode=OneWay}" />
+            </Grid>
+        </Popup>
     </Grid>
     <Page.BottomAppBar>
         <CommandBar ClosedDisplayMode="Compact">
-            <AppBarButton Label="Tweet"
+            <AppBarButton Label="Pictures"
                           Icon="Pictures"
-                          Click="{x:Bind ViewModel.PostTweet}" />
+                          Tapped="{x:Bind ViewModel.OpenPictureLiblary}" />
             <AppBarButton Label="Tweet"
-                          Icon="Send" />
+                          Icon="Send"
+                          Click="{x:Bind ViewModel.PostTweet}" />
         </CommandBar>
     </Page.BottomAppBar>
 </Page>

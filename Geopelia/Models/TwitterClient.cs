@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.IO;
+using System.Linq;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using CoreTweet;
-using CoreTweet.Core;
 using CoreTweet.Streaming;
 using Geopelia.ViewModels;
+using Microsoft.Practices.ObjectBuilder2;
 using Prism.Mvvm;
 using Prism.Windows.Navigation;
+using Reactive.Bindings.Extensions;
 
 namespace Geopelia.Models
 {
@@ -30,6 +33,21 @@ namespace Geopelia.Models
         }
 
         public ObservableCollection<TweetItemViewModel> MentionItems = new ObservableCollection<TweetItemViewModel>();
+        public ObservableCollection<TweetItemViewModel> MyItems      = new ObservableCollection<TweetItemViewModel>();
+
+        private ObservableCollection<string> _friendScreenNames = new ObservableCollection<string>();
+        public ObservableCollection<string> FriendScreenNames
+        {
+            get { return this._friendScreenNames; }
+            set { this.SetProperty(ref this._friendScreenNames, value); }
+        }
+
+        private ObservableCollection<string> _filteredfriendScreenNames = new ObservableCollection<string>();
+        public ObservableCollection<string> FilteredFriendScreenNames
+        {
+            get { return this._filteredfriendScreenNames; }
+            set { this.SetProperty(ref this._filteredfriendScreenNames, value); }
+        }
 
         public TwitterClient()
         {
@@ -37,9 +55,23 @@ namespace Geopelia.Models
                 TwitterConst.AccessTokenSecret);
         }
 
-        public void PostTweet(string s)
+        /// <summary>
+        /// ツイート投稿
+        /// </summary>
+        /// <param name="t">ツイート本文</param>
+        public async void PostTweetAsync(string t)
         {
-            var updateAsync = this._tokens.Statuses.UpdateAsync(new { status = s });
+            await this._tokens.Statuses.UpdateAsync(new { status = t });
+        }
+
+        /// <summary>
+        /// ツイート投稿
+        /// </summary>
+        /// <param name="t">ツイート本文</param>
+        /// <param name="s"></param>
+        public void PostTweetAsync(string t, Stream s)
+        {
+            this._tokens.Statuses.UpdateWithMediaAsync(t, s);
         }
 
         /// <summary>
@@ -89,11 +121,11 @@ namespace Geopelia.Models
         /// <returns></returns>
         public void InitTimelines(INavigationService iNavigationService)
         {
-            this._tokens.Statuses.HomeTimelineAsync(200)
+            this._tokens.Statuses.HomeTimelineAsync(50)
                 .Result.ToObservable()
                 .Subscribe(s => this.TweetItems.Insert(0, new TweetItemViewModel(iNavigationService, s, this)));
         }
-	
+
         /// <summary>
         /// 初回描画時のメンションを取得する
         /// </summary>
@@ -106,6 +138,17 @@ namespace Geopelia.Models
         }
 
         /// <summary>
+        /// 初回描画時の自ツイートを取得する
+        /// </summary>
+        /// <param name="iNavigationService"></param>
+        public void InitMyItems(INavigationService iNavigationService)
+        {
+            this._tokens.Statuses.UserTimelineAsync(this._tokens.UserId)
+                .Result.ToObservable()
+                .Subscribe(s => this.MyItems.Insert(0, new TweetItemViewModel(iNavigationService, s, this)));
+        }
+
+        /// <summary>
         /// ツイートを取得する
         /// </summary>
         /// <param name="id">ツイートID</param>
@@ -113,6 +156,44 @@ namespace Geopelia.Models
         public StatusResponse GetTweet(long id)
         {
             return _tokens.Statuses.ShowAsync(id).Result;
+        }
+
+        /// <summary>
+        /// フォローユーザの ScreenName のリストをセット
+        /// </summary>
+        /// <returns></returns>
+        public void SetFriendScreenNames()
+        {
+            this._friendScreenNames.Add("TanakaShibata");
+            this._friendScreenNames.Add("TanashimaShibata");
+            this._friendScreenNames.Add("TaneshimaShibata");
+            this._friendScreenNames.Add("TaneshigeShibata");
+            this._friendScreenNames.Add("TaneshibaShibata");
+            this._friendScreenNames.Add("TanesadaShibata");
+
+            //long nextCursor = -1;
+            //while (nextCursor != 0)
+            //{
+            //    // TODO:count ベタウチは直す（本当に？）
+            //    var friends = this._tokens.Friends.ListAsync(cursor => nextCursor, count => 200).Result;
+            //    friends.ForEach(f => this._friendScreenNames.Add(f.ScreenName));
+            //    nextCursor = friends.NextCursor;
+            //}
+        }
+
+        /// <summary>
+        /// フォロー ScreenName リストをフィルタリングする
+        /// </summary>
+        /// <param name="inputTweetText">ツイート文字列</param>
+        /// <param name="caretIndex">カーソル位置</param>
+        public void FilteringFriendScreenNames(string inputTweetText, int caretIndex)
+        {
+            var startPosWipScreenName       = inputTweetText.Substring(0, caretIndex).LastIndexOf('@') + 1;
+            var wipScreenName               = inputTweetText.Substring(startPosWipScreenName, caretIndex - 1);
+            this._filteredfriendScreenNames.Clear();
+            this._friendScreenNames
+                .Where(f => f.StartsWith(wipScreenName))
+                .ForEach(f => this._filteredfriendScreenNames.Add(f));
         }
     }
 }
