@@ -1,4 +1,5 @@
 # Geopelia
+[![Build status](https://ci.appveyor.com/api/projects/status/t570kwboih8owrbs/branch/master?svg=true)](https://ci.appveyor.com/project/tomoyashibata/geopelia/branch/master)
 
 ![Draft Logo](Geopelia/Assets/Images/DraftLogo.png)
 
