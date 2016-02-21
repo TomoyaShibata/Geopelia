@@ -80,7 +80,7 @@ namespace Geopelia.ViewModels
         /// </summary>
         public void PostTweet()
         {
-            this._twitterClient.PostTweetAsync(this.TweetText.Value, this._pictureModel.Pic);
+            this._twitterClient.PostTweetAsync(this.TweetText.Value, this._pictureModel.PickMultipleFilesAsync);
         }
 
         /// <summary>
