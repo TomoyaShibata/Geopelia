@@ -32,17 +32,23 @@
                  TextChanged="{x:Bind ViewModel.CheckInputKey}" />
         <ListView Grid.Row="2"
                   Grid.ColumnSpan="2"
-                  ItemsSource="{x:Bind ViewModel.PictureFilePaths}"
+                  ItemsSource="{x:Bind ViewModel.SelectedPictures}"
                   HorizontalAlignment="Left">
-            <ListView.ItemsPanel>
+            <!--<ListView.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <StackPanel Orientation="Horizontal"
+                    
+            <StackPanel Orientation="Horizontal"
                                 Height="100"
                                 Width="100">
-                        <!--<Image Source="{Binding}" />-->
                     </StackPanel>
+            
                 </ItemsPanelTemplate>
-            </ListView.ItemsPanel>
+            </ListView.ItemsPanel>-->
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="BitmapImage">
+                    <Image Source="{x:Bind}" />
+                </DataTemplate>
+            </ListView.ItemTemplate>
         </ListView>
         <Popup IsOpen="{x:Bind ViewModel.IsFriendScreenNamesShow.Value, Mode=OneWay }">
             <Grid Background="#666666"

@@ -1,9 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Reactive.Linq;
+using System.Reactive.Threading.Tasks;
 using System.Threading.Tasks;
+using Windows.Storage;
+using Windows.Storage.Streams;
+using Windows.UI.Xaml.Media.Imaging;
 using CoreTweet;
 using CoreTweet.Streaming;
 using Geopelia.ViewModels;
@@ -68,10 +73,20 @@ namespace Geopelia.Models
         /// ツイート投稿
         /// </summary>
         /// <param name="t">ツイート本文</param>
-        /// <param name="s"></param>
-        public void PostTweetAsync(string t, Stream s)
+        /// <param name="selectedPictures"></param>
+        public async void PostTweetAsync(string t, List<IRandomAccessStream> selectedPictures)
         {
-            this._tokens.Statuses.UpdateWithMediaAsync(t, s);
+            var foo      = await Task.WhenAll(selectedPictures.Select(s => this._tokens.Media.UploadAsync(media => s)));
+            var mediaIds = foo.Select(m => m.MediaId);
+
+            //var mediaIds =
+            //await Task.WhenAll(selectedPictures.Select(s => this._tokens.Media.UploadAsync(s)));
+            await this._tokens.Statuses.UpdateAsync(status => t, media_ids => mediaIds);
+
+            //var mediaIds = await selectedPictures.ToObservable()
+            //    .Select(s => new FileStream(s.UriSource.AbsolutePath, FileMode.Open))
+            //    .Select(s => this._tokens.Media.UploadAsync(_ => s)).ToArray();
+            //await this._tokens.Statuses.UpdateAsync(status: t, media_ids: mediaIds);
         }
 
         /// <summary>
