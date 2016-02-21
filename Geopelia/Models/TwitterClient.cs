@@ -74,7 +74,7 @@ namespace Geopelia.Models
         /// </summary>
         /// <param name="t">ツイート本文</param>
         /// <param name="selectedPictures"></param>
-        public async void PostTweetAsync(string t, List<IRandomAccessStream> selectedPictures)
+        public async void PostTweetAsync(string t, IReadOnlyList<StorageFile> selectedPictures)
         {
             var foo      = await Task.WhenAll(selectedPictures.Select(s => this._tokens.Media.UploadAsync(media => s)));
             var mediaIds = foo.Select(m => m.MediaId);
