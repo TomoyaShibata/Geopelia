@@ -1,19 +1,27 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Reactive.Linq;
+using Windows.Storage;
 using Windows.Storage.Pickers;
+using Windows.Storage.Streams;
+using Windows.UI.Xaml.Media.Imaging;
 using Prism.Mvvm;
 
 namespace Geopelia.Models
 {
     public class PictureModel : BindableBase
     {
-        private ObservableCollection<string> _pictureFilePaths = new ObservableCollection<string>();
-        public ObservableCollection<string> PictureFilePaths
+        private ObservableCollection<BitmapImage> _pictureFilePaths = new ObservableCollection<BitmapImage>();
+        public ObservableCollection<BitmapImage> PictureFilePaths
         {
             get { return this._pictureFilePaths; }
             set { this.SetProperty(ref this._pictureFilePaths, value); }
         }
+
+        public IReadOnlyList<StorageFile> PickMultipleFilesAsync { get; set; }
+        public List<IRandomAccessStream> Pic { get; set; } = new List<IRandomAccessStream>();
+
 
         /// <summary>
         /// 画像添付のために画像フォルダを参照する
@@ -33,9 +41,15 @@ namespace Geopelia.Models
             filePicker.FileTypeFilter.Add(".jpg");
             filePicker.FileTypeFilter.Add(".gif");
 
-            var pickMultipleFilesAsync = await filePicker.PickMultipleFilesAsync();
-            pickMultipleFilesAsync.ToObservable()
-                                  .Subscribe(f => this._pictureFilePaths.Add(f.Path));
+            this.PickMultipleFilesAsync = await filePicker.PickMultipleFilesAsync();
+            this.PickMultipleFilesAsync?.ToObservable().Subscribe(async f =>
+            {
+                var stream      = await f.OpenAsync(Windows.Storage.FileAccessMode.Read);
+                this.Pic.Add(stream);
+                var bitmapImage = new BitmapImage();
+                bitmapImage.SetSource(stream);
+                this._pictureFilePaths.Add(bitmapImage);
+            });
         }
     }
 }

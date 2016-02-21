@@ -1,4 +1,7 @@
-﻿using Windows.UI.Xaml.Controls;
+﻿using System;
+using System.Linq;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media.Imaging;
 using Geopelia.Models;
 using Prism.Windows.Mvvm;
 using Prism.Windows.Navigation;
@@ -12,9 +15,11 @@ namespace Geopelia.ViewModels
         public ReadOnlyReactiveCollection<string> FriendScreenNames { get; set; }
         public ReadOnlyReactiveCollection<string> FilteredFriendScreenNames { get; set; }
         public ReactiveProperty<bool> IsFriendScreenNamesShow { get; set; } = new ReactiveProperty<bool>(false);
-        public ReadOnlyReactiveCollection<string> PictureFilePaths { get; set; }
+        public ReadOnlyReactiveCollection<BitmapImage> SelectedPictures { get; set; }
 
         private readonly TwitterClient _twitterClient;
+        private readonly PictureModel _pictureModel = new PictureModel();
+
 
         /// <summary>
         /// コンストラクタ
@@ -29,6 +34,8 @@ namespace Geopelia.ViewModels
                 this._twitterClient.FilteredFriendScreenNames.ToReadOnlyReactiveCollection();
 
             this._twitterClient.SetFriendScreenNames();
+
+            this.SelectedPictures = this._pictureModel.PictureFilePaths.ToReadOnlyReactiveCollection();
         }
 
         public void CheckInputKey(object sender, TextChangedEventArgs e)
@@ -73,7 +80,7 @@ namespace Geopelia.ViewModels
         /// </summary>
         public void PostTweet()
         {
-            this._twitterClient.PostTweetAsync(this.TweetText.Value);
+            this._twitterClient.PostTweetAsync(this.TweetText.Value, this._pictureModel.Pic);
         }
 
         /// <summary>
@@ -81,9 +88,7 @@ namespace Geopelia.ViewModels
         /// </summary>
         public void OpenPictureLiblary()
         {
-            var pictureModel      = new PictureModel();
-            this.PictureFilePaths = pictureModel.PictureFilePaths.ToReadOnlyReactiveCollection();
-            pictureModel.PickupPicturesAsync();
+            this._pictureModel.PickupPicturesAsync();
         }
     }
 }
