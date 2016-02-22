@@ -68,12 +68,23 @@ namespace Geopelia.Models
         /// ツイート投稿
         /// </summary>
         /// <param name="t">ツイート本文</param>
-        /// <param name="selectedPictures"></param>
+        /// <param name="selectedPictures">選択された画像ファイルの List</param>
         public async void PostTweetAsync(string t, IReadOnlyList<StorageFile> selectedPictures)
         {
-            var mediaUploadResults = await Task.WhenAll(selectedPictures.Select(s => this._tokens.Media.UploadAsync(media => s)));
-            var mediaIds           = mediaUploadResults.Select(m => m.MediaId);
+            var mediaIds =  await this.UploadPictures(selectedPictures);
             await this._tokens.Statuses.UpdateAsync(status => t, media_ids => mediaIds);
+        }
+
+        /// <summary>
+        /// ツイート投稿前に添画像ファイルのアップロードを行う
+        /// </summary>
+        /// <param name="selectedPictures">選択された画像ファイルの List</param>
+        /// <returns>mediaId の Array</returns>
+        private async Task<IEnumerable<long>> UploadPictures(IEnumerable<StorageFile> selectedPictures)
+        {
+            if (selectedPictures == null) return null;
+            var mediaUploadResults = await Task.WhenAll(selectedPictures.Select(s => this._tokens.Media.UploadAsync(media => s)));
+            return mediaUploadResults.Select(m => m.MediaId);
         }
 
         /// <summary>

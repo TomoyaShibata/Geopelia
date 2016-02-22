@@ -18,7 +18,6 @@ namespace Geopelia.ViewModels
         private readonly TwitterClient _twitterClient;
         private readonly PictureModel _pictureModel = new PictureModel();
 
-
         /// <summary>
         /// コンストラクタ
         /// </summary>
