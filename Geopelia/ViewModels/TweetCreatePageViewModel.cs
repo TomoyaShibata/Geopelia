@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using Windows.UI.Xaml.Controls;
+﻿using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Imaging;
 using Geopelia.Models;
 using Prism.Windows.Mvvm;
@@ -80,15 +78,15 @@ namespace Geopelia.ViewModels
         /// </summary>
         public void PostTweet()
         {
-            this._twitterClient.PostTweetAsync(this.TweetText.Value, this._pictureModel.PickMultipleFilesAsync);
+            this._twitterClient.PostTweetAsync(this.TweetText.Value, this._pictureModel.PickedPictures);
         }
 
         /// <summary>
         /// 画像添付のために画像フォルダを参照する
         /// </summary>
-        public void OpenPictureLiblary()
+        public void PickPicturesAsync()
         {
-            this._pictureModel.PickupPicturesAsync();
+            this._pictureModel.PickPicturesAsync();
         }
     }
 }

@@ -64,7 +64,7 @@
         <CommandBar ClosedDisplayMode="Compact">
             <AppBarButton Label="Pictures"
                           Icon="Pictures"
-                          Tapped="{x:Bind ViewModel.OpenPictureLiblary}" />
+                          Tapped="{x:Bind ViewModel.PickPicturesAsync}" />
             <AppBarButton Label="Tweet"
                           Icon="Send"
                           Click="{x:Bind ViewModel.PostTweet}" />
