@@ -197,7 +197,7 @@
         <Pivot>
             <PivotItem Margin="0">
                 <PivotItem.Header>
-                    <TextBlock Text="SelectedPictures"
+                    <TextBlock Text="PickedPictures"
                                Tapped="{x:Bind ViewModel.JumpToTop}" />
                 </PivotItem.Header>
                 <ListView Name="ListViewTimelines"

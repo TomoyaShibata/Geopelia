@@ -4,7 +4,6 @@ using System.Collections.ObjectModel;
 using System.Reactive.Linq;
 using Windows.Storage;
 using Windows.Storage.Pickers;
-using Windows.Storage.Streams;
 using Windows.UI.Xaml.Media.Imaging;
 using Prism.Mvvm;
 
@@ -19,19 +18,18 @@ namespace Geopelia.Models
             set { this.SetProperty(ref this._pictureFilePaths, value); }
         }
 
-        public IReadOnlyList<StorageFile> PickMultipleFilesAsync { get; set; }
-        public List<IRandomAccessStream> Pic { get; set; } = new List<IRandomAccessStream>();
-
+        public IReadOnlyList<StorageFile> PickedPictures { get; set; }
 
         /// <summary>
-        /// 画像添付のために画像フォルダを参照する
+        /// ツイートに添付する画像選択画面を開く<br></br>
+        /// 選択された画像は画面描画用の BitmapImage と、内部で確保するための StorageFile にそれぞれ保存される
         /// </summary>
-        public async void PickupPicturesAsync()
+        public async void PickPicturesAsync()
         {
             var filePicker = new FileOpenPicker
             {
                 SuggestedStartLocation = PickerLocationId.PicturesLibrary,
-                ViewMode = PickerViewMode.Thumbnail
+                ViewMode               = PickerViewMode.Thumbnail
             };
 
             filePicker.FileTypeFilter.Clear();
@@ -41,13 +39,11 @@ namespace Geopelia.Models
             filePicker.FileTypeFilter.Add(".jpg");
             filePicker.FileTypeFilter.Add(".gif");
 
-            this.PickMultipleFilesAsync = await filePicker.PickMultipleFilesAsync();
-            this.PickMultipleFilesAsync?.ToObservable().Subscribe(async f =>
+            this.PickedPictures = await filePicker.PickMultipleFilesAsync();
+            this.PickedPictures?.ToObservable().Subscribe(async f =>
             {
-                var stream      = await f.OpenAsync(Windows.Storage.FileAccessMode.Read);
-                this.Pic.Add(stream);
                 var bitmapImage = new BitmapImage();
-                bitmapImage.SetSource(stream);
+                bitmapImage.SetSource(await f.OpenAsync(FileAccessMode.Read));
                 this._pictureFilePaths.Add(bitmapImage);
             });
         }
