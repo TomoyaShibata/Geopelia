@@ -145,7 +145,7 @@ namespace Geopelia.Models
         {
             this._tokens.Statuses.MentionsTimelineAsync(10)
                 .Result.ToObservable()
-                .Subscribe(s => this.MentionItems.Insert(0, new TweetItemViewModel(iNavigationService, s, this)));
+                .Subscribe(s => this.MentionItems.Add(new TweetItemViewModel(iNavigationService, s, this)));
         }
 
         /// <summary>
