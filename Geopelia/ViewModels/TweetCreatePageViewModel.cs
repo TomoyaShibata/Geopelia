@@ -39,7 +39,7 @@ namespace Geopelia.ViewModels
         {
             var textBox = sender as TextBox;
             var caretIndex = textBox?.SelectionStart;
-            if (textBox.Text.Length == 0)
+            if (textBox.Text.Length == 0 || caretIndex == 0)
             {
                 this.IsFriendScreenNamesShow.Value = false;
                 return;
