@@ -83,6 +83,11 @@ namespace Geopelia.Models
         /// </summary>
         public StatusResponse ReplyStatusMessage { get; set; }
 
+        /// <summary>
+        /// 自分がリツイートしたときに生成されたツイートのID
+        /// </summary>
+        public long MyRetweetId { get; set; }
+
         public TweetModel(StatusMessage s)
         {
             this.TweetStatus = s.Status;

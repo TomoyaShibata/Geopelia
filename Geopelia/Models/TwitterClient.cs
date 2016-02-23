@@ -93,11 +93,9 @@ namespace Geopelia.Models
         /// <param name="id">ツイート ID</param>
         /// <param name="newIsRetweeted"></param>
         /// <returns></returns>
-        public async Task<StatusResponse> ChangeIsRetweeted(long id, bool newIsRetweeted)
-        {
-            return newIsRetweeted ? await this._tokens.Statuses.RetweetAsync(id)
-                                  : await this._tokens.Statuses.DestroyAsync(id);
-        }
+        public async Task<StatusResponse> ChangeIsRetweetedAsync(TweetModel tweetModel, bool newIsRetweeted)
+            => newIsRetweeted ? await this._tokens.Statuses.RetweetAsync(tweetModel.Id)
+                              : await this._tokens.Statuses.DestroyAsync(tweetModel.MyRetweetId);
 
         /// <summary>
         /// お気に入り状態を切替える
