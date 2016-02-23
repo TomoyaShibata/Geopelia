@@ -67,8 +67,8 @@ namespace Geopelia.ViewModels
         /// </summary>
         public async void ChangeIsRetweeted()
         {
-            var newIsRetweeted                            = (bool) !this.TweetModel.Value.TweetStatus.IsRetweeted;
-            var statusResponse                            = await this._tweetClient.ChangeIsRetweetedAsync(this.TweetModel.Value, newIsRetweeted);
+            var newIsRetweeted = (bool) !this.TweetModel.Value.TweetStatus.IsRetweeted;
+            var statusResponse = await this._tweetClient.ChangeIsRetweetedAsync(this.TweetModel.Value, newIsRetweeted);
 
             if (newIsRetweeted)
             {
