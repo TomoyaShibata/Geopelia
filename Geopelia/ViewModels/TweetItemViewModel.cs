@@ -100,12 +100,8 @@ namespace Geopelia.ViewModels
                 return "DodgerBlue";
             }
 
-            if (this.TweetModel.Value.Text.Contains("@tomoya_shibata"))
-            {
-                return "LimeGreen";
-            }
-
-            return "Transparent";
+            return this.TweetModel.Value.Text.Contains("@tomoya_shibata") ? "LimeGreen" 
+                                                                          : "Transparent";
         }
 
         /// <summary>
@@ -160,11 +156,11 @@ namespace Geopelia.ViewModels
                 this.ReplyToTweetTextVisibility.Value = Visibility.Collapsed;
                 return;
             }
+		
+            this.ReplyToTweetTextVisibility.Value    = Visibility.Visible;
+            this.TweetModel.Value.ReplyStatusMessage = this._tweetClient.GetTweet((long)inReplyToStatusId);
 
-            //this.ReplyToTweetTextVisibility.Value = Visibility.Visible;
-            //this.TweetModel.Value.ReplyStatusMessage = this._tweetClient.GetTweet((long)inReplyToStatusId);
-
-            //this.ReplyToTweetText.Value = this._tweetClient.GetTweet((long)inReplyToStatusId).Text;
+            this.ReplyToTweetText.Value = this._tweetClient.GetTweet((long)inReplyToStatusId).Text;
         }
 
         private void SetPictureVisibility()
@@ -173,13 +169,13 @@ namespace Geopelia.ViewModels
                 ? Visibility.Collapsed
                 : Visibility.Visible;
         }
-	
+
         private void hoge()
         {
             this.TweetModel.Value.TweetStatus.Entities.Urls.ForEach(u => this.Urls.Add(u.Url));
         }
 
-        public void TextBlock_Loaded(Object sender, RoutedEventArgs args)
+        public void TextBlock_Loaded(object sender, RoutedEventArgs args)
         {
             var textBlock        = sender as TextBlock;
             var run              = new Run {Text = "クラりん可愛い"};
