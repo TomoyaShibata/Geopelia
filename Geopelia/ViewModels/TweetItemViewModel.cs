@@ -67,9 +67,15 @@ namespace Geopelia.ViewModels
         /// </summary>
         public async void ChangeIsRetweeted()
         {
-            var newIsRetweeted = (bool) !this.TweetModel.Value.TweetStatus.IsRetweeted;
-            var statusResponse = await this._tweetClient.ChangeIsRetweeted(this.TweetModel.Value.Id, newIsRetweeted);
-            this.TweetModel.Value.TweetStatus.IsRetweeted = statusResponse.IsRetweeted;
+            var newIsRetweeted                            = (bool) !this.TweetModel.Value.TweetStatus.IsRetweeted;
+            var statusResponse                            = await this._tweetClient.ChangeIsRetweetedAsync(this.TweetModel.Value, newIsRetweeted);
+
+            if (newIsRetweeted)
+            {
+                this.TweetModel.Value.MyRetweetId = statusResponse.Id;
+            }
+
+            this.TweetModel.Value.TweetStatus.IsRetweeted = newIsRetweeted;
             this.SetRetweetForegroundAndText();
         }
 
@@ -100,7 +106,7 @@ namespace Geopelia.ViewModels
                 return "DodgerBlue";
             }
 
-            return this.TweetModel.Value.Text.Contains("@tomoya_shibata") ? "LimeGreen" 
+            return this.TweetModel.Value.Text.Contains("@tomoya_shibata") ? "LimeGreen"
                                                                           : "Transparent";
         }
 
@@ -156,7 +162,7 @@ namespace Geopelia.ViewModels
                 this.ReplyToTweetTextVisibility.Value = Visibility.Collapsed;
                 return;
             }
-		
+
             this.ReplyToTweetTextVisibility.Value    = Visibility.Visible;
             this.TweetModel.Value.ReplyStatusMessage = this._tweetClient.GetTweet((long)inReplyToStatusId);
 
