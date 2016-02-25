@@ -40,7 +40,7 @@ namespace Geopelia.ViewModels
 
             this.Width.Value = Window.Current.Bounds.Width;
 
-            this.GetMyProfile();
+            //this.GetMyProfile();
 
             this.Timelines    = this._twitterClient.Timelines.ToReadOnlyReactiveCollection();
             this.TweetItems   = this._twitterClient.TweetItems.ToReadOnlyReactiveCollection();
