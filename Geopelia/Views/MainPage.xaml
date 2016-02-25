@@ -6,6 +6,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:mvvm="using:Prism.Windows.Mvvm"
       xmlns:viewModels="using:Geopelia.ViewModels"
+      xmlns:fragments="using:Geopelia.Views.Fragments"
       mvvm:ViewModelLocator.AutoWireViewModel="True"
       mc:Ignorable="d"
       FontFamily="Meiryo">
@@ -96,7 +97,14 @@
                            Text="{x:Bind TweetModel.Value.CreatedAt}"
                            VerticalAlignment="Top"
                            HorizontalAlignment="Right" />
-                <TextBlock Grid.Row="3"
+                <fragments:TweetTextBlock Grid.Row="3"
+                                          Grid.Column="1"
+                                          Grid.ColumnSpan="2"
+                                          HorizontalAlignment="Left"
+                                          VerticalAlignment="Top"
+                                          Margin="10, 0, 0, 0"
+                                          TwitterResponse="{x:Bind TweetModel.Value}" />
+                <!-- <TextBlock Grid.Row="3"
                            Grid.Column="1"
                            Grid.ColumnSpan="2"
                            HorizontalAlignment="Left"
@@ -104,8 +112,8 @@
                            Margin="10, 0, 0, 0"
                            Text="{x:Bind TweetModel.Value.Text}"
                            TextWrapping="WrapWholeWords"
-                           Loaded="{x:Bind TextBlock_Loaded}">
-                </TextBlock>
+                           Loaded="{x:Bind TextBlock_Loaded}"
+                </TextBlock>-->
                 <Grid Grid.Row="4"
                       Grid.Column="1"
                       Grid.ColumnSpan="2"

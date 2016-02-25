@@ -1,0 +1,15 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="using:Geopelia"
+                    xmlns:fragments="using:Geopelia.Views.Fragments">
+    <Style TargetType="fragments:TweetTextBlock">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="fragments:TweetTextBlock">
+                    <TextBlock x:Name="PART_TextBlock"
+                               Style="{ThemeResource BodyTextBlockStyle}" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>
