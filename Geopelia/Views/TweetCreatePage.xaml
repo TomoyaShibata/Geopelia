@@ -29,12 +29,36 @@
                  Grid.ColumnSpan="2"
                  PlaceholderText="Tweet..."
                  Text="{x:Bind ViewModel.TweetText.Value, Mode=TwoWay}"
-                 TextChanged="{x:Bind ViewModel.CheckInputKey}" />
-        <ListView Grid.Row="2"
+                 TextChanged="{x:Bind ViewModel.CheckInputKey}"
+                 TextWrapping="Wrap" />
+        <ItemsControl Grid.Row="2"
+                      Grid.ColumnSpan="2"
+                      HorizontalAlignment="Left"
+                      ItemsSource="{x:Bind ViewModel.SelectedPictures, Mode=OneWay}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate x:DataType="BitmapImage">
+                    <Image Source="{x:Bind Mode=OneWay}" />
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <ItemsStackPanel Width="100"
+                                     Orientation="Horizontal" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+        </ItemsControl>
+        <!--<ListView Grid.Row="2"
                   Grid.ColumnSpan="2"
                   ItemsSource="{x:Bind ViewModel.SelectedPictures}"
                   HorizontalAlignment="Left">
-            <!--<ListView.ItemsPanel>
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <ItemsWrapGrid Width="100"
+                                   Orientation="Horizontal" />
+                    <Image />
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>-->
+        <!--<ListView.ItemsPanel>
                 <ItemsPanelTemplate>
                     
             <StackPanel Orientation="Horizontal"
@@ -44,12 +68,12 @@
             
                 </ItemsPanelTemplate>
             </ListView.ItemsPanel>-->
-            <ListView.ItemTemplate>
+        <!--<ListView.ItemTemplate>
                 <DataTemplate x:DataType="BitmapImage">
                     <Image Source="{x:Bind}" />
                 </DataTemplate>
             </ListView.ItemTemplate>
-        </ListView>
+        </ListView>-->
         <Popup IsOpen="{x:Bind ViewModel.IsFriendScreenNamesShow.Value, Mode=OneWay }">
             <Grid Background="#666666"
                   BorderBrush="#222222"

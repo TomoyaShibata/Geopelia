@@ -49,6 +49,14 @@ namespace Geopelia.Models
             set { this.SetProperty(ref this._filteredfriendScreenNames, value); }
         }
 
+        private Status _replyToStatus;
+        public Status ReplyToStatus
+        {
+            get { return this._replyToStatus; }
+            set { this.SetProperty(ref this._replyToStatus, value); }
+        }
+
+
         public TwitterClient()
         {
             this._tokens = Tokens.Create(TwitterConst.ConsumerKey, TwitterConst.ConsumerSecret, TwitterConst.AccessToken,
@@ -62,8 +70,10 @@ namespace Geopelia.Models
         /// <param name="selectedPictures">選択された画像ファイルの List</param>
         public async void PostTweetAsync(string t, IReadOnlyList<StorageFile> selectedPictures)
         {
-            var mediaIds =  await this.UploadPictures(selectedPictures);
-            await this._tokens.Statuses.UpdateAsync(status => t, media_ids => mediaIds);
+            var mediaIds         =  await this.UploadPictures(selectedPictures);
+            var replayToStatusId = this._replyToStatus?.Id;
+            await this._tokens.Statuses.UpdateAsync(status => t, in_reply_to_status_id => replayToStatusId, media_ids => mediaIds);
+            this._replyToStatus = null;
         }
 
         /// <summary>
@@ -159,9 +169,9 @@ namespace Geopelia.Models
         /// </summary>
         /// <param name="id">ツイートID</param>
         /// <returns>ツイート</returns>
-        public StatusResponse GetTweet(long id)
+        public async Task<StatusResponse> GetTweetAsync(long id)
         {
-            return _tokens.Statuses.ShowAsync(id).Result;
+            return await _tokens.Statuses.ShowAsync(id);
         }
 
         /// <summary>

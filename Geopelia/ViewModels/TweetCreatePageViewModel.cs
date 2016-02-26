@@ -33,6 +33,11 @@ namespace Geopelia.ViewModels
             this._twitterClient.SetFriendScreenNames();
 
             this.SelectedPictures = this._pictureModel.PictureFilePaths.ToReadOnlyReactiveCollection();
+
+            if (this._twitterClient.ReplyToStatus != null)
+            {
+                this.TweetText.Value  = $"@{this._twitterClient.ReplyToStatus.User.ScreenName} ";
+            }
         }
 
         public void CheckInputKey(object sender, TextChangedEventArgs e)

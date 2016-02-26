@@ -92,7 +92,8 @@ namespace Geopelia.ViewModels
 
         public void NavigateTweetCreatePage()
         {
-            this._iNavigationService.Navigate("TweetCreate", this.TweetModel.Value.Id);
+            this._tweetClient.ReplyToStatus = this.TweetModel.Value.TweetStatus;
+            this._iNavigationService.Navigate("TweetCreate", this._tweetClient);
         }
 
         /// <summary>
@@ -154,7 +155,7 @@ namespace Geopelia.ViewModels
         /// <summary>
         /// リプライ先のツイートテキストをセットする
         /// </summary>
-        private void SetReplyToTweetText()
+        private async void SetReplyToTweetText()
         {
             var inReplyToStatusId = this.TweetModel.Value.TweetStatus.InReplyToStatusId;
             if (inReplyToStatusId == null)
@@ -164,9 +165,8 @@ namespace Geopelia.ViewModels
             }
 
             this.ReplyToTweetTextVisibility.Value    = Visibility.Visible;
-            this.TweetModel.Value.ReplyStatusMessage = this._tweetClient.GetTweet((long)inReplyToStatusId);
-
-            this.ReplyToTweetText.Value = this._tweetClient.GetTweet((long)inReplyToStatusId).Text;
+            this.TweetModel.Value.ReplyStatusMessage = await this._tweetClient.GetTweetAsync((long)inReplyToStatusId);
+            this.ReplyToTweetText.Value              = this.TweetModel.Value.ReplyStatusMessage.Text;
         }
 
         private void SetPictureVisibility()
