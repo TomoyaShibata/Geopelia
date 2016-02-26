@@ -42,8 +42,10 @@ namespace Geopelia.Views.Fragments
         {
             if (this.TwitterResponse == null || this.TextBlock == null) return;
 
+            var tweetText   = this.TwitterResponse.TweetStatus.RetweetedStatus == null ? this.TwitterResponse.TweetStatus.Text
+                                                                                       : this.TwitterResponse.TweetStatus.RetweetedStatus.Text;
+            var stringInfo  = new StringInfo(tweetText);
             var currTextIdx = 0;
-            var stringInfo  = new StringInfo(this.TwitterResponse.TweetStatus.Text);
 
             this.TextBlock.Inlines.Clear();
             foreach (var url in this.TwitterResponse.TweetStatus.Entities.Urls)
@@ -56,7 +58,7 @@ namespace Geopelia.Views.Fragments
                     this.TextBlock.Inlines.Add(run);
                 }
                 var link = new Hyperlink { NavigateUri = new Uri(url.Url) };
-                link.Inlines.Add(new Run { Text = url.ExpandedUrl });
+                link.Inlines.Add(new Run { Text = url.DisplayUrl });
                 this.TextBlock.Inlines.Add(link);
 
                 currTextIdx = end;

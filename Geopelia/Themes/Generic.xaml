@@ -7,7 +7,8 @@
             <Setter.Value>
                 <ControlTemplate TargetType="fragments:TweetTextBlock">
                     <TextBlock x:Name="PART_TextBlock"
-                               Style="{ThemeResource BodyTextBlockStyle}" />
+                               Style="{ThemeResource BodyTextBlockStyle}"
+                               TextWrapping="Wrap" />
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
