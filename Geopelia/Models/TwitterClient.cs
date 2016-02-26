@@ -56,16 +56,7 @@ namespace Geopelia.Models
         }
 
         /// <summary>
-        /// ツイート投稿
-        /// </summary>
-        /// <param name="t">ツイート本文</param>
-        public async void PostTweetAsync(string t)
-        {
-            await this._tokens.Statuses.UpdateAsync(new { status = t });
-        }
-
-        /// <summary>
-        /// ツイート投稿
+        /// ツイートを投稿する
         /// </summary>
         /// <param name="t">ツイート本文</param>
         /// <param name="selectedPictures">選択された画像ファイルの List</param>
@@ -90,7 +81,7 @@ namespace Geopelia.Models
         /// <summary>
         /// リツイート状態を切替える
         /// </summary>
-        /// <param name="id">ツイート ID</param>
+        /// <param name="tweetModel">ツイート Model</param>
         /// <param name="newIsRetweeted"></param>
         /// <returns></returns>
         public async Task<StatusResponse> ChangeIsRetweetedAsync(TweetModel tweetModel, bool newIsRetweeted)
@@ -103,11 +94,13 @@ namespace Geopelia.Models
         /// <param name="id">ツイート ID</param>
         /// <param name="newIsFavorited"></param>
         public async Task<StatusResponse> ChangeIsFavorited(long id, bool newIsFavorited)
-        {
-            return newIsFavorited ? await this._tokens.Favorites.CreateAsync(id)
-                                  : await this._tokens.Favorites.DestroyAsync(id);
-        }
+            => newIsFavorited ? await this._tokens.Favorites.CreateAsync(id)
+                              : await this._tokens.Favorites.DestroyAsync(id);
 
+        /// <summary>
+        /// TL, Mention の Streaming 受信を開始する
+        /// </summary>
+        /// <param name="iNavigationService"></param>
         public void StartStreaming(INavigationService iNavigationService)
         {
             var observable = this._tokens.Streaming.UserAsObservable()
@@ -121,10 +114,12 @@ namespace Geopelia.Models
                 .Subscribe(m => this.MentionItems.Insert(0, new TweetItemViewModel(iNavigationService, m.Status, this)));
         }
 
-        public UserResponse GetMyProfile()
-        {
-            return this._tokens.Users.ShowAsync(57864731).Result;
-        }
+        /// <summary>
+        /// 自分のプロフィール情報を取得する
+        /// </summary>
+        /// <returns></returns>
+        public async Task<UserResponse> GetMyProfile()
+            => await this._tokens.Users.ShowAsync(57864731);
 
         /// <summary>
         /// 初回描画時のタイムラインを取得する

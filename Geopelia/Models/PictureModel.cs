@@ -40,6 +40,7 @@ namespace Geopelia.Models
             filePicker.FileTypeFilter.Add(".gif");
 
             this.PickedPictures = await filePicker.PickMultipleFilesAsync();
+
             this.PickedPictures?.ToObservable().Subscribe(async f =>
             {
                 var bitmapImage = new BitmapImage();
