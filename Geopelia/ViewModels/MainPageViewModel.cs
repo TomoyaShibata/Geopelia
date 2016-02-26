@@ -40,7 +40,7 @@ namespace Geopelia.ViewModels
 
             this.Width.Value = Window.Current.Bounds.Width;
 
-            //this.GetMyProfile();
+            this.GetMyProfile();
 
             this.Timelines    = this._twitterClient.Timelines.ToReadOnlyReactiveCollection();
             this.TweetItems   = this._twitterClient.TweetItems.ToReadOnlyReactiveCollection();
@@ -62,9 +62,9 @@ namespace Geopelia.ViewModels
         /// <summary>
         /// 自分のプロフィールを取得する
         /// </summary>
-        private void GetMyProfile()
+        private async void GetMyProfile()
         {
-            this.MyProfile.Value    = this._twitterClient.GetMyProfile();
+            this.MyProfile.Value    = await this._twitterClient.GetMyProfile();
             this.ProfileImage.Value = new Uri(this.MyProfile.Value.ProfileImageUrlHttps);
         }
 
