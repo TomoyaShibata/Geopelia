@@ -9,7 +9,8 @@
       xmlns:fragments="using:Geopelia.Views.Fragments"
       mvvm:ViewModelLocator.AutoWireViewModel="True"
       mc:Ignorable="d"
-      FontFamily="Meiryo">
+      FontFamily="Meiryo"
+      NavigationCacheMode="Required">
     <Page.Resources>
         <DataTemplate x:Key="TweetItemTemplate"
                       x:DataType="viewModels:TweetItemViewModel">
@@ -104,20 +105,11 @@
                                           VerticalAlignment="Top"
                                           Margin="10, 0, 0, 0"
                                           TwitterResponse="{x:Bind TweetModel.Value}" />
-                <!-- <TextBlock Grid.Row="3"
-                           Grid.Column="1"
-                           Grid.ColumnSpan="2"
-                           HorizontalAlignment="Left"
-                           VerticalAlignment="Top"
-                           Margin="10, 0, 0, 0"
-                           Text="{x:Bind TweetModel.Value.Text}"
-                           TextWrapping="WrapWholeWords"
-                           Loaded="{x:Bind TextBlock_Loaded}"
-                </TextBlock>-->
                 <Grid Grid.Row="4"
                       Grid.Column="1"
                       Grid.ColumnSpan="2"
                       Background="#333"
+                      Opacity="0.8"
                       Margin="10"
                       Padding="5"
                       Visibility="{x:Bind ReplyToTweetTextVisibility.Value}">
