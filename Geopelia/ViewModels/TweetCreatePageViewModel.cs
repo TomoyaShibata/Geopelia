@@ -1,4 +1,5 @@
-﻿using Windows.UI.Xaml.Controls;
+﻿using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Imaging;
 using Geopelia.Models;
 using Prism.Windows.Mvvm;
@@ -38,6 +39,18 @@ namespace Geopelia.ViewModels
             {
                 this.TweetText.Value  = $"@{this._twitterClient.ReplyToStatus.User.ScreenName} ";
             }
+        }
+
+        /// <summary>
+        /// ツイート入力欄のカーソル位置を末尾に移動する
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void MoveCaretToLast(object sender, RoutedEventArgs e)
+        {
+            var textBox = sender as TextBox;
+            if (textBox == null) return;
+            textBox.SelectionStart = textBox.Text.Length;
         }
 
         public void CheckInputKey(object sender, TextChangedEventArgs e)

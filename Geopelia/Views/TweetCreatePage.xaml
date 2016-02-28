@@ -30,7 +30,9 @@
                  PlaceholderText="Tweet..."
                  Text="{x:Bind ViewModel.TweetText.Value, Mode=TwoWay}"
                  TextChanged="{x:Bind ViewModel.CheckInputKey}"
-                 TextWrapping="Wrap" />
+                 TextWrapping="Wrap"
+                 IsSpellCheckEnabled="False"
+                 GotFocus="{x:Bind ViewModel.MoveCaretToLast}" />
         <ItemsControl Grid.Row="2"
                       Grid.ColumnSpan="2"
                       HorizontalAlignment="Left"
