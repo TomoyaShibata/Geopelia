@@ -22,6 +22,7 @@ namespace Geopelia.ViewModels
             set { this.SetProperty(ref this._nowDateTime, value); }
         }
 
+        public ReadOnlyReactiveCollection<Tokens> TokensList;
         public ReactiveProperty<string> TweetText { get; set; } = new ReactiveProperty<string>("");
         public ReactiveProperty<UserResponse> MyProfile { get; set; } = new ReactiveProperty<UserResponse>();
         public ReactiveProperty<Uri> ProfileImage { get; set; } = new ReactiveProperty<Uri>();
@@ -32,11 +33,15 @@ namespace Geopelia.ViewModels
 
         public class ItemModelBase { }
         private readonly TwitterClient _twitterClient;
+        private readonly TokenModel _tokenModel;
 
         public MainPageViewModel(INavigationService navigationService, TwitterClient twitterClient)
         {
-            this._twitterClient    = twitterClient;
             this.NavigationService = navigationService;
+            this._twitterClient    = twitterClient;
+
+            //this.TokensList  = this._tokenModel.TokensList.ToReadOnlyReactiveCollection();
+            this._tokenModel = new TokenModel();
 
             this.Width.Value = Window.Current.Bounds.Width;
 

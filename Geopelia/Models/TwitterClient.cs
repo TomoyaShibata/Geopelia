@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
+using Windows.Security.Authentication.Web;
 using Windows.Storage;
 using CoreTweet;
 using CoreTweet.Streaming;
@@ -56,11 +57,41 @@ namespace Geopelia.Models
             set { this.SetProperty(ref this._replyToStatus, value); }
         }
 
+        private int _userId;
+        public int UserId
+        {
+            get { return this._userId; }
+            set { this.SetProperty(ref this._userId, value); }
+        }
+
+
+        private UserResponse _user;
+        public UserResponse User
+        {
+            get { return this._user; }
+            set { this.SetProperty(ref this._user, value); }
+        }
 
         public TwitterClient()
         {
             this._tokens = Tokens.Create(TwitterConst.ConsumerKey, TwitterConst.ConsumerSecret, TwitterConst.AccessToken,
                 TwitterConst.AccessTokenSecret);
+
+            //AuthorizeNewUserAsync();
+        }
+
+        private static async void AuthorizeNewUserAsync()
+        {
+            var session                 = await OAuth.AuthorizeAsync(TwitterConst.ConsumerKey, TwitterConst.ConsumerSecret);
+            var authorizeUri            = session.AuthorizeUri;
+            var webAuthenticationResult = await WebAuthenticationBroker.AuthenticateAsync(WebAuthenticationOptions.None, authorizeUri, new Uri("https://twitter.com/tomoya_shibata"));
+
+            var responseData  = webAuthenticationResult.ResponseData.Substring(webAuthenticationResult.ResponseData.IndexOf("oauth_token", StringComparison.Ordinal));
+            var oauthVerifier = responseData.Split('&')
+                                            .Where(kv => kv.ToLower().StartsWith("oauth_verifier="))
+                                            .Select(kv => kv.Split('=')[1])
+                                            .FirstOrDefault();
+            var tokensAsync = await session.GetTokensAsync(oauthVerifier);
         }
 
         /// <summary>

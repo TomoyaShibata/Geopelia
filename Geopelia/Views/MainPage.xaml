@@ -150,7 +150,8 @@
                     <Button Background="Transparent"
                             HorizontalAlignment="Center"
                             Tapped="{x:Bind NavigateTweetCreatePage}">
-                        <SymbolIcon Symbol="Back" />
+                        <FontIcon FontFamily="Segoe MDL2 Assets"
+                                  Glyph="&#xE248;" />
                     </Button>
                     <Button Grid.Column="1"
                             Background="Transparent"
@@ -169,13 +170,15 @@
                             Background="Transparent"
                             HorizontalAlignment="Center"
                             Tapped="{x:Bind ChangeIsFavorited}">
-                        <SymbolIcon Symbol="Favorite"
-                                    Foreground="{x:Bind FavoriteForground.Value, Mode=OneWay}" />
+                        <FontIcon FontFamily="Segoe MDL2 Assets"
+                                  Glyph="&#xE006;"
+                                  Foreground="{x:Bind FavoriteForground.Value, Mode=OneWay}" />
                     </Button>
                     <Button Grid.Column="3"
                             Background="Transparent"
                             HorizontalAlignment="Center">
-                        <SymbolIcon Symbol="Upload" />
+                        <FontIcon FontFamily="Segoe MDL2 Assets"
+                                  Glyph="&#xE72D;" />
                     </Button>
                     <Button Grid.Column="4"
                             Background="Transparent"
@@ -190,6 +193,30 @@
         <ProgressBar VerticalAlignment="Top"
                      IsEnabled="True"
                      IsIndeterminate="True" />
+        <SplitView IsPaneOpen="True"
+                   PaneBackground="#FF2B2B2B"
+                   OpenPaneLength="180"
+                   DisplayMode="Overlay">
+            <SplitView.Pane>
+                <StackPanel>
+                    <StackPanel.Resources>
+                        <Style TargetType="TextBlock"
+                               x:Key="AccountTextBlock">
+                            <Setter Property="Margin"
+                                    Value="10"></Setter>
+                        </Style>
+                    </StackPanel.Resources>
+                    <TextBlock Style="{StaticResource AccountTextBlock}"
+                               Text="@tomoya_shibata " />
+                    <TextBlock Style="{StaticResource AccountTextBlock}"
+                               Text="@tomoya_shibata_a" />
+                    <TextBlock Style="{StaticResource AccountTextBlock}"
+                               Text="@tomoya_shibata_b" />
+                    <TextBlock Style="{StaticResource AccountTextBlock}"
+                               Text="@tomoya_shibata_c" />
+                </StackPanel>
+            </SplitView.Pane>
+        </SplitView>
         <Pivot>
             <PivotItem Margin="0">
                 <PivotItem.Header>
