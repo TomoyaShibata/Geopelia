@@ -193,7 +193,7 @@
         <ProgressBar VerticalAlignment="Top"
                      IsEnabled="True"
                      IsIndeterminate="True" />
-        <SplitView IsPaneOpen="True"
+        <SplitView IsPaneOpen="False"
                    PaneBackground="#FF2B2B2B"
                    OpenPaneLength="180"
                    DisplayMode="Overlay">
