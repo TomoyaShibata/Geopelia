@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Security.Authentication.Web;
 using Windows.Security.Credentials;
@@ -13,7 +14,7 @@ namespace Geopelia.Models
 {
     public class TokenModel : BindableBase
     {
-        private ObservableCollection<Tokens> _tokensList;
+        private ObservableCollection<Tokens> _tokensList = new ObservableCollection<Tokens>();
         public ObservableCollection<Tokens> TokensList
         {
             get { return this._tokensList; }
@@ -29,22 +30,22 @@ namespace Geopelia.Models
             //{
             //    passwordVault.Remove(credential);
             //}
-            this.AuthorizeNewUserAsync();
         }
 
         /// <summary>
         /// 新規ユーザの認証をする
         /// </summary>
-        private async void AuthorizeNewUserAsync()
+        public async Task<Tokens> AuthorizeNewUserAsync()
         {
             var session                 = await OAuth.AuthorizeAsync(TwitterConst.ConsumerKey, TwitterConst.ConsumerSecret, "https://twitter.com/tomoya_shibata/callback");
             var webAuthenticationResult = await WebAuthenticationBroker.AuthenticateAsync(WebAuthenticationOptions.None, session.AuthorizeUri, new Uri("https://twitter.com/tomoya_shibata/callback"));
 
-            if (webAuthenticationResult.ResponseStatus == WebAuthenticationStatus.UserCancel) return;
+            if (webAuthenticationResult.ResponseStatus == WebAuthenticationStatus.UserCancel) return null;
 
             var oauthVerifier = new WwwFormUrlDecoder(new Uri(webAuthenticationResult.ResponseData).Query).GetFirstValueByName("oauth_verifier");
-            var tokens        = await session.GetTokensAsync(oauthVerifier);
+            var tokens = await session.GetTokensAsync(oauthVerifier);
             SaveTokens(tokens);
+            return tokens;
         }
 
         /// <summary>
@@ -52,19 +53,19 @@ namespace Geopelia.Models
         /// </summary>
         private static void SaveTokens(Tokens tokens)
         {
-            var key = $"{tokens.ConsumerSecret}:{tokens.UserId}";
-            var dictionary = new Dictionary<string, object>
+            var key               = $"{tokens.ConsumerSecret}:{tokens.UserId}";
+            var authorizationInfo = new AuthorizationInfo
             {
-                { "screenName"       , tokens.ScreenName },
-                { "consumerKey"      , tokens.ConsumerKey },
-                { "consumerSecret"   , tokens.ConsumerSecret },
-                { "AccessToken"      , tokens.AccessToken },
-                { "AccessTokenSecret", tokens.AccessTokenSecret},
-                { "displayOrder"     , GetGeopeliaAccountCount() }
+                ScreenName        = tokens.ScreenName,
+                ConsumerKey       = tokens.ConsumerKey,
+                ConsumerSecret    = tokens.ConsumerSecret,
+                AccessToken       = tokens.AccessToken,
+                AccessTokenSecret = tokens.AccessTokenSecret,
+                DisplayOrder      = GetGeopeliaAccountCount()
             };
-            var passwordVault = new PasswordVault();
-            var json = JsonConvert.SerializeObject(dictionary);
-            passwordVault.Add(new PasswordCredential("GeopeliaAccount", key, json));
+
+            var json = JsonConvert.SerializeObject(authorizationInfo);
+            new PasswordVault().Add(new PasswordCredential("GeopeliaAccount", key, json));
         }
 
         /// <summary>
@@ -74,12 +75,9 @@ namespace Geopelia.Models
         {
             return new PasswordVault().RetrieveAll().Where(c => c.Resource == "GeopeliaAccount").Select(c =>
             {
-                var deserializeObject = JsonConvert.DeserializeObject<Dictionary<string, object>>(c.Password);
-                var consumerKey       = deserializeObject["ConsumerKey"].ToString();
-                var consumerSecret    = deserializeObject["consumerSecret"].ToString();
-                var accessToken       = deserializeObject["AccessToken"].ToString();
-                var accessTokenSecret = deserializeObject["AccessTokenSecret"].ToString();
-                return CreateTokens(consumerKey, consumerSecret, accessToken, accessTokenSecret);
+                var passwordCredential = new PasswordVault().Retrieve(c.Resource, c.UserName);
+                var authorizeInfo      = JsonConvert.DeserializeObject<AuthorizationInfo>(passwordCredential.Password);
+                return CreateTokens(authorizeInfo);
             });
         }
 
@@ -93,11 +91,8 @@ namespace Geopelia.Models
         /// <summary>
         /// トークンを生成する
         /// </summary>
-        /// <param name="consumerKey">ConsumerKey</param>
-        /// <param name="consumerSecret">ConsumerSecret</param>
-        /// <param name="accessToken">AccessToken</param>
-        /// <param name="accessTokenSecret">AccessTokenSecret</param>
-        private static Tokens CreateTokens(string consumerKey, string consumerSecret, string accessToken, string accessTokenSecret)
-            => Tokens.Create(consumerKey, consumerSecret, accessToken, accessTokenSecret);
+        /// <param name="authorizationInfo">認証情報</param>
+        private static Tokens CreateTokens(AuthorizationInfo authorizationInfo)
+            => Tokens.Create(authorizationInfo.ConsumerKey, authorizationInfo.ConsumerSecret, authorizationInfo.AccessToken, authorizationInfo.AccessTokenSecret);
     }
 }

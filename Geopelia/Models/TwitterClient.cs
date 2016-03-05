@@ -4,7 +4,6 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
-using Windows.Security.Authentication.Web;
 using Windows.Storage;
 using CoreTweet;
 using CoreTweet.Streaming;
@@ -72,26 +71,9 @@ namespace Geopelia.Models
             set { this.SetProperty(ref this._user, value); }
         }
 
-        public TwitterClient()
+        public TwitterClient(Tokens tokens)
         {
-            this._tokens = Tokens.Create(TwitterConst.ConsumerKey, TwitterConst.ConsumerSecret, TwitterConst.AccessToken,
-                TwitterConst.AccessTokenSecret);
-
-            //AuthorizeNewUserAsync();
-        }
-
-        private static async void AuthorizeNewUserAsync()
-        {
-            var session                 = await OAuth.AuthorizeAsync(TwitterConst.ConsumerKey, TwitterConst.ConsumerSecret);
-            var authorizeUri            = session.AuthorizeUri;
-            var webAuthenticationResult = await WebAuthenticationBroker.AuthenticateAsync(WebAuthenticationOptions.None, authorizeUri, new Uri("https://twitter.com/tomoya_shibata"));
-
-            var responseData  = webAuthenticationResult.ResponseData.Substring(webAuthenticationResult.ResponseData.IndexOf("oauth_token", StringComparison.Ordinal));
-            var oauthVerifier = responseData.Split('&')
-                                            .Where(kv => kv.ToLower().StartsWith("oauth_verifier="))
-                                            .Select(kv => kv.Split('=')[1])
-                                            .FirstOrDefault();
-            var tokensAsync = await session.GetTokensAsync(oauthVerifier);
+            this._tokens = tokens;
         }
 
         /// <summary>

@@ -32,28 +32,36 @@ namespace Geopelia.ViewModels
         public ReactiveProperty<double> Width { get; set; } = new ReactiveProperty<double>();
 
         public class ItemModelBase { }
-        private readonly TwitterClient _twitterClient;
+        private TwitterClient _twitterClient;
         private readonly TokenModel _tokenModel;
 
-        public MainPageViewModel(INavigationService navigationService, TwitterClient twitterClient)
+        public MainPageViewModel(INavigationService navigationService)
         {
             this.NavigationService = navigationService;
-            this._twitterClient    = twitterClient;
+            this.Width.Value       = Window.Current.Bounds.Width;
 
-            //this.TokensList  = this._tokenModel.TokensList.ToReadOnlyReactiveCollection();
-            this._tokenModel = new TokenModel();
+            this._tokenModel       = new TokenModel();
+            if (this._tokenModel.TokensList.Count != 0)
+            {
+                this.InitializeMainPage();
+                return;
+            }
 
-            this.Width.Value = Window.Current.Bounds.Width;
+            this._tokenModel.AuthorizeNewUserAsync().ContinueWith(_ => this.InitializeMainPage());
+        }
 
-            this.GetMyProfile();
-
-            this.Timelines    = this._twitterClient.Timelines.ToReadOnlyReactiveCollection();
-            this.TweetItems   = this._twitterClient.TweetItems.ToReadOnlyReactiveCollection();
-            this.MentionItems = this._twitterClient.MentionItems.ToReadOnlyReactiveCollection();
+        private void InitializeMainPage()
+        {
+            this._twitterClient = new TwitterClient(this._tokenModel.TokensList[0]);
+            this.Timelines      = this._twitterClient.Timelines.ToReadOnlyReactiveCollection();
+            this.TweetItems     = this._twitterClient.TweetItems.ToReadOnlyReactiveCollection();
+            this.MentionItems   = this._twitterClient.MentionItems.ToReadOnlyReactiveCollection();
 
             this._twitterClient.InitTimelines(this.NavigationService);
             this._twitterClient.InitMentions(this.NavigationService);
             this.StartStreaming();
+
+            this.GetMyProfile();
         }
 
         /// <summary>
