@@ -113,8 +113,9 @@
     <Compile Include="ViewModels\TweetCreatePageViewModel.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />
     <Compile Include="ViewModels\TweetItemViewModel.cs" />
-    <Compile Include="Views\IndexPage.xaml.cs">
-      <DependentUpon>IndexPage.xaml</DependentUpon>
+
+    <Compile Include="Views\SettingPage.xaml.cs">
+      <DependentUpon>SettingPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\TweetCreatePage.xaml.cs">
       <DependentUpon>TweetCreatePage.xaml</DependentUpon>
@@ -155,7 +156,7 @@
       <Generator>MSBuild:Compile</Generator>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Page>
-    <Page Include="Views\IndexPage.xaml">
+    <Page Include="Views\SettingPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
