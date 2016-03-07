@@ -10,19 +10,76 @@
       FontFamily="Meiryo"
       Background="Black">
     <Grid>
-        <StackPanel Margin="10">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="50" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <FontIcon Glyph="&#xE713;" />
-                <TextBlock Grid.Column="1"
-                           Text="Setting"
-                           FontSize="20" />
-            </Grid>
-            <Button Margin="0,50,0,0"
-                    Content="All Reset" />
-        </StackPanel>
+        <ListView>
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment"
+                            Value="Stretch" />
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ListViewHeaderItem>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="25" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <FontIcon Glyph="&#xE713;"
+                              Foreground="{ThemeResource SystemControlBackgroundAccentBrush}" />
+                    <TextBlock Grid.Column="1"
+                               Text="Setting"
+                               FontSize="20"
+                               Padding="10, 0, 0, 0" />
+                </Grid>
+            </ListViewHeaderItem>
+            <ListViewItem>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="25" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="50" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <FontIcon Glyph="&#xE890;"
+                              Foreground="{ThemeResource SystemControlBackgroundAccentBrush}" />
+                    <TextBlock Grid.Column="1"
+                               Text="Apearance" />
+                </Grid>
+            </ListViewItem>
+            <ListViewItem>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="25" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="50" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <FontIcon Glyph="&#xE74F;"
+                              Foreground="{ThemeResource SystemControlBackgroundAccentBrush}" />
+                    <TextBlock Grid.Column="1"
+                               Text="Mute" />
+                </Grid>
+            </ListViewItem>
+            <ListViewItem>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="25" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="50" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <FontIcon Glyph="&#xE712;"
+                              Foreground="{ThemeResource SystemControlBackgroundAccentBrush}" />
+                    <TextBlock Grid.Column="1"
+                               Text="External services" />
+                </Grid>
+            </ListViewItem>
+            <ListViewItem>
+                <Button Content="All reset"
+                        Margin="10, 0, 0, 0" />
+            </ListViewItem>
+        </ListView>
     </Grid>
 </Page>
