@@ -9,6 +9,7 @@ using Windows.Security.Credentials;
 using CoreTweet;
 using Newtonsoft.Json;
 using Prism.Mvvm;
+using System.Reactive.Linq;
 
 namespace Geopelia.Models
 {
@@ -54,7 +55,7 @@ namespace Geopelia.Models
         private static void SaveTokens(Tokens tokens)
         {
             var key               = $"{tokens.ConsumerSecret}:{tokens.UserId}";
-            var authorizationInfo = new AuthorizationInfo
+            var authorizationInfo = new AuthorizationInfoModel
             {
                 ScreenName        = tokens.ScreenName,
                 ConsumerKey       = tokens.ConsumerKey,
@@ -73,12 +74,26 @@ namespace Geopelia.Models
         /// </summary>
         private static IEnumerable<Tokens> LoadTokens()
         {
-            return new PasswordVault().RetrieveAll().Where(c => c.Resource == "GeopeliaAccount").Select(c =>
+            return new PasswordVault().RetrieveAll()
+                                      .Where(c => c.Resource == "GeopeliaAccount")
+                                      .Select(c =>
             {
                 var passwordCredential = new PasswordVault().Retrieve(c.Resource, c.UserName);
-                var authorizeInfo      = JsonConvert.DeserializeObject<AuthorizationInfo>(passwordCredential.Password);
+                var authorizeInfo      = JsonConvert.DeserializeObject<AuthorizationInfoModel>(passwordCredential.Password);
                 return CreateTokens(authorizeInfo);
             });
+        }
+
+        /// <summary>
+        /// 認証情報を全て削除する
+        /// </summary>
+        public async void RemoveAllTokens()
+        {
+            var passwordValut = new PasswordVault();
+            await passwordValut.RetrieveAll()
+                               .ToObservable()
+                               .Where(c => c.Resource == "GeopeliaAccount")
+                               .ForEachAsync(c => passwordValut.Remove(c));
         }
 
         /// <summary>
@@ -92,7 +107,7 @@ namespace Geopelia.Models
         /// トークンを生成する
         /// </summary>
         /// <param name="authorizationInfo">認証情報</param>
-        private static Tokens CreateTokens(AuthorizationInfo authorizationInfo)
+        private static Tokens CreateTokens(AuthorizationInfoModel authorizationInfo)
             => Tokens.Create(authorizationInfo.ConsumerKey, authorizationInfo.ConsumerSecret, authorizationInfo.AccessToken, authorizationInfo.AccessTokenSecret);
     }
 }

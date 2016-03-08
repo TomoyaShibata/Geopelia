@@ -102,18 +102,17 @@
     <Compile Include="DraftLogo.xaml.cs">
       <DependentUpon>DraftLogo.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Models\AuthorizationInfo.cs" />
+    <Compile Include="Models\AuthorizationInfoModel.cs" />
     <Compile Include="Models\PictureModel.cs" />
     <Compile Include="Models\TokenModel.cs" />
     <Compile Include="Models\TweetModel.cs" />
     <Compile Include="Models\TwitterClient.cs" />
     <Compile Include="Models\TwitterConst.cs" />
     <Compile Include="Models\UserModel.cs" />
-    <Compile Include="ViewModels\IndexPageViewModel.cs" />
+    <Compile Include="ViewModels\SettingPageViewModel.cs" />
     <Compile Include="ViewModels\TweetCreatePageViewModel.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />
     <Compile Include="ViewModels\TweetItemViewModel.cs" />
-
     <Compile Include="Views\SettingPage.xaml.cs">
       <DependentUpon>SettingPage.xaml</DependentUpon>
     </Compile>
