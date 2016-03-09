@@ -8,7 +8,7 @@
       mvvm:ViewModelLocator.AutoWireViewModel="True"
       mc:Ignorable="d"
       FontFamily="Meiryo"
-      Background="Black">
+      Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <Grid>
         <ListView>
             <ListView.ItemContainerStyle>
