@@ -193,30 +193,6 @@
         <ProgressBar VerticalAlignment="Top"
                      IsEnabled="True"
                      IsIndeterminate="True" />
-        <SplitView IsPaneOpen="False"
-                   PaneBackground="#FF2B2B2B"
-                   OpenPaneLength="180"
-                   DisplayMode="Overlay">
-            <SplitView.Pane>
-                <StackPanel>
-                    <StackPanel.Resources>
-                        <Style TargetType="TextBlock"
-                               x:Key="AccountTextBlock">
-                            <Setter Property="Margin"
-                                    Value="10"></Setter>
-                        </Style>
-                    </StackPanel.Resources>
-                    <TextBlock Style="{StaticResource AccountTextBlock}"
-                               Text="@tomoya_shibata " />
-                    <TextBlock Style="{StaticResource AccountTextBlock}"
-                               Text="@tomoya_shibata_a" />
-                    <TextBlock Style="{StaticResource AccountTextBlock}"
-                               Text="@tomoya_shibata_b" />
-                    <TextBlock Style="{StaticResource AccountTextBlock}"
-                               Text="@tomoya_shibata_c" />
-                </StackPanel>
-            </SplitView.Pane>
-        </SplitView>
         <Pivot>
             <PivotItem Margin="0">
                 <PivotItem.Header>
@@ -326,19 +302,52 @@
                         <TextBlock Grid.Row="1"
                                    VerticalAlignment="Center"
                                    HorizontalAlignment="Center">
-							   <Run Text="{x:Bind ViewModel.MyProfile.Value.Status.FavoriteCount}" />
-						      <Run Text="ChangeFavorites" />
+                            <Run Text="{x:Bind ViewModel.MyProfile.Value.Status.FavoriteCount}" />
+                            <Run Text="ChangeFavorites" />
                         </TextBlock>
                     </Grid>
                 </Grid>
             </PivotItem>
         </Pivot>
+        <SplitView IsPaneOpen="True"
+                   PaneBackground="#FF2B2B2B"
+                   OpenPaneLength="180"
+                   DisplayMode="Overlay">
+            <SplitView.Pane>
+                <StackPanel>
+                    <StackPanel.Resources>
+                        <Style TargetType="TextBlock"
+                               x:Key="AccountTextBlock">
+                            <Setter Property="Margin"
+                                    Value="10"></Setter>
+                        </Style>
+                    </StackPanel.Resources>
+                    <TextBlock Style="{StaticResource AccountTextBlock}"
+                               Text="@tomoya_shibata " />
+                    <TextBlock Style="{StaticResource AccountTextBlock}"
+                               Text="@tomoya_shibata_a" />
+                    <TextBlock Style="{StaticResource AccountTextBlock}"
+                               Text="@tomoya_shibata_b" />
+                    <TextBlock Style="{StaticResource AccountTextBlock}"
+                               Text="@tomoya_shibata_c" />
+                </StackPanel>
+            </SplitView.Pane>
+        </SplitView>
     </Grid>
     <Page.BottomAppBar>
         <CommandBar ClosedDisplayMode="Compact">
-            <AppBarButton Icon="Edit"
-                          Label="Tweet"
-                          Click="{x:Bind ViewModel.NavigateNextPage}" />
+            <CommandBar.PrimaryCommands>
+                <AppBarButton Icon="Edit"
+                              Label="Tweet"
+                              Click="{x:Bind ViewModel.NavigateNextPage}" />
+            </CommandBar.PrimaryCommands>
+            <CommandBar.SecondaryCommands>
+                <AppBarButton Label="Setting">
+                    <AppBarButton.Icon>
+                        <FontIcon Glyph="&#xE890;" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
+            </CommandBar.SecondaryCommands>
         </CommandBar>
     </Page.BottomAppBar>
 </Page>
