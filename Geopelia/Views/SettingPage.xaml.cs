@@ -11,10 +11,5 @@ namespace Geopelia.Views
         {
             this.InitializeComponent();
         }
-
-        private void Button_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
-        {
-
-        }
     }
 }
