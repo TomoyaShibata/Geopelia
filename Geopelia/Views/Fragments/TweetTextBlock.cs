@@ -58,7 +58,7 @@ namespace Geopelia.Views.Fragments
                     this.TextBlock.Inlines.Add(run);
                 }
                 var link = new Hyperlink { NavigateUri = new Uri(url.Url) };
-                link.Inlines.Add(new Run { Text = url.DisplayUrl });
+                link.Inlines.Add(new Run { Text = url.ExpandedUrl });
                 this.TextBlock.Inlines.Add(link);
 
                 currTextIdx = end;
