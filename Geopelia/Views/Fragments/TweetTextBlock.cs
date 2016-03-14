@@ -74,9 +74,10 @@ namespace Geopelia.Views.Fragments
         private static string SubStringAndDecode(string text, int start, int length)
         {
             var result = "";
+            var data   = StringInfo.ParseCombiningCharacters(text);
             for (var i = start; i < start + length; i++)
             {
-                result += StringInfo.GetNextTextElement(text, i);
+                result += StringInfo.GetNextTextElement(text, data[i]);
             }
 
             return WebUtility.HtmlDecode(result);
