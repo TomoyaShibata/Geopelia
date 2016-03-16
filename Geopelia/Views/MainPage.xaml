@@ -14,42 +14,35 @@
     <Page.Resources>
         <DataTemplate x:Key="TweetItemTemplate"
                       x:DataType="viewModels:TweetItemViewModel">
-            <Grid Margin="0,10"
-                  BorderThickness="3,0,0,0"
-                  BorderBrush="{x:Bind Brush.Value}">
+            <Grid Margin="-10,0"
+                  Padding="0, 10, 0, 10"
+                  BorderThickness="0,1,0,0"
+                  BorderBrush="#222">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="*" />
-                    <RowDefinition MaxHeight="200" />
-                    <RowDefinition MaxHeight="0" />
-                    <RowDefinition MaxHeight="0" />
-                    <RowDefinition MaxHeight="0" />
                     <RowDefinition />
-                    <RowDefinition Height="30" />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="70" />
+                    <ColumnDefinition Width="3" />
+                    <ColumnDefinition Width="50" />
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <Image Grid.RowSpan="7"
-                       Grid.ColumnSpan="3"
-                       VerticalAlignment="Top"
-                       Source="{x:Bind TweetModel.Value.PicTwitterUris[0]}"
-                       Stretch="UniformToFill"
-                       Height="300"
-                       Visibility="{x:Bind PictureVisibility.Value}" />
-                <Grid Row="1"
-                      Height="100"
-                      Visibility="{x:Bind PictureVisibility.Value}" />
-                <Border Grid.Row="2"
-                        Grid.RowSpan="3"
-                        Width="50"
-                        Height="50"
+                <Rectangle Grid.RowSpan="6"
+                           Fill="{x:Bind Brush.Value}" />
+                <Border Grid.RowSpan="3"
+                        Grid.Column="1"
+                        Width="38"
+                        Height="38"
                         VerticalAlignment="Top"
                         HorizontalAlignment="Left"
-                        Margin="10,0"
-                        CornerRadius="5"
-                        BorderThickness="2"
+                        Margin="12, 0, 0, 0"
+                        CornerRadius="3"
+                        BorderThickness="1"
                         BorderBrush="White">
                     <Border.Background>
                         <ImageBrush Stretch="None"
@@ -60,53 +53,30 @@
                              Margin="0, -20, -9, 0"
                              Fill="White" />
                 </Border>
-                <Border Grid.Row="2"
-                        Grid.RowSpan="3"
-                        Width="50"
-                        Height="50"
-                        VerticalAlignment="Top"
-                        HorizontalAlignment="Left"
-                        Margin="10,45,0,10"
-                        CornerRadius="5"
-                        BorderThickness="2"
-                        BorderBrush="White"
-                        Visibility="{x:Bind TweetVisibility.Value}">
-                    <Border.Background>
-                        <ImageBrush Stretch="None"
-                                    ImageSource="{x:Bind TweetModel.Value.RetweetedStatus.User.ProfileImageUrlHttps}" />
-                    </Border.Background>
-                    <Ellipse Visibility="{x:Bind ProtectedVisibility.Value, Mode=OneTime}"
-                             HorizontalAlignment="Right"
-                             Margin="0, -20, -9, 0"
-                             Fill="White" />
-                </Border>
-                <TextBlock Grid.Row="2"
-                           Grid.Column="1"
+                <TextBlock Grid.Column="2"
                            Grid.ColumnSpan="2"
                            VerticalAlignment="Top"
                            Margin="10, 0, 0, 0"
-                           TextTrimming="CharacterEllipsis">
-                                    <Run Text="{x:Bind TweetModel.Value.Name}"
-                                         FontSize="12" />
-                                    <Run Text="@"
-                                         FontSize="11" />
-                                    <Run Text="{x:Bind TweetModel.Value.ScreenName}"
-                                         FontSize="12" />
+                           TextTrimming="CharacterEllipsis"
+                           FontSize="15">
+                                    <Run Text="{x:Bind TweetModel.Value.Name}" />
+                                    <Run Text="@" />
+                                    <Run Text="{x:Bind TweetModel.Value.ScreenName}" />
                 </TextBlock>
-                <TextBlock Grid.Row="2"
-                           Grid.Column="2"
+                <TextBlock Grid.Column="3"
                            Text="{x:Bind TweetModel.Value.CreatedAt}"
                            VerticalAlignment="Top"
-                           HorizontalAlignment="Right" />
-                <fragments:TweetTextBlock Grid.Row="3"
-                                          Grid.Column="1"
+                           HorizontalAlignment="Right"
+                           Margin="0,0,10,0" />
+                <fragments:TweetTextBlock Grid.Row="1"
+                                          Grid.Column="2"
                                           Grid.ColumnSpan="2"
                                           HorizontalAlignment="Left"
                                           VerticalAlignment="Top"
-                                          Margin="10, 0, 0, 0"
+                                          Margin="10, 10, 0, 0"
                                           TwitterResponse="{x:Bind TweetModel.Value}" />
-                <Grid Grid.Row="4"
-                      Grid.Column="1"
+                <Grid Grid.Row="2"
+                      Grid.Column="2"
                       Grid.ColumnSpan="2"
                       Background="#333"
                       Opacity="0.8"
@@ -129,16 +99,41 @@
                                Text="{x:Bind TweetModel.Value.ReplyStatusMessage.Text}"
                                TextWrapping="WrapWholeWords" />
                 </Grid>
-                <TextBlock Grid.Row="5"
-                           Grid.Column="1"
+                <Border Grid.Row="3"
+                        Grid.Column="2"
+                        Grid.ColumnSpan="2"
+                        Width="30"
+                        Height="30"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Left"
+                        Margin="10,0"
+                        CornerRadius="3"
+                        BorderThickness="1"
+                        BorderBrush="White"
+                        Visibility="{x:Bind TweetVisibility.Value}">
+                    <Border.Background>
+                        <ImageBrush Stretch="None"
+                                    ImageSource="{x:Bind TweetModel.Value.TweetStatus.User.ProfileImageUrlHttps}" />
+                    </Border.Background>
+                    <Ellipse Visibility="{x:Bind ProtectedVisibility.Value, Mode=OneTime}"
+                             HorizontalAlignment="Right"
+                             Margin="0, -20, -9, 0"
+                             Fill="White" />
+                </Border>
+                <TextBlock Grid.Row="3"
+                           Grid.Column="2"
                            Grid.ColumnSpan="2"
-                           FontSize="11"
+                           FontSize="15"
                            Foreground="Gray"
-                           Margin="10, 0, 0, 0"
+                           Margin="50, 0, 0, 0"
+                           VerticalAlignment="Center"
                            Text="{x:Bind TweetModel.Value.RtName}"
                            TextWrapping="WrapWholeWords"
-                           Visibility="{x:Bind TweetVisibility.Value}" />
-                <Grid Row="6"
+                           Visibility="{x:Bind TweetVisibility.Value}">
+
+                </TextBlock>
+                <Grid Row="4"
+                      Grid.Column="1"
                       Grid.ColumnSpan="3">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
@@ -150,7 +145,8 @@
                     <Button Background="Transparent"
                             HorizontalAlignment="Center"
                             Tapped="{x:Bind NavigateTweetCreatePage}">
-                        <SymbolIcon Symbol="Back" />
+                        <SymbolIcon Symbol="Back"
+                                    Foreground="Gray" />
                     </Button>
                     <Button Grid.Column="1"
                             Background="Transparent"
@@ -175,12 +171,14 @@
                     <Button Grid.Column="3"
                             Background="Transparent"
                             HorizontalAlignment="Center">
-                        <SymbolIcon Symbol="Upload" />
+                        <SymbolIcon Symbol="Upload"
+                                    Foreground="Gray" />
                     </Button>
                     <Button Grid.Column="4"
                             Background="Transparent"
                             HorizontalAlignment="Center">
-                        <SymbolIcon Symbol="More" />
+                        <SymbolIcon Symbol="More"
+                                    Foreground="Gray" />
                     </Button>
                 </Grid>
             </Grid>
@@ -194,6 +192,7 @@
             <PivotItem Margin="0">
                 <PivotItem.Header>
                     <TextBlock Text="Home"
+                               Margin="5,0,0,0"
                                Tapped="{x:Bind ViewModel.JumpToTop}" />
                 </PivotItem.Header>
                 <ListView Name="ListViewTimelines"
@@ -211,7 +210,7 @@
                     </ListView.ItemContainerStyle>
                 </ListView>
             </PivotItem>
-            <PivotItem>
+            <PivotItem Margin="0">
                 <PivotItem.Header>
                     <TextBlock Text="Mentions" />
                 </PivotItem.Header>
