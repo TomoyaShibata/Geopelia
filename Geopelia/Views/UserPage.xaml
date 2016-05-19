@@ -1,0 +1,784 @@
+﻿<Page x:Class="Geopelia.Views.UserPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:local="using:Geopelia"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:mvvm="using:Prism.Windows.Mvvm"
+      xmlns:viewModels="using:Geopelia.ViewModels"
+      xmlns:fragments="using:Geopelia.Views.Fragments"
+      mvvm:ViewModelLocator.AutoWireViewModel="True"
+      mc:Ignorable="d"
+      FontFamily="Meiryo"
+      NavigationCacheMode="Required"
+      Background="{ThemeResource SystemControlBackgroundAccentBrush}">
+    <Page.Resources>
+        <DataTemplate x:Key="TweetItemTemplate"
+                      x:DataType="viewModels:TweetItemViewModel">
+            <Grid Margin="-10,0"
+                  Padding="0, 10, 0, 10"
+                  BorderThickness="0,1,0,0"
+                  BorderBrush="#222">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3" />
+                    <ColumnDefinition Width="50" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Rectangle Grid.RowSpan="6"
+                           Fill="{x:Bind Brush.Value}" />
+                <Border Grid.RowSpan="3"
+                        Grid.Column="1"
+                        Width="38"
+                        Height="38"
+                        VerticalAlignment="Top"
+                        HorizontalAlignment="Left"
+                        Margin="12, 0, 0, 0"
+                        CornerRadius="3"
+                        BorderThickness="1"
+                        BorderBrush="White">
+                    <Border.Background>
+                        <ImageBrush Stretch="None"
+                                    ImageSource="{x:Bind TweetModel.Value.ProfileImageUrlHttps}" />
+                    </Border.Background>
+                    <Ellipse Visibility="{x:Bind ProtectedVisibility.Value, Mode=OneTime}"
+                             HorizontalAlignment="Right"
+                             Margin="0, -20, -9, 0"
+                             Fill="White" />
+                </Border>
+                <TextBlock Grid.Column="2"
+                           VerticalAlignment="Top"
+                           Margin="10, 0, 0, 0"
+                           TextTrimming="CharacterEllipsis"
+                           FontSize="15">
+                                    <Run Text="{x:Bind TweetModel.Value.Name}" />
+                                    <Run Text="@" />
+                                    <Run Text="{x:Bind TweetModel.Value.ScreenName}" />
+                </TextBlock>
+                <TextBlock Grid.Column="3"
+                           Text="{x:Bind TweetModel.Value.CreatedAt}"
+                           VerticalAlignment="Top"
+                           HorizontalAlignment="Right"
+                           Margin="0,0,10,0" />
+                <fragments:TweetTextBlock Grid.Row="1"
+                                          Grid.Column="2"
+                                          Grid.ColumnSpan="2"
+                                          HorizontalAlignment="Left"
+                                          VerticalAlignment="Top"
+                                          Margin="10, 10, 0, 0"
+                                          TwitterResponse="{x:Bind TweetModel.Value}"
+                                          Tapped="{x:Bind NavigateTweetDetailsPage}" />
+                <Grid Grid.Row="2"
+                      Grid.Column="2"
+                      Grid.ColumnSpan="2"
+                      Background="#333"
+                      Opacity="0.8"
+                      Margin="10"
+                      Padding="5"
+                      Visibility="{x:Bind ReplyToTweetTextVisibility.Value}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="20" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <TextBlock HorizontalAlignment="Left"
+                               VerticalAlignment="Top"
+                               Margin="10, 0, 0, 0"
+                               Text="{x:Bind TweetModel.Value.ReplyStatusMessage.User.ScreenName}"
+                               TextWrapping="WrapWholeWords" />
+                    <TextBlock Grid.Row="1"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Top"
+                               Margin="10, 0, 0, 0"
+                               Text="{x:Bind TweetModel.Value.ReplyStatusMessage.Text}"
+                               TextWrapping="WrapWholeWords" />
+                </Grid>
+                <Border Grid.Row="3"
+                        Grid.Column="2"
+                        Grid.ColumnSpan="2"
+                        Width="30"
+                        Height="30"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Left"
+                        Margin="10,0"
+                        CornerRadius="3"
+                        BorderThickness="1"
+                        BorderBrush="White"
+                        Visibility="{x:Bind TweetVisibility.Value}">
+                    <Border.Background>
+                        <ImageBrush Stretch="None"
+                                    ImageSource="{x:Bind TweetModel.Value.TweetStatus.User.ProfileImageUrlHttps}" />
+                    </Border.Background>
+                    <Ellipse Visibility="{x:Bind ProtectedVisibility.Value, Mode=OneTime}"
+                             HorizontalAlignment="Right"
+                             Margin="0, -20, -9, 0"
+                             Fill="White" />
+                </Border>
+                <TextBlock Grid.Row="3"
+                           Grid.Column="2"
+                           Grid.ColumnSpan="2"
+                           FontSize="15"
+                           Foreground="Gray"
+                           Margin="50, 0, 0, 0"
+                           VerticalAlignment="Center"
+                           Text="{x:Bind TweetModel.Value.RtName}"
+                           TextWrapping="WrapWholeWords"
+                           Visibility="{x:Bind TweetVisibility.Value}">
+
+                </TextBlock>
+                <Grid Row="4"
+                      Grid.Column="1"
+                      Grid.ColumnSpan="3">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Button Background="Transparent"
+                            HorizontalAlignment="Center"
+                            Tapped="{x:Bind NavigateTweetCreatePage}">
+                        <FontIcon Glyph="&#xE248;"
+                                  Foreground="Gray" />
+                    </Button>
+                    <Button Grid.Column="1"
+                            Background="Transparent"
+                            HorizontalAlignment="Center"
+                            Foreground="{x:Bind RetweetForground.Value, Mode=OneWay}">
+                        <Button.Flyout>
+                            <MenuFlyout>
+                                <MenuFlyoutItem Text="{x:Bind RetweetText.Value, Mode=OneWay}"
+                                                Tapped="{x:Bind ChangeIsRetweeted}" />
+                                <MenuFlyoutItem Text="引用リツイートする" />
+                            </MenuFlyout>
+                        </Button.Flyout>
+                        <SymbolIcon Symbol="ReShare" />
+                    </Button>
+                    <Button Grid.Column="2"
+                            Background="Transparent"
+                            HorizontalAlignment="Center"
+                            Tapped="{x:Bind ChangeIsFavorited}">
+                        <FontIcon Glyph="&#xE006;"
+                                  Foreground="{x:Bind FavoriteForground.Value, Mode=OneWay}" />
+                    </Button>
+                    <Button Grid.Column="3"
+                            Background="Transparent"
+                            HorizontalAlignment="Center">
+                        <SymbolIcon Symbol="Upload"
+                                    Foreground="Gray" />
+                    </Button>
+                    <Button Grid.Column="4"
+                            Background="Transparent"
+                            HorizontalAlignment="Center">
+                        <SymbolIcon Symbol="More"
+                                    Foreground="Gray" />
+                    </Button>
+                </Grid>
+            </Grid>
+        </DataTemplate>
+
+        <Style x:Key="NavRadioButtonStyle"
+               TargetType="RadioButton">
+            <Setter Property="HorizontalAlignment"
+                    Value="Stretch" />
+            <Setter Property="HorizontalContentAlignment"
+                    Value="Center"></Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RadioButton">
+                        <Border BorderBrush="{ThemeResource SystemControlBackgroundAccentBrush}">
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Normal" />
+                                    <VisualState x:Name="Disabled" />
+                                </VisualStateGroup>
+                                <VisualStateGroup x:Name="CheckStates">
+                                    <VisualState x:Name="Checked">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="BorderBrush"
+                                                                           Storyboard.TargetName="BackgroundGrid">
+                                                <DiscreteObjectKeyFrame KeyTime="0"
+                                                                        Value="{ThemeResource SystemControlBackgroundAccentBrush}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Unchecked" />
+                                    <VisualState x:Name="Indeterminate" />
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                            <Grid Name="BackgroundGrid"
+                                  BorderThickness="0,0,0,3"
+                                  HorizontalAlignment="Stretch">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="32" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <TextBlock Text="100"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Center" />
+                                <ContentPresenter x:Name="ContentPresenter"
+                                                  AutomationProperties.AccessibilityView="Raw"
+                                                  ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                  ContentTransitions="{TemplateBinding ContentTransitions}"
+                                                  Content="{TemplateBinding Content}"
+                                                  Grid.Row="1"
+                                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                  Margin="{TemplateBinding Padding}"
+                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                            </Grid>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
+    <StackPanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <StackPanel Orientation="Horizontal"
+                    Height="50"
+                    Background="{ThemeResource SystemControlBackgroundAccentBrush}">
+            <Button Width="55"
+                    VerticalAlignment="Stretch"
+                    HorizontalAlignment="Center"
+                    Tapped="{x:Bind ViewModel.GoBack}">
+                <FontIcon Glyph="&#xE72B;" />
+            </Button>
+            <TextBlock Margin="10"
+                       FontSize="20"
+                       VerticalAlignment="Center"
+                       Text="User" />
+        </StackPanel>
+        <Grid Padding="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.Background>
+                <ImageBrush Stretch="UniformToFill"
+                            ImageSource="https://pbs.twimg.com/profile_banners/57864731/1401368956/1500x500"
+                            Opacity="0.7">
+                </ImageBrush>
+            </Grid.Background>
+            <Border Grid.RowSpan="2"
+                    Width="38"
+                    Height="38"
+                    VerticalAlignment="Top"
+                    HorizontalAlignment="Left"
+                    Margin="0, 0, 15, 0"
+                    CornerRadius="3"
+                    BorderThickness="1"
+                    BorderBrush="White">
+                <Border.Background>
+                    <ImageBrush Stretch="UniformToFill"
+                                ImageSource="https://pbs.twimg.com/profile_images/637494283365298177/J0t3qvlm.jpg" />
+                </Border.Background>
+                <Ellipse HorizontalAlignment="Right"
+                         Margin="0, -20, -9, 0"
+                         Fill="White" />
+            </Border>
+            <TextBlock Grid.Column="1"
+                       Text="バトルプログラマー柴田智也" />
+            <TextBlock Grid.Row="1"
+                       Grid.Column="1"
+                       Text="@tomoya_shibata"
+                       FontSize="13"
+                       Foreground="DarkGray" />
+            <TextBlock Grid.Row="2"
+                       Grid.Column="1"
+                       Text="Age.26. Mass post, and HENTAI post. I like All WebTech, C#, Java, Windows, Security, ThinkPad, and dakimakura. My tweet is a personal opinion."
+                       TextWrapping="WrapWholeWords"
+                       Margin="0, 10" />
+        </Grid>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <RadioButton Content="Tweets"
+                         Style="{StaticResource NavRadioButtonStyle}"
+                         IsChecked="True" />
+            <RadioButton Grid.Column="1"
+                         Content="Follows"
+                         Style="{StaticResource NavRadioButtonStyle}"
+                         IsChecked="False" />
+            <RadioButton Grid.Column="2"
+                         Content="Followers"
+                         Style="{StaticResource NavRadioButtonStyle}"
+                         IsChecked="False" />
+        </Grid>
+        <!--<ListView Name="ListViewTimelines"
+                  VerticalAlignment="Top"
+                  ItemTemplate="{StaticResource TweetItemTemplate}"
+                  SelectionMode="None">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment"
+                            Value="Stretch" />
+                    <Setter Property="Margin"
+                            Value="0,0,0,0" />
+                </Style>
+            </ListView.ItemContainerStyle>
+        </ListView>-->
+        <ListView>
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="Margin"
+                            Value="0,10,0,10" />
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ListViewItem>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Border Grid.RowSpan="2"
+                            Width="38"
+                            Height="38"
+                            VerticalAlignment="Top"
+                            HorizontalAlignment="Left"
+                            Margin="0, 0, 15, 0"
+                            CornerRadius="3"
+                            BorderThickness="1"
+                            BorderBrush="White">
+                        <Border.Background>
+                            <ImageBrush Stretch="UniformToFill"
+                                        ImageSource="https://pbs.twimg.com/profile_images/637494283365298177/J0t3qvlm.jpg" />
+                        </Border.Background>
+                        <Ellipse HorizontalAlignment="Right"
+                                 Margin="0, -20, -9, 0"
+                                 Fill="White" />
+                    </Border>
+                    <TextBlock Grid.Column="1"
+                               Text="バトルプログラマー柴田智也" />
+                    <TextBlock Grid.Row="1"
+                               Grid.Column="1"
+                               Text="@tomoya_shibata"
+                               FontSize="13"
+                               Foreground="DarkGray" />
+                </Grid>
+            </ListViewItem>
+            <ListViewItem>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Border Grid.RowSpan="2"
+                            Width="38"
+                            Height="38"
+                            VerticalAlignment="Top"
+                            HorizontalAlignment="Left"
+                            Margin="0, 0, 15, 0"
+                            CornerRadius="3"
+                            BorderThickness="1"
+                            BorderBrush="White">
+                        <Border.Background>
+                            <ImageBrush Stretch="UniformToFill"
+                                        ImageSource="https://pbs.twimg.com/profile_images/637494283365298177/J0t3qvlm.jpg" />
+                        </Border.Background>
+                        <Ellipse HorizontalAlignment="Right"
+                                 Margin="0, -20, -9, 0"
+                                 Fill="White" />
+                    </Border>
+                    <TextBlock Grid.Column="1"
+                               Text="バトルプログラマー柴田智也" />
+                    <TextBlock Grid.Row="1"
+                               Grid.Column="1"
+                               Text="@tomoya_shibata"
+                               FontSize="13"
+                               Foreground="DarkGray" />
+                </Grid>
+            </ListViewItem>
+            <ListViewItem>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Border Grid.RowSpan="2"
+                            Width="38"
+                            Height="38"
+                            VerticalAlignment="Top"
+                            HorizontalAlignment="Left"
+                            Margin="0, 0, 15, 0"
+                            CornerRadius="3"
+                            BorderThickness="1"
+                            BorderBrush="White">
+                        <Border.Background>
+                            <ImageBrush Stretch="UniformToFill"
+                                        ImageSource="https://pbs.twimg.com/profile_images/637494283365298177/J0t3qvlm.jpg" />
+                        </Border.Background>
+                        <Ellipse HorizontalAlignment="Right"
+                                 Margin="0, -20, -9, 0"
+                                 Fill="White" />
+                    </Border>
+                    <TextBlock Grid.Column="1"
+                               Text="バトルプログラマー柴田智也" />
+                    <TextBlock Grid.Row="1"
+                               Grid.Column="1"
+                               Text="@tomoya_shibata"
+                               FontSize="13"
+                               Foreground="DarkGray" />
+                </Grid>
+            </ListViewItem>
+            <ListViewItem>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Border Grid.RowSpan="2"
+                            Width="38"
+                            Height="38"
+                            VerticalAlignment="Top"
+                            HorizontalAlignment="Left"
+                            Margin="0, 0, 15, 0"
+                            CornerRadius="3"
+                            BorderThickness="1"
+                            BorderBrush="White">
+                        <Border.Background>
+                            <ImageBrush Stretch="UniformToFill"
+                                        ImageSource="https://pbs.twimg.com/profile_images/637494283365298177/J0t3qvlm.jpg" />
+                        </Border.Background>
+                        <Ellipse HorizontalAlignment="Right"
+                                 Margin="0, -20, -9, 0"
+                                 Fill="White" />
+                    </Border>
+                    <TextBlock Grid.Column="1"
+                               Text="バトルプログラマー柴田智也" />
+                    <TextBlock Grid.Row="1"
+                               Grid.Column="1"
+                               Text="@tomoya_shibata"
+                               FontSize="13"
+                               Foreground="DarkGray" />
+                </Grid>
+            </ListViewItem>
+            <ListViewItem>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Border Grid.RowSpan="2"
+                            Width="38"
+                            Height="38"
+                            VerticalAlignment="Top"
+                            HorizontalAlignment="Left"
+                            Margin="0, 0, 15, 0"
+                            CornerRadius="3"
+                            BorderThickness="1"
+                            BorderBrush="White">
+                        <Border.Background>
+                            <ImageBrush Stretch="UniformToFill"
+                                        ImageSource="https://pbs.twimg.com/profile_images/637494283365298177/J0t3qvlm.jpg" />
+                        </Border.Background>
+                        <Ellipse HorizontalAlignment="Right"
+                                 Margin="0, -20, -9, 0"
+                                 Fill="White" />
+                    </Border>
+                    <TextBlock Grid.Column="1"
+                               Text="バトルプログラマー柴田智也" />
+                    <TextBlock Grid.Row="1"
+                               Grid.Column="1"
+                               Text="@tomoya_shibata"
+                               FontSize="13"
+                               Foreground="DarkGray" />
+                </Grid>
+            </ListViewItem>
+            <ListViewItem>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Border Grid.RowSpan="2"
+                            Width="38"
+                            Height="38"
+                            VerticalAlignment="Top"
+                            HorizontalAlignment="Left"
+                            Margin="0, 0, 15, 0"
+                            CornerRadius="3"
+                            BorderThickness="1"
+                            BorderBrush="White">
+                        <Border.Background>
+                            <ImageBrush Stretch="UniformToFill"
+                                        ImageSource="https://pbs.twimg.com/profile_images/637494283365298177/J0t3qvlm.jpg" />
+                        </Border.Background>
+                        <Ellipse HorizontalAlignment="Right"
+                                 Margin="0, -20, -9, 0"
+                                 Fill="White" />
+                    </Border>
+                    <TextBlock Grid.Column="1"
+                               Text="バトルプログラマー柴田智也" />
+                    <TextBlock Grid.Row="1"
+                               Grid.Column="1"
+                               Text="@tomoya_shibata"
+                               FontSize="13"
+                               Foreground="DarkGray" />
+                </Grid>
+            </ListViewItem>
+            <ListViewItem>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Border Grid.RowSpan="2"
+                            Width="38"
+                            Height="38"
+                            VerticalAlignment="Top"
+                            HorizontalAlignment="Left"
+                            Margin="0, 0, 15, 0"
+                            CornerRadius="3"
+                            BorderThickness="1"
+                            BorderBrush="White">
+                        <Border.Background>
+                            <ImageBrush Stretch="UniformToFill"
+                                        ImageSource="https://pbs.twimg.com/profile_images/637494283365298177/J0t3qvlm.jpg" />
+                        </Border.Background>
+                        <Ellipse HorizontalAlignment="Right"
+                                 Margin="0, -20, -9, 0"
+                                 Fill="White" />
+                    </Border>
+                    <TextBlock Grid.Column="1"
+                               Text="バトルプログラマー柴田智也" />
+                    <TextBlock Grid.Row="1"
+                               Grid.Column="1"
+                               Text="@tomoya_shibata"
+                               FontSize="13"
+                               Foreground="DarkGray" />
+                </Grid>
+            </ListViewItem>
+            <ListViewItem>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Border Grid.RowSpan="2"
+                            Width="38"
+                            Height="38"
+                            VerticalAlignment="Top"
+                            HorizontalAlignment="Left"
+                            Margin="0, 0, 15, 0"
+                            CornerRadius="3"
+                            BorderThickness="1"
+                            BorderBrush="White">
+                        <Border.Background>
+                            <ImageBrush Stretch="UniformToFill"
+                                        ImageSource="https://pbs.twimg.com/profile_images/637494283365298177/J0t3qvlm.jpg" />
+                        </Border.Background>
+                        <Ellipse HorizontalAlignment="Right"
+                                 Margin="0, -20, -9, 0"
+                                 Fill="White" />
+                    </Border>
+                    <TextBlock Grid.Column="1"
+                               Text="バトルプログラマー柴田智也" />
+                    <TextBlock Grid.Row="1"
+                               Grid.Column="1"
+                               Text="@tomoya_shibata"
+                               FontSize="13"
+                               Foreground="DarkGray" />
+                </Grid>
+            </ListViewItem>
+            <ListViewItem>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Border Grid.RowSpan="2"
+                            Width="38"
+                            Height="38"
+                            VerticalAlignment="Top"
+                            HorizontalAlignment="Left"
+                            Margin="0, 0, 15, 0"
+                            CornerRadius="3"
+                            BorderThickness="1"
+                            BorderBrush="White">
+                        <Border.Background>
+                            <ImageBrush Stretch="UniformToFill"
+                                        ImageSource="https://pbs.twimg.com/profile_images/637494283365298177/J0t3qvlm.jpg" />
+                        </Border.Background>
+                        <Ellipse HorizontalAlignment="Right"
+                                 Margin="0, -20, -9, 0"
+                                 Fill="White" />
+                    </Border>
+                    <TextBlock Grid.Column="1"
+                               Text="バトルプログラマー柴田智也" />
+                    <TextBlock Grid.Row="1"
+                               Grid.Column="1"
+                               Text="@tomoya_shibata"
+                               FontSize="13"
+                               Foreground="DarkGray" />
+                </Grid>
+            </ListViewItem>
+            <ListViewItem>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Border Grid.RowSpan="2"
+                            Width="38"
+                            Height="38"
+                            VerticalAlignment="Top"
+                            HorizontalAlignment="Left"
+                            Margin="0, 0, 15, 0"
+                            CornerRadius="3"
+                            BorderThickness="1"
+                            BorderBrush="White">
+                        <Border.Background>
+                            <ImageBrush Stretch="UniformToFill"
+                                        ImageSource="https://pbs.twimg.com/profile_images/637494283365298177/J0t3qvlm.jpg" />
+                        </Border.Background>
+                        <Ellipse HorizontalAlignment="Right"
+                                 Margin="0, -20, -9, 0"
+                                 Fill="White" />
+                    </Border>
+                    <TextBlock Grid.Column="1"
+                               Text="バトルプログラマー柴田智也" />
+                    <TextBlock Grid.Row="1"
+                               Grid.Column="1"
+                               Text="@tomoya_shibata"
+                               FontSize="13"
+                               Foreground="DarkGray" />
+                </Grid>
+            </ListViewItem>
+            <ListViewItem>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Border Grid.RowSpan="2"
+                            Width="38"
+                            Height="38"
+                            VerticalAlignment="Top"
+                            HorizontalAlignment="Left"
+                            Margin="0, 0, 15, 0"
+                            CornerRadius="3"
+                            BorderThickness="1"
+                            BorderBrush="White">
+                        <Border.Background>
+                            <ImageBrush Stretch="UniformToFill"
+                                        ImageSource="https://pbs.twimg.com/profile_images/637494283365298177/J0t3qvlm.jpg" />
+                        </Border.Background>
+                        <Ellipse HorizontalAlignment="Right"
+                                 Margin="0, -20, -9, 0"
+                                 Fill="White" />
+                    </Border>
+                    <TextBlock Grid.Column="1"
+                               Text="バトルプログラマー柴田智也" />
+                    <TextBlock Grid.Row="1"
+                               Grid.Column="1"
+                               Text="@tomoya_shibata"
+                               FontSize="13"
+                               Foreground="DarkGray" />
+                </Grid>
+            </ListViewItem>
+            <ListViewItem>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Border Grid.RowSpan="2"
+                            Width="38"
+                            Height="38"
+                            VerticalAlignment="Top"
+                            HorizontalAlignment="Left"
+                            Margin="0, 0, 15, 0"
+                            CornerRadius="3"
+                            BorderThickness="1"
+                            BorderBrush="White">
+                        <Border.Background>
+                            <ImageBrush Stretch="UniformToFill"
+                                        ImageSource="https://pbs.twimg.com/profile_images/637494283365298177/J0t3qvlm.jpg" />
+                        </Border.Background>
+                        <Ellipse HorizontalAlignment="Right"
+                                 Margin="0, -20, -9, 0"
+                                 Fill="White" />
+                    </Border>
+                    <TextBlock Grid.Column="1"
+                               Text="バトルプログラマー柴田智也" />
+                    <TextBlock Grid.Row="1"
+                               Grid.Column="1"
+                               Text="@tomoya_shibata"
+                               FontSize="13"
+                               Foreground="DarkGray" />
+                </Grid>
+            </ListViewItem>
+
+        </ListView>
+    </StackPanel>
+    <Page.BottomAppBar>
+        <CommandBar ClosedDisplayMode="Compact">
+            <AppBarButton Icon="Edit"
+                          Label="Tweet">
+            </AppBarButton>
+        </CommandBar>
+    </Page.BottomAppBar>
+</Page>

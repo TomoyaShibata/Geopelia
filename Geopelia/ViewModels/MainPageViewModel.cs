@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Windows.UI.Xaml;
 using CoreTweet;
 using Geopelia.Models;
@@ -29,6 +30,7 @@ namespace Geopelia.ViewModels
         public ReadOnlyReactiveCollection<TweetItemViewModel> TweetItems { get; set; }
         public ReadOnlyReactiveCollection<TweetItemViewModel> MentionItems { get; set; }
         public ReactiveProperty<double> Width { get; set; } = new ReactiveProperty<double>();
+        public ReactiveProperty<bool?> IsShowSplitView { get; set; } = new ReactiveProperty<bool?>(false);
 
         public class ItemModelBase { }
         private readonly TwitterClient _twitterClient;
@@ -75,10 +77,23 @@ namespace Geopelia.ViewModels
         {
         }
 
-
         public void NavigateNextPage()
         {
             this.NavigationService.Navigate("TweetCreate", null);
+        }
+
+        /// <summary>
+        /// ツイート詳細画面に遷移する
+        /// </summary>
+        public void NavigateTweetDetailsPage()
+        {
+            this.NavigationService.Navigate("TweetDetails", null);
+        }
+
+        public override void OnNavigatedTo(NavigatedToEventArgs e, Dictionary<string, object> viewModelState)
+        {
+            base.OnNavigatedTo(e, viewModelState);
+            this._twitterClient.ReplyToStatus = null;
         }
     }
 }

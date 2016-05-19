@@ -8,48 +8,54 @@
       mvvm:ViewModelLocator.AutoWireViewModel="True"
       mc:Ignorable="d"
       FontFamily="Meiryo"
-      Background="Black">
-    <Grid Margin="10">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="50" />
-            <RowDefinition Height="100" />
-            <RowDefinition Height="100" />
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
-        <TextBlock Text="Create Tweet"
-                   FontSize="20" />
-        <TextBlock Grid.Column="1"
-                   HorizontalAlignment="Right"
-                   Text="0/140"
-                   FontSize="20" />
-        <TextBox Grid.Row="1"
-                 Grid.ColumnSpan="2"
-                 PlaceholderText="Tweet..."
-                 Text="{x:Bind ViewModel.TweetText.Value, Mode=TwoWay}"
-                 TextChanged="{x:Bind ViewModel.CheckInputKey}"
-                 TextWrapping="Wrap"
-                 IsSpellCheckEnabled="False"
-                 GotFocus="{x:Bind ViewModel.MoveCaretToLast}" />
-        <ItemsControl Grid.Row="2"
-                      Grid.ColumnSpan="2"
-                      HorizontalAlignment="Left"
-                      ItemsSource="{x:Bind ViewModel.SelectedPictures, Mode=OneWay}">
-            <ItemsControl.ItemTemplate>
-                <DataTemplate x:DataType="BitmapImage">
-                    <Image Source="{x:Bind Mode=OneWay}" />
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <ItemsStackPanel Width="100"
-                                     Orientation="Horizontal" />
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-        </ItemsControl>
-        <!--<ListView Grid.Row="2"
+      Background="{ThemeResource SystemControlBackgroundAccentBrush}">
+    <StackPanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <StackPanel Orientation="Horizontal"
+                    Height="50"
+                    Background="{ThemeResource SystemControlBackgroundAccentBrush}">
+            <Button Width="55"
+                    VerticalAlignment="Stretch"
+                    HorizontalAlignment="Center"
+                    Tapped="{x:Bind ViewModel.GoBack}">
+                <FontIcon Glyph="&#xE72B;" />
+            </Button>
+            <TextBlock Margin="10"
+                       FontSize="20"
+                       VerticalAlignment="Center"
+                       Text="Create Tweet" />
+        </StackPanel>
+        <StackPanel Margin="10"
+                    Orientation="Vertical">
+            <TextBlock Grid.Column="1"
+                       HorizontalAlignment="Right"
+                       Text="0/140"
+                       FontSize="20" />
+            <TextBox Grid.Row="1"
+                     Grid.ColumnSpan="2"
+                     PlaceholderText="Tweet..."
+                     Text="{x:Bind ViewModel.TweetText.Value, Mode=TwoWay}"
+                     TextChanged="{x:Bind ViewModel.CheckInputKey}"
+                     TextWrapping="Wrap"
+                     IsSpellCheckEnabled="False"
+                     GotFocus="{x:Bind ViewModel.MoveCaretToLast}"
+                     Height="100" />
+            <ItemsControl Grid.Row="2"
+                          Grid.ColumnSpan="2"
+                          HorizontalAlignment="Left"
+                          ItemsSource="{x:Bind ViewModel.SelectedPictures, Mode=OneWay}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="BitmapImage">
+                        <Image Source="{x:Bind Mode=OneWay}" />
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <ItemsStackPanel Width="100"
+                                         Orientation="Horizontal" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
+            <!--<ListView Grid.Row="2"
                   Grid.ColumnSpan="2"
                   ItemsSource="{x:Bind ViewModel.SelectedPictures}"
                   HorizontalAlignment="Left">
@@ -60,7 +66,7 @@
                     <Image />
                 </ItemsPanelTemplate>
             </ListView.ItemsPanel>-->
-        <!--<ListView.ItemsPanel>
+            <!--<ListView.ItemsPanel>
                 <ItemsPanelTemplate>
                     
             <StackPanel Orientation="Horizontal"
@@ -70,22 +76,24 @@
             
                 </ItemsPanelTemplate>
             </ListView.ItemsPanel>-->
-        <!--<ListView.ItemTemplate>
+            <!--<ListView.ItemTemplate>
                 <DataTemplate x:DataType="BitmapImage">
                     <Image Source="{x:Bind}" />
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>-->
-        <Popup IsOpen="{x:Bind ViewModel.IsFriendScreenNamesShow.Value, Mode=OneWay }">
-            <Grid Background="#666666"
-                  BorderBrush="#222222"
-                  Height="200"
-                  Width="150"
-                  Margin="10,80,0,0">
-                <ListView ItemsSource="{x:Bind ViewModel.FilteredFriendScreenNames, Mode=OneWay}" />
-            </Grid>
-        </Popup>
-    </Grid>
+            <Popup IsOpen="{x:Bind ViewModel.IsFriendScreenNamesShow.Value, Mode=OneWay }">
+                <Grid Background="#666666"
+                      BorderBrush="#222222"
+                      Height="200"
+                      Width="150"
+                      Margin="10,80,0,0">
+                    <ListView ItemsSource="{x:Bind ViewModel.FilteredFriendScreenNames, Mode=OneWay}" />
+                </Grid>
+            </Popup>
+        </StackPanel>
+
+    </StackPanel>
     <Page.BottomAppBar>
         <CommandBar ClosedDisplayMode="Compact">
             <AppBarButton Label="Pictures"

@@ -4,6 +4,7 @@ using Windows.UI.Xaml.Data;
 using Geopelia.Models;
 using Prism.Unity.Windows;
 using Microsoft.Practices.Unity;
+using Prism.Windows.AppModel;
 
 namespace Geopelia
 {

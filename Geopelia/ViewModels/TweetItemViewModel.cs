@@ -90,12 +90,6 @@ namespace Geopelia.ViewModels
             this.SetFavoriteForeground();
         }
 
-        public void NavigateTweetCreatePage()
-        {
-            this._tweetClient.ReplyToStatus = this.TweetModel.Value.TweetStatus;
-            this._iNavigationService.Navigate("TweetCreate", this._tweetClient);
-        }
-
         /// <summary>
         /// ツイートの左ボーダー色を返却する
         /// </summary>
@@ -131,7 +125,7 @@ namespace Geopelia.ViewModels
         /// <returns></returns>
         public void SetFavoriteForeground()
         {
-            this.FavoriteForground.Value = this.TweetModel.Value.TweetStatus.IsFavorited == true ? "Gold"
+            this.FavoriteForground.Value = this.TweetModel.Value.TweetStatus.IsFavorited == true ? "Pink"
                                                                                                  : "White";
         }
 
@@ -188,6 +182,31 @@ namespace Geopelia.ViewModels
             var hyperlink        = new Hyperlink { NavigateUri = new Uri("https://www.google.co.jp/")};
             hyperlink.Inlines.Add(run);
             textBlock.Inlines.Add(hyperlink);
+        }
+
+        /// <summary>
+        /// 返信画面に遷移する
+        /// </summary>
+        public void NavigateTweetCreatePage()
+        {
+            this._tweetClient.ReplyToStatus = this.TweetModel.Value.TweetStatus;
+            this._iNavigationService.Navigate("TweetCreate", this._tweetClient);
+        }
+
+        /// <summary>
+        /// ユーザ画面に遷移する
+        /// </summary>
+        public void NavigateUserPage()
+        {
+            this._iNavigationService.Navigate("User", null);
+        }
+
+        /// <summary>
+        /// ツイート詳細画面に遷移する
+        /// </summary>
+        public void NavigateTweetDetailsPage()
+        {
+            this._iNavigationService.Navigate("TweetDetails", this.TweetModel.Value);
         }
     }
 }

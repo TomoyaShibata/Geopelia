@@ -106,9 +106,18 @@
     <Compile Include="Models\TweetModel.cs" />
     <Compile Include="Models\TwitterClient.cs" />
     <Compile Include="Models\TwitterConst.cs" />
+    <Compile Include="ViewModels\TransitedViewModelBase.cs" />
     <Compile Include="ViewModels\TweetCreatePageViewModel.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />
+    <Compile Include="ViewModels\UserPageVewModel.cs" />
+    <Compile Include="ViewModels\TweetDetailsPageViewModel.cs" />
     <Compile Include="ViewModels\TweetItemViewModel.cs" />
+    <Compile Include="Views\UserPage.xaml.cs">
+      <DependentUpon>UserPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TweetDetailsPage.xaml.cs">
+      <DependentUpon>TweetDetailsPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\TweetCreatePage.xaml.cs">
       <DependentUpon>TweetCreatePage.xaml</DependentUpon>
     </Compile>
@@ -147,6 +156,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
+    <Page Include="Views\UserPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\TweetDetailsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\TweetCreatePage.xaml">
       <Generator>MSBuild:Compile</Generator>

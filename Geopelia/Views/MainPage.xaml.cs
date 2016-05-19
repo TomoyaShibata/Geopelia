@@ -1,12 +1,8 @@
-﻿using Windows.UI.Xaml.Controls;
-using Geopelia.ViewModels;
+﻿using Geopelia.ViewModels;
 
 namespace Geopelia.Views
 {
-    /// <summary>
-    /// それ自体で使用できる空白ページまたはフレーム内に移動できる空白ページ。
-    /// </summary>
-    public sealed partial class MainPage : Page
+    public sealed partial class MainPage
     {
         private MainPageViewModel ViewModel => this.DataContext as MainPageViewModel;
 

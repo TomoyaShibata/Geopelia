@@ -1,17 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Windows.UI;
 using Windows.UI.Xaml.Media;
 using CoreTweet;
 using CoreTweet.Streaming;
 using Microsoft.Practices.ObjectBuilder2;
+using Prism.Mvvm;
 
 namespace Geopelia.Models
 {
     /// <summary>
     /// ツイート Model
     /// </summary>
-    public class TweetModel
+    public class TweetModel : BindableBase
     {
         /// <summary>
         /// ツイート ID
@@ -36,7 +36,7 @@ namespace Geopelia.Models
         /// <summary>
         /// プロフィール画像 URL
         /// </summary>
-        public Uri ProfileImageUrlHttps { get; set; }
+        public string ProfileImageUrlHttps { get; set; }
         /// <summary>
         /// RT 名前
         /// </summary>
@@ -48,7 +48,7 @@ namespace Geopelia.Models
         /// <summary>
         /// RT プロフィール画像 URL
         /// </summary>
-        public Uri RtProfileImageUrlHttps { get; set; }
+        public string RtProfileImageUrlHttps { get; set; } = "";
         /// <summary>
         /// 返信先ツイート ID
         /// </summary>
@@ -88,6 +88,11 @@ namespace Geopelia.Models
         /// </summary>
         public long MyRetweetId { get; set; }
 
+        public TweetModel()
+        {
+
+        }
+
         public TweetModel(StatusMessage s)
         {
             this.TweetStatus = s.Status;
@@ -111,7 +116,7 @@ namespace Geopelia.Models
             this.Text                 = s.Status.Text;
             this.Name                 = s.Status.User.Name;
             this.ScreenName           = s.Status.User.ScreenName;
-            this.ProfileImageUrlHttps = new Uri(s.Status.User.ProfileImageUrlHttps);
+            this.ProfileImageUrlHttps = s.Status.User.ProfileImageUrlHttps;
         }
 
         public TweetModel(Status s)
@@ -137,7 +142,7 @@ namespace Geopelia.Models
             this.Text                 = s.Text;
             this.Name                 = s.User.Name;
             this.ScreenName           = s.User.ScreenName;
-            this.ProfileImageUrlHttps = new Uri(s.User.ProfileImageUrlHttps);
+            this.ProfileImageUrlHttps = s.User.ProfileImageUrlHttps;
         }
 
         private SolidColorBrush SetBorderBrushColor(StatusMessage s)
@@ -168,8 +173,8 @@ namespace Geopelia.Models
             this.ScreenName             = s.RetweetedStatus.User.ScreenName;
             this.RtName                 = s.User.Name + "さんがリツイート";
             this.RtScreenName           = s.User.ScreenName;
-            this.ProfileImageUrlHttps   = new Uri(s.User.ProfileImageUrlHttps);
-            this.RtProfileImageUrlHttps = new Uri(s.RetweetedStatus.User.ProfileImageUrlHttps);
+            this.ProfileImageUrlHttps   = s.RetweetedStatus.User.ProfileImageUrlHttps;
+            this.RtProfileImageUrlHttps = s.User.ProfileImageUrlHttps;
         }
     }
 }

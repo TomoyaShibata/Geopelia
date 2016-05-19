@@ -4,6 +4,7 @@ using System.Net;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Documents;
+using CoreTweet;
 using Geopelia.Models;
 
 namespace Geopelia.Views.Fragments
@@ -38,49 +39,35 @@ namespace Geopelia.Views.Fragments
             this.ParseText();
         }
 
+        /// <summary>
+        /// ツイート本文をパートごとに分割して加工を施します
+        /// </summary>
         private void ParseText()
         {
             if (this.TwitterResponse == null || this.TextBlock == null) return;
 
-            var tweetText   = this.TwitterResponse.TweetStatus.RetweetedStatus == null ? this.TwitterResponse.TweetStatus.Text
-                                                                                       : this.TwitterResponse.TweetStatus.RetweetedStatus.Text;
-            var stringInfo  = new StringInfo(tweetText);
-            var currTextIdx = 0;
-
+            var tweetStatus   = this.TwitterResponse.TweetStatus.RetweetedStatus ?? this.TwitterResponse.TweetStatus;
             this.TextBlock.Inlines.Clear();
-            foreach (var url in this.TwitterResponse.TweetStatus.Entities.Urls)
+            foreach (var textPart in tweetStatus.EnumerateTextParts())
             {
-                var begin = url.Indices[0];
-                var end   = url.Indices[1];
-                if (currTextIdx != begin)
+                switch (textPart.Type)
                 {
-                    var run = new Run { Text = SubStringAndDecode(stringInfo.String, currTextIdx, begin - currTextIdx) };
-                    this.TextBlock.Inlines.Add(run);
+                    case TextPartType.Hashtag:
+                        var hashtag = new Hyperlink();
+                        hashtag.Inlines.Add(new Run { Text = textPart.Text });
+                        this.TextBlock.Inlines.Add(hashtag);
+                        break;
+                    case TextPartType.Plain:
+                        this.TextBlock.Inlines.Add(new Run { Text = textPart.Text });
+                        break;
+                    case TextPartType.Url:
+                        var url = new Hyperlink { NavigateUri = new Uri(textPart.RawText) };
+                        url.Inlines.Add(new Run { Text =  textPart.Text });
+                        this.TextBlock.Inlines.Add(url);
+                        break;
                 }
-                var link = new Hyperlink { NavigateUri = new Uri(url.Url) };
-                link.Inlines.Add(new Run { Text = url.ExpandedUrl });
-                this.TextBlock.Inlines.Add(link);
-
-                currTextIdx = end;
             }
 
-            if (currTextIdx > stringInfo.LengthInTextElements) return;
-            this.TextBlock.Inlines.Add(new Run
-            {
-                Text = SubStringAndDecode(stringInfo.String, currTextIdx, stringInfo.LengthInTextElements - currTextIdx)
-            });
-        }
-
-        private static string SubStringAndDecode(string text, int start, int length)
-        {
-            var result = "";
-            var data   = StringInfo.ParseCombiningCharacters(text);
-            for (var i = start; i < start + length; i++)
-            {
-                result += StringInfo.GetNextTextElement(text, data[i]);
-            }
-
-            return WebUtility.HtmlDecode(result);
         }
     }
 }

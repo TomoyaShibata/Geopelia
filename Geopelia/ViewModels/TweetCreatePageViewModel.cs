@@ -10,6 +10,7 @@ namespace Geopelia.ViewModels
 {
     public class TweetCreatePageViewModel : ViewModelBase
     {
+        private INavigationService NavigationService { get; }
         public ReactiveProperty<string> TweetText { get; set; } = new ReactiveProperty<string>("");
         public ReadOnlyReactiveCollection<string> FriendScreenNames { get; set; }
         public ReadOnlyReactiveCollection<string> FilteredFriendScreenNames { get; set; }
@@ -26,19 +27,16 @@ namespace Geopelia.ViewModels
         /// <param name="twitterClient"></param>
         public TweetCreatePageViewModel(INavigationService iNavigationService, TwitterClient twitterClient)
         {
-            this._twitterClient = twitterClient;
-            this.FriendScreenNames = this._twitterClient.FriendScreenNames.ToReadOnlyReactiveCollection();
-            this.FilteredFriendScreenNames =
-                this._twitterClient.FilteredFriendScreenNames.ToReadOnlyReactiveCollection();
+            this.NavigationService         = iNavigationService;
+            this._twitterClient            = twitterClient;
+            this.FriendScreenNames         = this._twitterClient.FriendScreenNames.ToReadOnlyReactiveCollection();
+            this.FilteredFriendScreenNames = this._twitterClient.FilteredFriendScreenNames.ToReadOnlyReactiveCollection();
 
             this._twitterClient.SetFriendScreenNames();
 
             this.SelectedPictures = this._pictureModel.PictureFilePaths.ToReadOnlyReactiveCollection();
-
-            if (this._twitterClient.ReplyToStatus != null)
-            {
-                this.TweetText.Value  = $"@{this._twitterClient.ReplyToStatus.User.ScreenName} ";
-            }
+            this.TweetText.Value  = this._twitterClient.ReplyToStatus != null ? $"@{this._twitterClient.ReplyToStatus.User.ScreenName} "
+                                                                              : "";
         }
 
         /// <summary>
@@ -104,6 +102,14 @@ namespace Geopelia.ViewModels
         public void PickPicturesAsync()
         {
             this._pictureModel.PickPicturesAsync();
+        }
+
+        /// <summary>
+        /// TL 画面に戻ります
+        /// </summary>
+        public void GoBack()
+        {
+            this.NavigationService.GoBack();
         }
     }
 }

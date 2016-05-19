@@ -1,9 +1,8 @@
-﻿using Windows.UI.Xaml.Controls;
-using Geopelia.ViewModels;
+﻿using Geopelia.ViewModels;
 
 namespace Geopelia.Views
 {
-    public sealed partial class TweetCreatePage : Page
+    public sealed partial class TweetCreatePage
     {
         private TweetCreatePageViewModel ViewModel => this.DataContext as TweetCreatePageViewModel;
 

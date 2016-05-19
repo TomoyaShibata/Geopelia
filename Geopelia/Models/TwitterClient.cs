@@ -49,13 +49,19 @@ namespace Geopelia.Models
             set { this.SetProperty(ref this._filteredfriendScreenNames, value); }
         }
 
+        private ObservableCollection<User> _followers = new ObservableCollection<User>();
+        public ObservableCollection<User> Followers
+        {
+            get { return this._followers; }
+            set { this.SetProperty(ref this._followers, value); }
+        }
+
         private Status _replyToStatus;
         public Status ReplyToStatus
         {
             get { return this._replyToStatus; }
             set { this.SetProperty(ref this._replyToStatus, value); }
         }
-
 
         public TwitterClient()
         {
@@ -123,6 +129,13 @@ namespace Geopelia.Models
                 .Where(m => m.Status.InReplyToScreenName?.Contains("tomoya_shibata") ?? false)
                 .Subscribe(m => this.MentionItems.Insert(0, new TweetItemViewModel(iNavigationService, m.Status, this)));
         }
+
+        public async void GetMyFollowers()
+        {
+            var followers = await this._tokens.Followers.ListAsync(cursor => -1, count => 200);
+            followers.ToObservable().Subscribe(u => this.Followers.Add(u));
+        }
+
 
         /// <summary>
         /// 自分のプロフィール情報を取得する
