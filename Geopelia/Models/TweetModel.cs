@@ -88,10 +88,15 @@ namespace Geopelia.Models
         /// </summary>
         public long MyRetweetId { get; set; }
 
-        public TweetModel()
-        {
+        /// <summary>
+        /// Twitter クライアント名
+        /// </summary>
+        public string ClientName { get; set; }
 
-        }
+        /// <summary>
+        /// 自分が選択されたツイートかどうか
+        /// </summary>
+        public bool IsSelected { get; set; } = false;
 
         public TweetModel(StatusMessage s)
         {
@@ -117,6 +122,7 @@ namespace Geopelia.Models
             this.Name                 = s.Status.User.Name;
             this.ScreenName           = s.Status.User.ScreenName;
             this.ProfileImageUrlHttps = s.Status.User.ProfileImageUrlHttps;
+            this.ClientName           = s.Status.ParseSource().Name;
         }
 
         public TweetModel(Status s)
@@ -143,6 +149,7 @@ namespace Geopelia.Models
             this.Name                 = s.User.Name;
             this.ScreenName           = s.User.ScreenName;
             this.ProfileImageUrlHttps = s.User.ProfileImageUrlHttps;
+            this.ClientName           = s.ParseSource().Name;
         }
 
         private SolidColorBrush SetBorderBrushColor(StatusMessage s)
@@ -175,6 +182,7 @@ namespace Geopelia.Models
             this.RtScreenName           = s.User.ScreenName;
             this.ProfileImageUrlHttps   = s.RetweetedStatus.User.ProfileImageUrlHttps;
             this.RtProfileImageUrlHttps = s.User.ProfileImageUrlHttps;
+            this.ClientName             = s.ParseSource().Name;
         }
     }
 }

@@ -186,20 +186,22 @@
             </Grid>
         </DataTemplate>
     </Page.Resources>
-    <Grid Background="{ThemeResource SystemControlBackgroundAccentBrush}">
+    <Grid>
         <ProgressBar VerticalAlignment="Top"
                      IsEnabled="True"
                      IsIndeterminate="True" />
-        <Pivot>
+        <Pivot Background="{ThemeResource SystemControlBackgroundAccentBrush}">
             <Pivot.LeftHeader>
                 <ToggleButton Height="50"
-                              Width="55">
+                              Width="55"
+                              Background="{ThemeResource SystemControlBackgroundAccentBrush}">
                     <ToggleButton.Content>
                         <FontIcon Glyph="&#xE700;" />
                     </ToggleButton.Content>
                 </ToggleButton>
             </Pivot.LeftHeader>
-            <PivotItem Margin="0">
+            <PivotItem Margin="0"
+                       Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
                 <PivotItem.Header>
                     <TextBlock Text="Home"
                                Margin="5,0,0,0"
@@ -209,8 +211,12 @@
                           VerticalAlignment="Top"
                           ItemsSource="{x:Bind ViewModel.TweetItems}"
                           ItemTemplate="{StaticResource TweetItemTemplate}"
-                          SelectionMode="None"
-                          Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+                          SelectionMode="None">
+                    <ListView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <ItemsStackPanel CacheLength="1" />
+                        </ItemsPanelTemplate>
+                    </ListView.ItemsPanel>
                     <ListView.ItemContainerStyle>
                         <Style TargetType="ListViewItem">
                             <Setter Property="HorizontalContentAlignment"
@@ -221,15 +227,15 @@
                     </ListView.ItemContainerStyle>
                 </ListView>
             </PivotItem>
-            <PivotItem Margin="0">
+            <PivotItem Margin="0"
+                       Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
                 <PivotItem.Header>
                     <TextBlock Text="Mentions" />
                 </PivotItem.Header>
                 <ListView VerticalAlignment="Top"
                           ItemsSource="{x:Bind ViewModel.MentionItems}"
                           ItemTemplate="{StaticResource TweetItemTemplate}"
-                          SelectionMode="None"
-                          Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+                          SelectionMode="None">
                     <ListView.ItemContainerStyle>
                         <Style TargetType="ListViewItem">
                             <Setter Property="HorizontalContentAlignment"
@@ -240,11 +246,12 @@
                     </ListView.ItemContainerStyle>
                 </ListView>
             </PivotItem>
-            <PivotItem>
+            <PivotItem Margin="0"
+                       Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
                 <PivotItem.Header>
                     <TextBlock Text="Profile" />
                 </PivotItem.Header>
-                <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+                <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="250" />
                         <RowDefinition Height="*" />

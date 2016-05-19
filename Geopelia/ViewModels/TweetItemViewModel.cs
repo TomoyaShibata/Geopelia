@@ -206,7 +206,16 @@ namespace Geopelia.ViewModels
         /// </summary>
         public void NavigateTweetDetailsPage()
         {
-            this._iNavigationService.Navigate("TweetDetails", this.TweetModel.Value);
+            this._tweetModel.Value.IsSelected = true;
+            this._iNavigationService.Navigate("TweetDetails", null);
+        }
+
+        /// <summary>
+        /// ハッシュタグツイート一覧画面に遷移する
+        /// </summary>
+        public void NavigateHashtagTweetsPage()
+        {
+            this._iNavigationService.Navigate("HashtagTweets", null);
         }
     }
 }
