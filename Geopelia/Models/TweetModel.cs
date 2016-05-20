@@ -98,45 +98,27 @@ namespace Geopelia.Models
         /// </summary>
         public bool IsSelected { get; set; } = false;
 
-        public TweetModel(StatusMessage s)
+        public bool IsImages1Page { get; set; } = false;
+        public bool IsImages2Page { get; set; } = false;
+        public bool IsImages3Page { get; set; } = false;
+        public bool IsImages4Page { get; set; } = false;
+
+        public TweetModel(StatusMessage statusMessage)
         {
-            this.TweetStatus = s.Status;
-
-            if (s.Status.Entities.Media != null)
-            {
-                this.PicTwitterUris = new List<string>();
-                s.Status.ExtendedEntities.Media.ForEach(m => this.PicTwitterUris.Add(m.MediaUrlHttps));
-            }
-
-            //this.BorderColor = this.SetBorderBrushColor(s);
-            this.RetweetedStatus      = s.Status.RetweetedStatus;
-            if (s.Status.RetweetedStatus != null)
-            {
-                this.SetRetweet(s.Status);
-                return;
-            }
-
-            this.CreatedAt            = s.Status.CreatedAt.DateTime.ToLocalTime().ToString("yyyy/MM/dd HH:mm:ss");
-            this.Id                   = s.Status.Id;
-            this.Text                 = s.Status.Text;
-            this.Name                 = s.Status.User.Name;
-            this.ScreenName           = s.Status.User.ScreenName;
-            this.ProfileImageUrlHttps = s.Status.User.ProfileImageUrlHttps;
-            this.ClientName           = s.Status.ParseSource().Name;
+            this.InitTweetModel(statusMessage.Status);
         }
 
-        public TweetModel(Status s)
+        public TweetModel(Status status)
+        {
+            this.InitTweetModel(status);
+        }
+
+        private void InitTweetModel(Status s)
         {
             this.TweetStatus = s;
+            this.SetPicTwitterUris(s);
 
-            if (s.Entities.Media != null)
-            {
-                this.PicTwitterUris = new List<string>();
-                s.ExtendedEntities.Media.ForEach(m => this.PicTwitterUris.Add(m.MediaUrlHttps));
-            }
-
-            //this.BorderColor = this.SetBorderBrushColor(s);
-            this.RetweetedStatus      = s.RetweetedStatus;
+            this.RetweetedStatus = s.RetweetedStatus;
             if (s.RetweetedStatus != null)
             {
                 this.SetRetweet(s);
@@ -183,6 +165,33 @@ namespace Geopelia.Models
             this.ProfileImageUrlHttps   = s.RetweetedStatus.User.ProfileImageUrlHttps;
             this.RtProfileImageUrlHttps = s.User.ProfileImageUrlHttps;
             this.ClientName             = s.ParseSource().Name;
+        }
+
+        /// <summary>
+        /// 添付画像の URI をコレクションに格納する
+        /// <param name="status">status</param>
+        /// </summary>
+        private void SetPicTwitterUris(Status status)
+        {
+            if (status.Entities.Media == null) return;
+            this.PicTwitterUris = new List<string>();
+            status.ExtendedEntities.Media.ForEach(m => this.PicTwitterUris.Add(m.MediaUrlHttps));
+
+            switch (this.PicTwitterUris.Count)
+            {
+                case 1:
+                    this.IsImages1Page = true;
+                    break;
+                case 2:
+                    this.IsImages2Page = true;
+                    break;
+                case 3:
+                    this.IsImages3Page = true;
+                    break;
+                case 4:
+                    this.IsImages4Page = true;
+                    break;
+            }
         }
     }
 }

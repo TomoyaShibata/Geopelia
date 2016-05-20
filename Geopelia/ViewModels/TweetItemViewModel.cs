@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Documents;
@@ -216,6 +217,12 @@ namespace Geopelia.ViewModels
         public void NavigateHashtagTweetsPage()
         {
             this._iNavigationService.Navigate("HashtagTweets", null);
+        }
+
+        public override void OnNavigatedTo(NavigatedToEventArgs e, Dictionary<string,object> viewModelState)
+        {
+            base.OnNavigatedTo(e, viewModelState);
+            this.TweetModel.Value.IsSelected = false;
         }
     }
 }
