@@ -309,9 +309,6 @@
                                    TextWrapping="WrapWholeWords"
                                    Margin="0, 10" />
                     </Grid>
-
-                    <RelativePanel></RelativePanel>
-
                     <StackPanel Orientation="Horizontal"
                                 Width="Auto">
                         <RadioButton Content="Tweets"
@@ -330,8 +327,10 @@
             </ListView.Header>
             <ListView.Footer>
                 <Button Content="もっと読み込む"
-                        HorizontalAlignment="Center"
+                        HorizontalAlignment="Stretch"
+                        Padding="10"
                         Tapped="{x:Bind ViewModel.LoadPastUserTweetItems}" />
+
             </ListView.Footer>
         </ListView>
     </Grid>
