@@ -75,6 +75,25 @@
                        HorizontalAlignment="Right"
                        Text="{x:Bind ViewModel.TweetModel.Value.ClientName}" />
         </Grid>
+        <Grid BorderBrush="#333"
+              BorderThickness="0, 1, 0, 1"
+              Height="40">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <TextBlock HorizontalAlignment="Center"
+                       VerticalAlignment="Center">
+                <Run Text="{x:Bind ViewModel.TweetModel.Value.TweetStatus.RetweetCount}" />
+                <Run Text="Retweets" />
+            </TextBlock>
+            <TextBlock Grid.Column="1"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center">
+                       <Run Text="{x:Bind ViewModel.TweetModel.Value.TweetStatus.FavoriteCount}" />
+                       <Run Text="Likes" />
+            </TextBlock>
+        </Grid>
         <StackPanel Margin="10"
                     Visibility="{x:Bind ViewModel.IsImages1Page.Value}">
             <Image Source="{x:Bind ViewModel.TweetModel.Value.PicTwitterUris[0]}"
@@ -92,7 +111,7 @@
                    Height="200"
                    Stretch="UniformToFill" />
             <Image Grid.Column="2"
-                   Source="{x:Bind ViewModel.TweetModel.Value.PicTwitterUris[1]}"
+                   Source="{x:Bind ViewModel.TweetModel.Value.PicTwitterUris[0]}"
                    Height="200"
                    Stretch="UniformToFill" />
         </Grid>
@@ -113,24 +132,50 @@
                    Height="200"
                    Stretch="UniformToFill" />
             <Image Grid.Column="2"
-                   Source="{x:Bind ViewModel.TweetModel.Value.PicTwitterUris[1]}"
+                   Source="{x:Bind ViewModel.TweetModel.Value.PicTwitterUris[0]}"
                    Height="95"
                    Stretch="UniformToFill" />
             <Image Grid.Row="2"
                    Grid.Column="2"
-                   Source="{x:Bind ViewModel.TweetModel.Value.PicTwitterUris[2]}"
+                   Source="{x:Bind ViewModel.TweetModel.Value.PicTwitterUris[0]}"
                    Height="95"
                    Stretch="UniformToFill" />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="100 Retweets" />
+                <TextBlock Grid.Column="1"
+                           Text="10 Likes" />
+            </Grid>
         </Grid>
     </StackPanel>
+    <Page.Resources>
+        <MenuFlyout x:Key="fl">
+            <MenuFlyoutItem Text="{x:Bind ViewModel.RetweetButtonText.Value, Mode=OneWay}"
+                            Tapped="{x:Bind ViewModel.ChangeIsRetweeted}" />
+            <MenuFlyoutItem Text="引用リツイートする" />
+        </MenuFlyout>
+    </Page.Resources>
     <Page.BottomAppBar>
         <CommandBar ClosedDisplayMode="Compact">
-            <AppBarButton Icon="Reshare"
-                          Label="Tweet">
+            <AppBarButton Label="Reply">
+                <FontIcon Glyph="&#xE248;" />
             </AppBarButton>
-            <AppBarButton Icon="Favorite"
-                          Label="Tweet">
+            <AppBarButton Foreground="{x:Bind ViewModel.RetweetButtonForeground.Value, Mode=OneWay}"
+                          Label="Retweet"
+                          Tapped="{x:Bind ViewModel.ChangeIsRetweeted}">
+                <FontIcon Glyph="&#xE8EB;" />
             </AppBarButton>
+            <AppBarButton Foreground="Fuchsia"
+                          Label="Like">
+                <FontIcon Glyph="&#xE006;" />
+            </AppBarButton>
+            <CommandBar.SecondaryCommands>
+                <AppBarButton Content="Copy tweet text" />
+                <AppBarButton Content="Copy tweet link" />
+            </CommandBar.SecondaryCommands>
         </CommandBar>
     </Page.BottomAppBar>
 </Page>

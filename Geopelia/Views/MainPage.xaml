@@ -15,7 +15,7 @@
         <DataTemplate x:Key="TweetItemTemplate"
                       x:DataType="viewModels:TweetItemViewModel">
             <Grid Margin="-10,0"
-                  Padding="0, 10, 0, 10"
+                  Padding="0,10,0,10"
                   BorderThickness="0,1,0,0"
                   BorderBrush="#222">
                 <Grid.RowDefinitions>
@@ -40,13 +40,13 @@
                         Height="38"
                         VerticalAlignment="Top"
                         HorizontalAlignment="Left"
-                        Margin="12, 0, 0, 0"
+                        Margin="12,0,0,0"
                         CornerRadius="3"
                         BorderThickness="1"
                         BorderBrush="White"
                         Tapped="{x:Bind NavigateUserPage}">
                     <Border.Background>
-                        <ImageBrush Stretch="None"
+                        <ImageBrush Stretch="UniformToFill"
                                     ImageSource="{x:Bind TweetModel.Value.ProfileImageUrlHttps}" />
                     </Border.Background>
                     <Ellipse Visibility="{x:Bind ProtectedVisibility.Value, Mode=OneTime}"
@@ -59,9 +59,8 @@
                            Margin="10, 0, 0, 0"
                            TextTrimming="CharacterEllipsis"
                            FontSize="15">
-                                    <Run Text="{x:Bind TweetModel.Value.Name}" />
-                                    <Run Text="@" />
-                                    <Run Text="{x:Bind TweetModel.Value.ScreenName}" />
+                    <Run Text="{x:Bind TweetModel.Value.Name}" />
+                    <Run Text="@" /><Run Text="{x:Bind TweetModel.Value.ScreenName}" />
                 </TextBlock>
                 <TextBlock Grid.Column="3"
                            Text="{x:Bind TweetModel.Value.CreatedAt}"
@@ -114,7 +113,7 @@
                         BorderBrush="White"
                         Visibility="{x:Bind TweetVisibility.Value}">
                     <Border.Background>
-                        <ImageBrush Stretch="None"
+                        <ImageBrush Stretch="UniformToFill"
                                     ImageSource="{x:Bind TweetModel.Value.TweetStatus.User.ProfileImageUrlHttps}" />
                     </Border.Background>
                     <Ellipse Visibility="{x:Bind ProtectedVisibility.Value, Mode=OneTime}"
@@ -207,8 +206,7 @@
                                Margin="5,0,0,0"
                                Tapped="{x:Bind ViewModel.JumpToTop}" />
                 </PivotItem.Header>
-                <ListView Name="ListViewTimelines"
-                          VerticalAlignment="Top"
+                <ListView VerticalAlignment="Top"
                           ItemsSource="{x:Bind ViewModel.TweetItems}"
                           ItemTemplate="{StaticResource TweetItemTemplate}"
                           SelectionMode="None">
@@ -225,6 +223,9 @@
                                     Value="0,0,0,0" />
                         </Style>
                     </ListView.ItemContainerStyle>
+                    <ListView.Footer>
+                        <Button Content="もっと読み込む" />
+                    </ListView.Footer>
                 </ListView>
             </PivotItem>
             <PivotItem Margin="0"
@@ -245,6 +246,14 @@
                         </Style>
                     </ListView.ItemContainerStyle>
                 </ListView>
+            </PivotItem>
+            <PivotItem Margin="0"
+                       Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+                <PivotItem.Header>
+                    <TextBlock Text="Lists" />
+                </PivotItem.Header>
+                <ListView VerticalAlignment="Top"
+                          SelectionMode="None"></ListView>
             </PivotItem>
             <PivotItem Margin="0"
                        Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
@@ -327,7 +336,6 @@
                    OpenPaneLength="200">
             <SplitView.Pane>
                 <StackPanel>
-
                     <HyperlinkButton Content="TomoyaShibata"
                                      Foreground="White"></HyperlinkButton>
                     <HyperlinkButton Content="SubAccount"

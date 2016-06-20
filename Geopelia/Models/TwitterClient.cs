@@ -6,6 +6,7 @@ using System.Reactive.Linq;
 using System.Threading.Tasks;
 using Windows.Storage;
 using CoreTweet;
+using CoreTweet.Core;
 using CoreTweet.Streaming;
 using Geopelia.ViewModels;
 using Microsoft.Practices.ObjectBuilder2;
@@ -67,6 +68,13 @@ namespace Geopelia.Models
         {
             this._tokens = Tokens.Create(TwitterConst.ConsumerKey, TwitterConst.ConsumerSecret, TwitterConst.AccessToken,
                 TwitterConst.AccessTokenSecret);
+        }
+
+        private ObservableCollection<TweetItemViewModel> _userTweetItems = new ObservableCollection<TweetItemViewModel>();
+        public ObservableCollection<TweetItemViewModel> UserTweetItems
+        {
+            get { return this._userTweetItems; }
+            set { this.SetProperty(ref this._userTweetItems, value); }
         }
 
         /// <summary>
@@ -135,7 +143,6 @@ namespace Geopelia.Models
             var followers = await this._tokens.Followers.ListAsync(cursor => -1, count => 200);
             followers.ToObservable().Subscribe(u => this.Followers.Add(u));
         }
-
 
         /// <summary>
         /// 自分のプロフィール情報を取得する
@@ -223,6 +230,46 @@ namespace Geopelia.Models
             this._friendScreenNames
                 .Where(f => f.StartsWith(wipScreenName))
                 .ForEach(f => this._filteredfriendScreenNames.Add(f));
+        }
+
+        /// <summary>
+        /// ユーザを取得する
+        /// </summary>
+        /// <param name="userId">ユーザ ID</param>
+        /// <returns></returns>
+        public async Task<UserResponse> GetUser(long userId)
+        {
+            var user = await this._tokens.Users.ShowAsync(user_id => userId);
+            return user;
+        }
+
+        /// <summary>
+        /// ユーザのツイート一覧をリフレッシュします
+        /// </summary>
+        /// <param name="userId">ユーザID</param>
+        /// <returns></returns>
+        public async void RefreshUserTweetItems(INavigationService iNavigationService, long userId)
+        {
+            this._userTweetItems.Clear();
+            var userTweets =  await this._tokens.Statuses.UserTimelineAsync(
+                user_id => userId,
+                count => 50,
+                exclude_replies => true,
+                include_rts => true
+                );
+            userTweets.ForEach(u => this._userTweetItems.Add(new TweetItemViewModel(iNavigationService, u, this)));
+        }
+
+        public async Task LoadPastUserTweetItems(INavigationService iNavigationService, long userId)
+        {
+            var userTweets = await this._tokens.Statuses.UserTimelineAsync(
+                user_id => userId,
+                count => 50,
+                since_id => this._userTweetItems.Last().TweetModel.Value.Id,
+                exclude_replies => true,
+                include_rts => true
+            );
+            userTweets.ForEach(u => this._userTweetItems.Add(new TweetItemViewModel(iNavigationService, u, this)));
         }
     }
 }

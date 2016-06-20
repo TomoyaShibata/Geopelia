@@ -98,6 +98,8 @@ namespace Geopelia.Models
         /// </summary>
         public bool IsSelected { get; set; } = false;
 
+        public bool IsTweetLiked { get; set; } = false;
+
         public bool IsImages1Page { get; set; } = false;
         public bool IsImages2Page { get; set; } = false;
         public bool IsImages3Page { get; set; } = false;
@@ -117,6 +119,7 @@ namespace Geopelia.Models
         {
             this.TweetStatus = s;
             this.SetPicTwitterUris(s);
+            this.SetIsTweetLiked(s);
 
             this.RetweetedStatus = s.RetweetedStatus;
             if (s.RetweetedStatus != null)
@@ -191,6 +194,14 @@ namespace Geopelia.Models
                 case 4:
                     this.IsImages4Page = true;
                     break;
+            }
+        }
+
+        private void SetIsTweetLiked(Status status)
+        {
+            if (status.IsFavorited.Value)
+            {
+                this.IsTweetLiked = true;
             }
         }
     }

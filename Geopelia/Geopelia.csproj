@@ -106,12 +106,23 @@
     <Compile Include="Models\TweetModel.cs" />
     <Compile Include="Models\TwitterClient.cs" />
     <Compile Include="Models\TwitterConst.cs" />
+    <Compile Include="Models\UserItem.cs" />
     <Compile Include="ViewModels\TransitedViewModelBase.cs" />
     <Compile Include="ViewModels\TweetCreatePageViewModel.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />
+    <Compile Include="ViewModels\HashtagTweetsPageViewModel.cs" />
     <Compile Include="ViewModels\UserPageVewModel.cs" />
     <Compile Include="ViewModels\TweetDetailsPageViewModel.cs" />
     <Compile Include="ViewModels\TweetItemViewModel.cs" />
+    <Compile Include="Views\HashtagTweetsPage.xaml.cs">
+      <DependentUpon>HashtagTweetsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserControls\Image3Page.xaml.cs">
+      <DependentUpon>Image3Page.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserControls\RetweetButtonWithBadgeUserControl.xaml.cs">
+      <DependentUpon>RetweetButtonWithBadgeUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\UserPage.xaml.cs">
       <DependentUpon>UserPage.xaml</DependentUpon>
     </Compile>
@@ -156,6 +167,18 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
+    <Page Include="Views\HashtagTweetsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserControls\Image3Page.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserControls\RetweetButtonWithBadgeUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\UserPage.xaml">
       <Generator>MSBuild:Compile</Generator>

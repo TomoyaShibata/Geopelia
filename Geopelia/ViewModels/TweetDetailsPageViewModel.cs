@@ -11,6 +11,9 @@ namespace Geopelia.ViewModels
     {
         public ReactiveProperty<TweetModel> TweetModel = new ReactiveProperty<TweetModel>();
 
+        public ReactiveProperty<string> RetweetButtonForeground = new ReactiveProperty<string>();
+        public ReactiveProperty<string> RetweetButtonText       = new ReactiveProperty<string>();
+
         public ReactiveProperty<Visibility> IsImages1Page = new ReactiveProperty<Visibility>(Visibility.Collapsed);
         public ReactiveProperty<Visibility> IsImages2Page = new ReactiveProperty<Visibility>(Visibility.Collapsed);
         public ReactiveProperty<Visibility> IsImages3Page = new ReactiveProperty<Visibility>(Visibility.Collapsed);
@@ -22,15 +25,47 @@ namespace Geopelia.ViewModels
             this.TwitterClient     = twitterClient;
             this.TweetModel.Value  = this.TwitterClient.TweetItems.First(t => t.TweetModel.Value.IsSelected)
                                                                   .TweetModel.Value;
+            this.SetRetweetButtonForegroundAndText();
             this.SetImagesPageVisibility();
         }
 
-        public override void OnNavigatingFrom(NavigatingFromEventArgs e, Dictionary<string, object> viewModelState, bool suspending)
+        /// <summary>
+        /// リツイート状態を切替える
+        /// </summary>
+        public async void ChangeIsRetweeted()
         {
-            base.OnNavigatingFrom(e, viewModelState, suspending);
-            this.Disposable.Dispose();
+            var newIsRetweeted = (bool) !this.TweetModel.Value.TweetStatus.IsRetweeted;
+            var statusResponse = await this.TwitterClient.ChangeIsRetweetedAsync(this.TweetModel.Value, newIsRetweeted);
+
+            if (newIsRetweeted)
+            {
+                this.TweetModel.Value.MyRetweetId = statusResponse.Id;
+            }
+
+            this.TweetModel.Value.TweetStatus.IsRetweeted = newIsRetweeted;
+            this.SetRetweetButtonForegroundAndText();
         }
 
+        /// <summary>
+        /// リツイートボタンの色とテキストを設定する
+        /// </summary>
+        /// <returns></returns>
+        private void SetRetweetButtonForegroundAndText()
+        {
+            if (this.TweetModel.Value.TweetStatus.IsRetweeted == true)
+            {
+                this.RetweetButtonForeground.Value = "LawnGreen";
+                this.RetweetButtonText.Value      = "リツイートを取り消す";
+                return;
+            }
+
+            this.RetweetButtonForeground.Value = "White";
+            this.RetweetButtonText.Value      = "リツイートする";
+        }
+        
+        /// <summary>
+        /// 添付画像に応じて画像レイアウトの Visibility を設定する
+        /// </summary>
         private void SetImagesPageVisibility()
         {
             if (this.TweetModel.Value.IsImages1Page)
@@ -57,9 +92,18 @@ namespace Geopelia.ViewModels
             }
         }
 
+        /// <summary>
+        /// ユーザ画面に遷移する
+        /// </summary>
         public void NavigateUserPage()
         {
-            this.NavigationService.Navigate("User", null);
+            this.NavigationService.Navigate("UserItem", null);
+        }
+
+        public override void OnNavigatingFrom(NavigatingFromEventArgs e, Dictionary<string, object> viewModelState, bool suspending)
+        {
+            base.OnNavigatingFrom(e, viewModelState, suspending);
+            this.Disposable.Dispose();
         }
     }
 }

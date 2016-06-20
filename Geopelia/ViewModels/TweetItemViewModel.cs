@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using Windows.UI.Notifications;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Documents;
@@ -74,6 +76,18 @@ namespace Geopelia.ViewModels
             if (newIsRetweeted)
             {
                 this.TweetModel.Value.MyRetweetId = statusResponse.Id;
+                //var template = ToastTemplateType.ToastText02;
+                //var toastXml = ToastNotificationManager.GetTemplateContent(template);
+                //toastXml.GetElementById("text").FirstChild.AppendChild(toastXml.CreateTextNode("リツイートに成功しました"));
+                //ToastNotificationManager.CreateToastNotifier().Show(new ToastNotification(toastXml));
+
+                var template = ToastTemplateType.ToastText01;
+                var toastXml = ToastNotificationManager.GetTemplateContent(template);
+                var textTag  = toastXml.GetElementsByTagName("text").First();
+                textTag.AppendChild(toastXml.CreateTextNode("リツイートしました"));
+                var notifier = ToastNotificationManager.CreateToastNotifier();
+                var notify   = new ToastNotification(toastXml) {Tag = "Retwet"};
+                notifier.Show(notify);
             }
 
             this.TweetModel.Value.TweetStatus.IsRetweeted = newIsRetweeted;
@@ -85,9 +99,9 @@ namespace Geopelia.ViewModels
         /// </summary>
         public async void ChangeIsFavorited()
         {
-            var newIsFavorited = (bool) !this.TweetModel.Value.TweetStatus.IsFavorited;
-            var statusResponse = await this._tweetClient.ChangeIsFavorited(this.TweetModel.Value.Id, newIsFavorited);
-            this.TweetModel.Value.TweetStatus.IsFavorited = statusResponse.IsFavorited;
+            var newIsTweetLiked = !this.TweetModel.Value.IsTweetLiked;
+            var statusResponse  = await this._tweetClient.ChangeIsFavorited(this.TweetModel.Value.Id, newIsTweetLiked);
+            this.TweetModel.Value.IsTweetLiked = (bool)statusResponse.IsFavorited;
             this.SetFavoriteForeground();
         }
 
@@ -126,8 +140,8 @@ namespace Geopelia.ViewModels
         /// <returns></returns>
         public void SetFavoriteForeground()
         {
-            this.FavoriteForground.Value = this.TweetModel.Value.TweetStatus.IsFavorited == true ? "Pink"
-                                                                                                 : "White";
+            this.FavoriteForground.Value = this.TweetModel.Value.IsTweetLiked ? "Pink"
+                                                                              : "Gray";
         }
 
         /// <summary>
@@ -143,7 +157,7 @@ namespace Geopelia.ViewModels
                 return;
             }
 
-            this.RetweetForground.Value = "White";
+            this.RetweetForground.Value = "Gray";
             this.RetweetText.Value      = "リツイートする";
         }
 
@@ -199,7 +213,7 @@ namespace Geopelia.ViewModels
         /// </summary>
         public void NavigateUserPage()
         {
-            this._iNavigationService.Navigate("User", null);
+            this._iNavigationService.Navigate("User", this.TweetModel.Value.TweetStatus.User.Id);
         }
 
         /// <summary>
@@ -219,7 +233,7 @@ namespace Geopelia.ViewModels
             this._iNavigationService.Navigate("HashtagTweets", null);
         }
 
-        public override void OnNavigatedTo(NavigatedToEventArgs e, Dictionary<string,object> viewModelState)
+        public override void OnNavigatedTo(NavigatedToEventArgs e, Dictionary<string, object> viewModelState)
         {
             base.OnNavigatedTo(e, viewModelState);
             this.TweetModel.Value.IsSelected = false;

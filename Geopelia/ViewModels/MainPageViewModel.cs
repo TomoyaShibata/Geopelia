@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using Windows.UI.Notifications;
 using Windows.UI.Xaml;
 using CoreTweet;
 using Geopelia.Models;
 using Prism.Windows.Mvvm;
 using Prism.Windows.Navigation;
 using Reactive.Bindings;
+using Reactive.Bindings.Extensions;
 
 namespace Geopelia.ViewModels
 {
@@ -51,6 +54,7 @@ namespace Geopelia.ViewModels
             this._twitterClient.InitTimelines(this.NavigationService);
             this._twitterClient.InitMentions(this.NavigationService);
             this.StartStreaming();
+            this.ho();
         }
 
         /// <summary>
@@ -59,6 +63,21 @@ namespace Geopelia.ViewModels
         public void StartStreaming()
         {
             this._twitterClient.StartStreaming(this.NavigationService);
+        }
+
+        private void ho()
+        {
+            this.MentionItems.ObserveAddChangedItems().Subscribe(x =>
+            {
+                //var template = ToastTemplateType.ToastText01;
+                //var toastXml = ToastNotificationManager.GetTemplateContent(template);
+                //var textTag  = toastXml.GetElementsByTagName("text").First();
+                //textTag.AppendChild(toastXml.CreateTextNode(x[0].TweetModel.Value.Text));
+                //var notifier = ToastNotificationManager.CreateToastNotifier();
+                //var notify   = new ToastNotification(toastXml);
+                //notify.Tag   = "Retwet";
+                //notifier.Show(notify);
+            });
         }
 
         /// <summary>
