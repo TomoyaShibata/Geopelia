@@ -334,11 +334,11 @@
             </ListView.Footer>
         </ListView>
     </Grid>
-    <Page.BottomAppBar>
+    <!--<Page.BottomAppBar>
         <CommandBar ClosedDisplayMode="Compact">
             <AppBarButton Icon="Edit"
                           Label="Tweet">
             </AppBarButton>
         </CommandBar>
-    </Page.BottomAppBar>
+    </Page.BottomAppBar>-->
 </Page>
